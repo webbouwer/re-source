@@ -1,0 +1,33 @@
+/**
+Theme Name: RE-source_wptheme
+Theme URI: http://www.webdesigndenhaag.net/
+Description: WP Theme for project RE-source
+Version: 0.2.0
+Details URI: http://webdesigndenhaag.net/
+Author: Webbouwer
+Author URI: https://github.com/webbouwer
+License: GPL 3
+License URI: http://www.gnu.org/licenses/gpl-3.0.html
+Text Domain: resource
+Tags: theme-options, custom-menu, full-width-template, featured-image-header, featured-images
+GitHub Theme URI: https://github.com/webbouwer/RE-source_wptheme
+GitHub branch: setup
+*/
+
+
+/* main window default styles */
+*
+{
+-webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+box-sizing: border-box;
+margin:0;
+padding:0;
+}
+body
+{
+font-family: "Helvetica", arial, serif;
+font-size:15px;
+color: black;
+background-color: white;
+}

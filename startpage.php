@@ -1,8 +1,11 @@
 <?php
 /**
- * Theme main index file
- */
+* Template Name: Start Page
+*/
 require_once('functions.php');
+
+// the current page/post data
+global $post;
 
 // determine header image
 $header_image = get_header_image();
@@ -54,19 +57,13 @@ echo '<body '.$headerbgstyle.' '; body_class(); echo '>';
 
      <div id="pagecontainer" class="site">
          <?php
-         wp_main_theme_widgetarea_html( 'widgets-top-sidebar' );
-
+         echo 'This is a custom page template<hr />';
          wp_main_theme_toplogo_html();
          wp_main_theme_menu_html( array( 'top', 'main'  ) , true );
          wp_main_theme_loop_html();
-
-         wp_main_theme_widgetarea_html( 'sidebar' );
-
          ?>
     </div>
 <?php
     wp_footer();
     echo '</body></html>';
 ?>
-
-

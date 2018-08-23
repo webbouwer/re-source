@@ -10,12 +10,6 @@ global $post;
 
 // determine header image
 $header_image = get_header_image();
-
-// remove the default common theme styles (comment out to keep)
-add_action('wp_print_styles', 'wp_startup_theme_deregister_func', 100);
-
-// Add theme stylesheet link to wp_head
-add_action( 'wp_head', 'wpstartup_theme_stylesheet', 9999 );
 ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?> class="no-js no-svg">

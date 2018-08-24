@@ -4,6 +4,8 @@
  */
 require_once('functions.php');
 
+// the current page/post data
+global $post;
 // determine header image
 $header_image = get_header_image();
 

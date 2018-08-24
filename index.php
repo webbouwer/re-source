@@ -4,6 +4,8 @@
  */
 require_once('functions.php');
 
+// the current page/post data
+global $post;
 
 // determine header image
 $header_image = get_header_image();
@@ -15,7 +17,6 @@ $header_image = get_header_image();
     <meta charset="<?php bloginfo( 'charset' ); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="profile" href="http://gmpg.org/xfn/11">
-
     <?php
     if ( ! isset( $content_width ) ) $content_width = 360; // mobile first
     echo
@@ -31,15 +32,19 @@ $header_image = get_header_image();
 		.'<meta property="og:url" content="' . get_permalink() . '"/>'
 		.'<meta property="og:site_name" content="'.esc_attr( get_bloginfo( 'name', 'display' ) ).'"/>'
 		.'<meta property="og:description" content="'.get_bloginfo( 'description' ).'"/>';
-        if( !has_post_thumbnail( $post->ID )) { //the post does not have featured image, use a default image
-            if( !empty($header_image) ){
-                $default_image = get_theme_mod( 'wp_main_theme_identity_logo', get_header_image() );
-                echo '<meta property="og:image" content="' . $default_image . '"/>';
-            }
-		}else{
-			$thumbnail_src = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'medium' );
-			echo '<meta property="og:image" content="' . esc_attr( $thumbnail_src[0] ) . '"/>';
-		}
+    $default_image = 'https://avatars3.githubusercontent.com/u/36711733?s=400&u=222c42bbcb09f7639b152cabbe1091b640e78ff2&v=4';
+    if( !has_post_thumbnail( $post->ID )) { //the post does not have featured image, use a default image
+        if( !empty($header_image) ){
+            $default_image = get_header_image();
+        }else{
+            $default_image = get_theme_mod( 'wp_main_theme_identity_logo', $default_image );
+        }
+    }else{
+        $thumbnail_src = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'medium' );
+        $default_image = esc_attr( $thumbnail_src[0] );
+    }
+    echo '<meta property="og:image" content="' . $default_image . '"/>';
+
     // include wp head
     wp_head();
 

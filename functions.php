@@ -3,7 +3,6 @@
  * theme main functions file
  */
 
-
 // register functions
 require_once( get_template_directory() . '/customizer.php'); // customizer functions
 

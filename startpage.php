@@ -1,7 +1,7 @@
 <?php
 /**
- * Template Name: Custom Page
- * Theme main index file
+ * Template Name: Start Page
+ * Theme custom start file
  */
 require_once('functions.php');
 
@@ -52,7 +52,7 @@ $header_image = get_header_image();
     $bgsize = get_theme_mod('background_size', 'cover');
     $headerbgstyle = ' style="background-image:url('.esc_url( get_background_image() ).');background-position:'.$bgposition.';background-attachment:'.$bgattacht.';background-size:'.$bgsize.';background-repeat:'.$bgrepeat.';"';
 
-    $stylesheet = get_template_directory_uri().'/custom.css';
+    $stylesheet = get_template_directory_uri().'/start.css';
     echo '<link rel="stylesheet" id="wp-theme-custom-style"  href="'.$stylesheet.'" type="text/css" media="all" />';
 
 echo '</head>';
@@ -61,7 +61,7 @@ echo '<body '.$headerbgstyle.' '; body_class(); echo '>';
     <div id="pagecontainer" class="site">
         <div id="topcontent">
             <div class="outerspace">
-                Custom page theme<hr />
+                Custom Start page theme<hr />
             <?php
             wp_main_theme_toplogo_html();
             wp_main_theme_menu_html( 'top' , true  );

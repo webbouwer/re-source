@@ -59,64 +59,39 @@ echo '</head>';
 echo '<body '.$headerbgstyle.' '; body_class(); echo '>';
 ?>
     <div id="pagecontainer" class="site">
-        <div id="topcontent">
-            <div class="outerspace">
-                Custom Start page theme<hr />
-            <?php
-            wp_main_theme_toplogo_html();
-            wp_main_theme_menu_html( 'top' , true  );
-            wp_main_theme_widgetarea_html( 'widgets-top-sidebar' );
-            ?>
-            </div>
-        </div>
-        <div id="maincontent">
-            <div class="outerspace">
 
-                <?php
-                if( is_customize_preview() ){
-                    echo '<div id="area-main-menu" class="customizer-placeholder">Main menu</div>';
-                }
-                wp_main_theme_menu_html( array( 'main' ) );
-                ?>
+    Custom Start page theme<hr />
 
-                <div id="maincontentbar">
-                    <?php
-                    if( is_customize_preview() ){
-                        echo '<div id="area-page-main-content" class="customizer-placeholder">Page main content</div>';
-                    }
-                    wp_main_theme_loop_html();
-                    ?>
-                </div>
-                <div id="mainsidebar">
-                    <?php
-                    if( is_customize_preview() ){
-                        echo '<div id="area-side-menu" class="customizer-placeholder">Side menu</div>';
-                    }
-                    wp_main_theme_menu_html( 'side' );
+    <?php
+    /* default pageframe:
+    #topcontent, .outerspace, #maincontent, #maincontentbar, #mainsidebar, #bottomcontent
+    */
+    /*
+    wp_main_theme_toplogo_html();
+    wp_main_theme_menu_html( 'top' , true  );
+    wp_main_theme_widgetarea_html( 'widgets-top-sidebar' );
+    if( is_customize_preview() ){
+        echo '<div id="area-main-menu" class="customizer-placeholder">Main menu</div>';
+    }
+    wp_main_theme_menu_html( array( 'main' ) );
+    if( is_customize_preview() ){
+        echo '<div id="area-page-main-content" class="customizer-placeholder">Page main content</div>';
+    }
+    wp_main_theme_loop_html();
+    if( is_customize_preview() ){
+        echo '<div id="area-side-menu" class="customizer-placeholder">Side menu</div>';
+    }
+    wp_main_theme_menu_html( 'side' );
+    wp_main_theme_widgetarea_html( 'sidebar' );
+    if( is_customize_preview() ){
+        echo '<div id="area-bottom-menu" class="customizer-placeholder">Bottom menu</div>';
+    }
+    wp_main_theme_menu_html( 'bottom' );
+    wp_main_theme_widgetarea_html( 'widgets-bottom-sidebar' );
+    */
 
-                    wp_main_theme_widgetarea_html( 'sidebar' );
-
-                    ?>
-                </div>
-                <div class="clr"></div>
-
-            </div>
-        </div>
-        <div id="bottomcontent">
-            <div class="outerspace">
-            <?php
-            if( is_customize_preview() ){
-                echo '<div id="area-bottom-menu" class="customizer-placeholder">Bottom menu</div>';
-            }
-            wp_main_theme_menu_html( 'bottom' );
-
-            wp_main_theme_widgetarea_html( 'widgets-bottom-sidebar' );
-            ?>
-            </div>
-        </div>
-    </div>
-<?php
     wp_footer();
+
     echo '</body></html>';
 ?>
 

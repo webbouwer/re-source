@@ -15,7 +15,7 @@ GitHub branch: setup
 */
 
 
-/* main window default styles */
+/* default */
 *
 {
 margin:0;
@@ -38,9 +38,62 @@ color: black;
 background-color: white;
 }
 
+.clr
+{
+clear: both;
+height: 0;
+}
+
+
+/* customizer */
+.customizer-placeholder
+{
+display: inline-block;
+font-size: 11px;
+padding:2px;
+border:1px solid white;
+color:white;
+background-color: cadetblue;
+}
+
+/* pageframe */
 #pagecontainer
 {
 position: relative;
 display: block;
+width:100%;
 min-height: 100%;
+}
+
+.outerspace
+{
+position: relative;
+width:96%;
+max-width:1280px;
+margin:0px auto;
+min-height: 100%;
+}
+
+
+.widget,
+.widget h3,
+.widget ul
+{
+display:block;
+}
+
+@media screen and (min-width: 560px) {
+
+#maincontentbar
+{
+width: 70%;
+float:left;
+}
+
+#mainsidebar
+{
+width:30%;
+float:right;
+}
+
 }

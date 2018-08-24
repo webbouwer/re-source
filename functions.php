@@ -2,23 +2,22 @@
 /**
  * theme main functions file
  */
- 
-// require get_template_directory() . '/customizer.php'; // customizer functions
-// require get_template_directory() . '/data.php'; // data functions
+
+
+// register functions
+require_once( get_template_directory() . '/customizer.php'); // customizer functions
 
 
 // register options
 function theme_post_thumbnails() {
-
 	add_theme_support( 'custom-background' );
-    //add_theme_support( 'custom-header' );
+    add_theme_support( 'custom-header' );
     add_theme_support( 'post-thumbnails' );
 }
 add_action( 'after_setup_theme', 'theme_post_thumbnails' );
 
-//Register menu's
+// register menu's
 function basic_setup_register_menus() {
-
 	register_nav_menus(
 		array(
 		'top' => __( 'Top menu' , 'resource' ),
@@ -27,22 +26,15 @@ function basic_setup_register_menus() {
 		'bottom' => __( 'Bottom menu' , 'resource' )
 		)
 	);
-
 }
 add_action( 'init', 'basic_setup_register_menus' );
 
-/*
- * Return of the Links Manager
-add_filter( 'pre_option_link_manager_enabled', '__return_true' );
-*/
+// activate the Links Manager:: add_filter( 'pre_option_link_manager_enabled', '__return_true' );
 
-/*
- * Register widgets
- */
+// register widgets
 function basic_setup_widgets_init() {
 	if (function_exists('register_sidebar')) {
-   /* Not using the the default wordpress widget,
-        keep the widget slot for management (repositioning options) */
+        // Not using the default wordpress widget, keep the widget slot for management (repositioning options)
 		register_sidebar(array(
 			'name' => 'Widgets Header',
 			'id'   => 'widgets-header',
@@ -52,9 +44,9 @@ function basic_setup_widgets_init() {
 			'before_title'  => '<h3>',
 			'after_title'   => '</h3>'
 		));
-		// the top sidebar widgets
+		// Topcontent main widgets
 		register_sidebar(array(
-			'name' => 'Widgets Top Sidebar',
+			'name' => 'Widgets Top',
 			'id'   => 'widgets-top-sidebar',
 			'description'   => 'This the widgetized area in the top sidebar.',
 			'before_widget' => '<div id="%1$s" class="widget %2$s"><div class="widgetpadding">',
@@ -62,11 +54,21 @@ function basic_setup_widgets_init() {
 			'before_title'  => '<h3>',
 			'after_title'   => '</h3>'
 		));
-		// the default wordpress sidebar
+		// Maincontent sidebar widgets
 		register_sidebar(array(
 			'name' => 'Widgets Sidebar',
 			'id'   => 'sidebar',
 			'description'   => 'This is the standard wordpress widgetized sidebar area.',
+			'before_widget' => '<div id="%1$s" class="widget %2$s"><div class="widgetpadding">',
+			'after_widget'  => '<div class="clr"></div></div></div>',
+			'before_title'  => '<h3>',
+			'after_title'   => '</h3>'
+		));
+		// Bottomcontent main widgets
+		register_sidebar(array(
+			'name' => 'Widgets Bottom',
+			'id'   => 'widgets-bottom-sidebar',
+			'description'   => 'This the widgetized area in the bottom sidebar.',
 			'before_widget' => '<div id="%1$s" class="widget %2$s"><div class="widgetpadding">',
 			'after_widget'  => '<div class="clr"></div></div></div>',
 			'before_title'  => '<h3>',
@@ -77,15 +79,8 @@ function basic_setup_widgets_init() {
 add_action( 'widgets_init', 'basic_setup_widgets_init' );
 
 
-
-
-
-
-/*
- * Register global variables (options/customizer)
- */
+// register global variables (options/customizer)
 $wp_global_data = array();
-
 // all post data global
 function wp_main_theme_get_postdata(){
         $args = array(
@@ -134,7 +129,6 @@ function wp_main_theme_get_postdata(){
         //wp_die();
         return $response;
 }
-
 function wp_main_theme_get_customizer(){
     return json_encode( get_theme_mods() );
 }
@@ -147,29 +141,19 @@ function wp_main_theme_get_all_tags(){
 function wp_main_theme_get_all_categories(){
     return json_encode( get_categories( array("type"=>"post") ) );
 }
-
-
 // data for global js
 $wp_global_data['customdata']   = wp_main_theme_get_customizer();
 $wp_global_data['postdata']     = wp_main_theme_get_all_posts();
 $wp_global_data['tagdata']      = wp_main_theme_get_all_tags();
 $wp_global_data['catdata']      = wp_main_theme_get_all_categories();
 
-
-/*
- * Register global customizer variables
- */
-// http://wordpress.stackexchange.com/questions/57386/how-do-i-force-wp-enqueue-scripts-to-load-at-the-end-of-head
+// register global customizer variables
 function wp_main_theme_global_js() {
     // add jquery
-    wp_enqueue_script("jquery");    // default wp jquery
-    // Register the script first.
-    wp_register_script( 'custom_global_js', get_template_directory_uri().'/global.js', 99, '1.0', false);
-
-    // Get the global data list.
-    global $wp_global_data;
-	// Localize the global data list for the script
-	wp_localize_script( 'custom_global_js', 'site_data', $wp_global_data );
+    wp_enqueue_script("jquery"); // default wp jquery
+    wp_register_script( 'custom_global_js', get_template_directory_uri().'/global.js', 99, '1.0', false); // register the script
+    global $wp_global_data; // get global data var
+	wp_localize_script( 'custom_global_js', 'site_data', $wp_global_data ); // localize the global data list for the script
     // localize the script with specific data.
     //$color_array = array( 'color1' => get_theme_mod('color1'), 'color2' => '#000099' );
     //wp_localize_script( 'custom_global_js', 'object_name', $color_array );
@@ -179,26 +163,39 @@ function wp_main_theme_global_js() {
 add_action('wp_enqueue_scripts', 'wp_main_theme_global_js');
 
 
-
-
-
-
-// insert style sheet function to head
+// register style sheet
 function wp_main_theme_stylesheet(){
     $stylesheet = get_template_directory_uri().'/style.css';
     echo '<link rel="stylesheet" id="wp-theme-main-style"  href="'.$stylesheet.'" type="text/css" media="all" />';
 }
 add_action( 'wp_head', 'wp_main_theme_stylesheet', 9999 );
-// insert style sheet function to editor
+
+// register style sheet function for editor
 function onepiece_editor_styles() {
     add_editor_style( 'style.css' );
 }
 add_action( 'admin_init', 'onepiece_editor_styles' );
 
 
+
 // theme html output toplogo (custom_logo) or site title home link
 function wp_main_theme_toplogo_html(){
-    if( get_theme_mod('custom_logo', '') != '' ){
+
+    if( is_customize_preview() ){
+        echo '<div id="area-custom-image" class="customizer-placeholder">Logo image</div>';
+    }
+
+    if( get_theme_mod('wp_main_theme_identity_logo', '') != '' ){
+        $custom_logo_url = get_theme_mod('wp_main_theme_identity_logo');
+        $custom_logo_attr = array(
+            'class'    => 'custom-logo',
+            'itemprop' => 'logo',
+        );
+        echo sprintf( '<a href="%1$s" class="custom-logo-link image" rel="home" itemprop="url">%2$s</a>',
+        esc_url( home_url( '/' ) ),
+        '<img id="toplogo" src="'.$custom_logo_url.'" border="0" />'
+        );
+    }else if( get_theme_mod('custom_logo', '') != '' ){
         $custom_logo_id = get_theme_mod('custom_logo');
         $custom_logo_attr = array(
             'class'    => 'custom-logo',
@@ -244,9 +241,12 @@ function wp_main_theme_menu_html( $menu, $primary = false ){
 
         }
 
-        if( $chk == 0 && isset($primary) ){
+        if( $chk == 0 && $primary ){
 
             // default pages menu
+            if( is_customize_preview() ){
+            echo '<div id="area-default-menu" class="customizer-placeholder">Default menu</div>';
+            }
             wp_nav_menu( array( 'theme_location' => 'primary', 'menu_class' => 'nav-menu' ) ); // wp_page_menu();
 
         }
@@ -256,6 +256,11 @@ function wp_main_theme_menu_html( $menu, $primary = false ){
 
 // theme html output widget area's by type or default
 function wp_main_theme_widgetarea_html( $id, $type = false ){
+
+
+    if( is_customize_preview() ){
+        echo '<div id="area-'.$id.'" class="customizer-placeholder">Area '.$id.'</div>';
+    }
     if( isset($id) && $id != '' ){
 
         if( function_exists('dynamic_sidebar') && function_exists('is_sidebar_active') && is_sidebar_active( $id ) ){
@@ -268,8 +273,6 @@ function wp_main_theme_widgetarea_html( $id, $type = false ){
             }
             dynamic_sidebar( $id );
             echo '<div class="clr"></div></div>';
-        }else if( is_customize_preview() ){
-            echo '<div id="'.$id.'" class="customizer-placeholder"> -- Widget area '.$id.' -- </div>';
         }
 
     }
@@ -280,47 +283,46 @@ function wp_main_theme_loop_html(){
     if (have_posts()) :
 		while (have_posts()) : the_post();
 
-            // post title section
-            $title_html = '<a href="'.get_the_permalink().'" target="_self" title="'.get_the_title().'">'.get_the_title().'</a>';
+            echo '<div class="post-container">';
 
-            if(is_page()){
+                // post title section
+                $title_html = '<a href="'.get_the_permalink().'" target="_self" title="'.get_the_title().'">'.get_the_title().'</a>';
 
-                echo '<h1>'.$title_html.'</h1>';
+                echo '<div class="post-title">';
+                if(is_page()){
+                    echo '<h1>'.$title_html.'</h1>';
+                }else if( is_single() ){
+                    echo '<h1>'.$title_html.'</h1>';
+                }else{
+                    echo '<h2>'.$title_html.'</h2>';
+                }
+                echo '</div>';
 
-            }else if( is_single() ){
+                // post content section
+                $excerpt_length = 24; // char count
+                $post = get_post($post->id);
+                $fulltext = $post->post_content;//  str_replace( '<!--more-->', '',);
+                $content = apply_filters('the_content', $fulltext );
+                $excerpt = truncate( $content, $excerpt_length, '', false, true );  // get_the_excerpt()
 
-                echo '<h1>'.$title_html.'</h1>';
+                if(is_page()){
+                    echo '<div class="post-content">';
+                    echo $content;
+                    echo '</div>';
+                }else if( is_single() ){
+                    echo '<div class="post-content">';
+                    echo $content;
+                    echo '</div>';
+                    previous_post_link('%link', __('previous', 'resource' ), TRUE);
+                    next_post_link('%link', __('next', 'resource' ), TRUE);
 
-            }else{
+                }else{
+                    echo '<div class="post-content post-excerpt">';
+                    echo $excerpt;
+                    echo '</div>';
+                }
 
-                echo '<h2>'.$title_html.'</h2>';
-
-            }
-
-            // post content section
-            // post text
-            $excerpt_length = 24; // words
-            $post = get_post($post->id);
-            $fulltext = $post->post_content;//  str_replace( '<!--more-->', '',);
-            $content = apply_filters('the_content', $fulltext );
-            $excerpt = truncate( $content, $excerpt_length, '', false, true );  // get_the_excerpt()
-
-            if(is_page()){
-
-                echo $content;
-
-            }else if( is_single() ){
-
-                echo $content;
-
-                previous_post_link('%link', __('previous', 'resource' ), TRUE);
-                next_post_link('%link', __('next', 'resource' ), TRUE);
-
-            }else{
-
-                echo $excerpt;
-
-            }
+            echo '</div>';
 
         endwhile;
     endif;
@@ -390,7 +392,7 @@ function check_sidebar_params( $params ) {
     $settings_getter = $wp_registered_widgets[ $params[0]['widget_id'] ]['callback'][0];
     $settings = $settings_getter->get_settings();
     $settings = $settings[ $params[1]['number'] ];
-    if ( $params[0][ 'after_widget' ] == '<div class="clr"></div></div></div>' && isset( $settings[ 'title' ] ) &&  empty( $settings[ 'title' ] ) ){
+    if ( $params[0][ 'after_widget' ] == '<div class="clr"></div></div>' && isset( $settings[ 'title' ] ) &&  empty( $settings[ 'title' ] ) ){
         $params[0][ 'before_widget' ] .= '<div class="widget-contentbox">';
     }
     return $params;

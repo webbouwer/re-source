@@ -1,1 +1,357 @@
 /* custom start */
+
+img
+{
+max-width:100%;
+height:auto;
+}
+
+
+
+
+
+#pagecontainer
+{
+position: relative;
+height:100%;
+}
+#topcontentcontainer
+{
+position:fixed;
+left:0px;
+top:0px;
+width:100%;
+z-index:99;
+overflow: hidden;
+}
+#leftmenucontainer
+{
+position:fixed;
+left:0px;
+top:0px;
+width:12%;
+overflow-x:hidden;
+height:100%;
+z-index:500;
+background-color:darkgreen;
+}
+#leftmenuplaceholder
+{
+position: relative;
+float:left;
+width:12%;
+height:100%;
+}
+#leftcontentcontainer
+{
+position: relative;
+float:left;
+width:2%;
+overflow-x:hidden;
+min-height:100%;
+background-color:green;
+}
+#maincontentcontainer
+{
+position: relative;
+float:left;
+width:0%; /* start elese width:0%;  */
+height:100%;
+background-color: blue;
+}
+#rightcontentcontainer
+{
+position: relative;
+float:left;
+width:0%; /* width:88%; */
+min-height:100%;
+max-height:100%;
+background-color: orange;
+}
+#rightmenucontainer
+{
+position:fixed;
+right:0px;
+top:0px;
+width:0%;
+overflow-x:hidden;
+height:100%;
+z-index:500;
+background-color: orange;
+}
+#rightmenuplaceholder
+{
+position:fixed;
+right:0px;
+top:0px;
+width:12%;
+z-index:600;
+}
+
+
+
+
+#leftmenucontainer,
+#leftmenuplaceholder,
+#leftcontentcontainer,
+#maincontentcontainer,
+#rightcontentcontainer,
+#rightmenucontainer,
+#rightmenuplaceholder
+{
+transition: width linear .5s;
+}
+.contentbox
+{
+transition: all linear .5s;
+}
+#leftcontentcontainer{
+transition: all linear .5s;
+}
+
+
+/* top content */
+#topcontentcontainer,
+.topplaceholder,
+.togglebox
+{
+height:120px;
+}
+#topcontentbox
+{
+position: relative;
+width:60%;
+margin:0px auto;
+}
+/* left content */
+#leftmenucontainer .togglebox
+{
+margin-left:8%;
+}
+#leftmenucontainer .contentbox
+{
+position: relative;
+width:400px;
+margin-left:-100%;
+}
+#leftcontentcontainer .contentbox
+{
+position: relative;
+width:600px;
+margin-left:-700px;
+}
+/* right content */
+#rightmenuplaceholder .togglebox
+{
+margin-left:8%;
+}
+#rightmenucontainer .contentbox
+{
+position: relative;
+width:400px;
+margin-left:100%;
+}
+/* overview (main) content */
+#maincontentcontainer .contentbox
+{
+width:600px;
+margin-right:-100%;
+}
+#maincontentcontainer .contentbox .item
+{
+display:none;
+}
+
+
+/* item content */
+.item .main,
+.item.menubutton .intro img,
+.item.menubutton .intro .mediaplaceholder,
+.item.menubutton .itemcatbox,
+.item.menubutton .itemtagbox,
+.item.menubutton .infotoggle,
+.item.overviewcontent .author
+{
+display:none;
+}
+/* moderate */
+.moderate
+{
+display: none;
+}
+
+
+#leftcontentcontainer .contentbox,
+#maincontentcontainer .contentbox,
+#rightcontentcontainer .contentbox
+{
+background-color: cornflowerblue;
+}
+
+/* overview */
+.overview #maincontentcontainer
+{
+width:86%; /* width:0%; overflow-x:hidden;*/
+}
+.overview #maincontentcontainer .contentbox
+{
+float:right;
+width:68%;
+margin-right:25%;
+}
+.overview #maincontentcontainer .contentbox .item:first-child
+{
+display:block;
+}
+.overview #rightcontentcontainer
+{
+position:relative;
+float:right;
+width:0%;
+overflow:hidden;
+}
+.overview #leftcontentcontainer .contentbox,
+.overview #rightcontentcontainer .contentbox
+{
+width:800px;
+margin-left:-900px;
+}
+.overview.articlemenu #maincontentcontainer
+{
+width:78%; /* width:0%; overflow-x:hidden;*/
+float:right;
+}
+.overview.articlemenu #maincontentcontainer .contentbox
+{
+float:right;
+width:76%;
+margin-right:20%;
+}
+
+/* practice */
+.practice #rightcontentcontainer
+{
+position:relative;
+float:right;
+max-height:none;
+width:86%; /* width:0%; overflow-x:hidden;*/
+}
+.practice #rightcontentcontainer .contentbox
+{
+float:right;
+width:94%;
+margin-right:3%;
+}
+.practice.articlemenu #rightcontentcontainer
+{
+width:78%; /* width:0%; overflow-x:hidden;*/
+float:right;
+}
+.practice #leftcontentcontainer
+{
+position: fixed;
+top:0px;
+left:12%;
+min-height:100%;
+}
+.practice.articlemenu #leftcontentcontainer
+{
+left:20%;
+}
+.practice #leftcontentcontainer .contentbox
+{
+width:800px;
+margin-left:-900px;
+}
+.practice #maincontentcontainer .contentbox
+{
+width:800px;
+margin-right:-900px;
+}
+
+/* theory */
+.theory #leftcontentcontainer
+{
+position: relative;
+/*overflow-y: auto;*/
+height:100%;
+float:left;
+width:66%; /* width:0%; overflow-x:hidden;*/
+}
+.theory #leftcontentcontainer .contentbox
+{
+float:left;
+width:92%;
+max-height:80%;
+margin-left:4%;
+overflow-y:auto;
+/*
+float:right;
+width:80%;
+margin-right:8%;
+*/
+}
+.theory.articlemenu #leftcontentcontainer
+{
+width:58%; /* width:0%; overflow-x:hidden;*/
+float:left;
+}
+.theory.articlemenu #leftcontentcontainer .contentbox
+{
+/*
+float:left;
+width:92%;
+margin-left:4%;
+*/
+}
+.theory #rightcontentcontainer
+{
+position:fixed;
+top:0px;
+right:0px;
+/*float:right;*/
+height:100%;
+overflow-y: auto;
+width:22%;
+}
+.theory #rightcontentcontainer .contentbox
+{
+float:right;
+width:82%;
+margin-right:8%;
+}
+
+
+/* filtermenu */
+.filtermenu #rightmenuplaceholder
+{
+width:18%;
+}
+.filtermenu #rightmenucontainer
+{
+width:18%;
+}
+.filtermenu #rightmenucontainer .contentbox
+{
+width:84%;
+margin-left:8%;
+}
+
+/* articlemenu */
+
+.articlemenu #leftmenucontainer
+{
+width:20%;
+}
+.articlemenu #leftmenuplaceholder
+{
+width:20%;
+}
+.articlemenu #leftmenucontainer .togglebox
+{
+}
+.articlemenu #leftmenucontainer .contentbox
+{
+height:auto;
+margin-left:8%;
+}

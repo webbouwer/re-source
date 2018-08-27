@@ -3,29 +3,35 @@ jQuery(function($) {
 
 	$(document).ready(function(){
 
+        var objlist = []; // all posts
+        var tagfilter = [];
+
+       // var catfilter = [];
+
+            // display posts
             var markupHTMLContent = function(result){
-
                 $('#leftmenucontainer .contentbox, #maincontentcontainer .contentbox, #rightcontentcontainer .contentbox').html('');
-
                 var htmllist = '', oc = 0;
                 $.each( result, function(idx,obj){
 
-                        var html = '';
-                        var display_tags = gethtmlListTags( obj.tags );
-                        var display_cats = gethtmlListCats( obj.cats );
+                        objlist[obj.id] = obj;
 
-                        var objfilterclasses = '';
+                        var html = '',
+                        objfilterclasses = '',
+                        display_tags = gethtmlListTags( obj.tags ),
+                        display_cats = gethtmlListCats( obj.cats );
+
                         $(obj.tags).each(function( x , tag ){
                             objfilterclasses += ' '+tag;
                         });
-                        var itemsort = 0;
+                        var itemtype = 0;
                         $(obj.cats).each(function( x , cat ){
                             if( cat == 'uncategorized' ){
-                                itemsort = 1;
+                                itemtype = 1;
                                  objfilterclasses += ' menubutton';
                             }
                             if( cat == 'examples-1' ){
-                                itemsort = 2;
+                                itemtype = 2;
                                  objfilterclasses += ' overviewcontent';
                             }
                             objfilterclasses += ' '+cat;
@@ -35,30 +41,19 @@ jQuery(function($) {
                             objfilterclasses += ' base';
                         }
 
-                        html += '<div id="post-'+obj.id+'" data-id="'+obj.id+'" ';
-                        html += 'class="item '+objfilterclasses+'" ';
-                        html += 'data-author="'+obj.author+'" data-timestamp="'+obj.timestamp+'" ';
-                        html += 'data-tags="'+obj.tags+'" data-cats="'+obj.cats+'" data-category="'+catreverse[0]+'" data-matchweight="0">';
-
+                        html += '<div id="post-'+obj.id+'" data-id="'+obj.id+'" class="item '+objfilterclasses+'" ';
+                        html += 'data-author="'+obj.author+'" data-timestamp="'+obj.timestamp+'" data-category="'+catreverse[0]+'" ';
+                        html += 'data-tags="'+obj.tags+'" data-cats="'+obj.cats+'" data-matchweight="0">';
                         html += '<div class="matchweight moderate">0</div>';
-
                         html += '<div class="itemcontent">';
-
-                        html += '<div class="intro">';
-                        html += '<div class="title"><h3>'+obj.title+'</h3><div class="author">'+obj.author+'</div></div>';
+                        html += '<div class="intro"><div class="title"><h3>'+obj.title+'</h3><div class="author">'+obj.author+'</div></div>';
                         if(obj.image && obj.image != ''){
                             html += '<div class="coverimage">'+obj.image+'</div>';
                         }else{
                             html += '<div class="mediaplaceholder"><h3>'+obj.title+'</h3>Media placeholder</div>';
-                        }
-                        //html += '<div class="excerpt">'+obj.excerpt+'</div>';
-                        html += '<div class="itemcatbox">'+display_cats+'</div>';
-                        html += '<div class="itemtagbox">'+display_tags+'</div>';
-
-                        html += '</div>';
-
+                        } //html += '<div class="excerpt">'+obj.excerpt+'</div>';
+                        html += '<div class="itemcatbox">'+display_cats+'</div><div class="itemtagbox">'+display_tags+'</div></div>';
                         html += '<div class="main"><div class="textbox"></div></div>'; //'+obj.content+'
-
                         html += '</div>';
                         html += '<div class="infotoggle button"><span>+</span></div>';
                         html += '</div>';
@@ -66,9 +61,9 @@ jQuery(function($) {
 
                         htmllist += html;
 
-                        if( itemsort == 1 ){
+                        if( itemtype == 1 ){
                             $('#leftmenucontainer .contentbox').append( html );
-                        }else if( itemsort == 2 ){
+                        }else if( itemtype == 2 ){
                             $('#maincontentcontainer .contentbox').append( html );
                         }else{
                             $('#rightcontentcontainer .contentbox').append( html );
@@ -79,8 +74,7 @@ jQuery(function($) {
 
             // display clickable tags
             var gethtmlListTags = function( itemtags ){
-                var tags = JSON.parse(site_data['tagdata']);
-                //console.log(tags);
+                var tags = JSON.parse(site_data['tagdata']); //console.log(tags);
                 var html = '';
                 for(i=0;i<tags.length;i++){
                     for(t=0;t<itemtags.length;t++){
@@ -91,6 +85,7 @@ jQuery(function($) {
                 }
                 return html;
             };
+
 
             // display clickable categories
             var gethtmlListCats = function( itemcats ){
@@ -108,19 +103,34 @@ jQuery(function($) {
                 return html;
             };
 
-
-            if( site_data['postdata'].length > 0 ){
-                markupHTMLContent( JSON.parse(site_data['postdata']) );
-            }
-
             // display tag menu
             var markupHTMLTagMenu = function( tags ){
                 var html = '';
                 for(i=0;i<tags.length;i++){
-                    html += '<a href="#tags='+tags[i]['slug']+'" class="tagbutton '+tags[i]['slug']+'" data-tag="'+tags[i]['slug']+'">'+tags[i]['name']+'</a> ';
+                    html += '<a href="#tags='+tags[i]['slug']+'" class="tagbutton '+tags[i]['slug']+'" data-tag="'+tags[i]['slug']+'">'+tags[i]['name']+'</a>';
                 }
                 $('#rightmenucontainer .contentbox').html( html );
             };
+
+            // display selected clickable tags
+            var sethtmlSelectedTags = function( el ){
+                tagfilter = [];
+                el.toggleClass('selected');
+                if( $('#rightmenucontainer #tagmenu').length < 1 ){
+                    $('#rightmenucontainer .contentbox').prepend('<div id="tagmenu"></div>');
+                }
+                $('#tagmenu').html('');
+                $('#rightmenucontainer .tagbutton.selected').each( function(idx,obj){
+                    $('#tagmenu').append( $(obj).clone() );
+                    tagfilter.push( $(obj).data('tag') );
+                });
+                console.log(tagfilter);
+            }
+
+            // set Data
+            if( site_data['postdata'].length > 0 ){
+                markupHTMLContent( JSON.parse(site_data['postdata']) );
+            }
             if( site_data['tagdata'].length > 0 ){
                 markupHTMLTagMenu( JSON.parse(site_data['tagdata']) );
             }
@@ -133,21 +143,55 @@ jQuery(function($) {
 
 
 
+            // toggle left menu
             $('#leftmenucontainer .togglebox').on( 'click', function(){
                 $('#infocontainer').slideUp(200);
                 $('body').toggleClass('articlemenu');
             });
+            // toggle right menu
             $('#rightmenuplaceholder .togglebox').on( 'click', function(){
                 $('#infocontainer').slideUp(200);
                 $('body').toggleClass('filtermenu');
             });
 
-            $('#rightmenucontainer .tagbutton').on( 'click', function(){
+            $('#rightmenucontainer .tagbutton').on( 'click', function( event ){
+                if(event.preventDefault){
+                    event.preventDefault();
+                }else{
+                    event.returnValue = false;
+                }
+
+                // contentfilter
+                sethtmlSelectedTags( $(this) );
+
+                // display
                 $('#infocontainer').slideUp(200);
                 $('body').removeClass('overview');
                 $('body').removeClass('theory');
                 $('body').addClass('practice');
             });
+
+            // button right menu (tag deselect button)
+            $('body').on('click', '#tagmenu .tagbutton', function( event ){
+                if(event.preventDefault){
+                    event.preventDefault();
+                }else{
+                    event.returnValue = false;
+                }
+
+                // contentfilter
+                var el = $('#rightmenucontainer .'+ $(this).data('tag') );
+                sethtmlSelectedTags( el );
+
+                // display
+                $('#infocontainer').slideUp(200);
+                $('body').removeClass('overview');
+                $('body').removeClass('theory');
+                $('body').addClass('practice');
+            });
+
+
+            // button left menu
             $('#leftmenucontainer .menubutton').on( 'click', function(){
                 $('#infocontainer').slideUp(200);
                 $('body').removeClass( 'overview' );
@@ -156,7 +200,7 @@ jQuery(function($) {
                 setLeftContent( $(this) );
             });
 
-
+            // toggle slide info content
             $('#topbar .leftside .menubutton').on( 'click', function( event ){
                 if(event.preventDefault){
                     event.preventDefault();
@@ -167,20 +211,7 @@ jQuery(function($) {
                 $('#infocontainer').toggleClass( 'active' );
             });
 
-            $('#topbar .leftside .custom-logo-link').on( 'click', function( event ){
-                if(event.preventDefault){
-                    event.preventDefault();
-                }else{
-                    event.returnValue = false;
-                }
-                $('#infocontainer').slideUp(200);
-                $('body').removeClass( 'theory' );
-                $('body').removeClass( 'practice' );
-                $('body').removeClass( 'articlemenu' );
-                $('body').removeClass( 'filtermenu' );
-                $('body').addClass('overview');
-            });
-
+            // toggle slide main content
             $('.switchbutton span').on( 'click', function( event ){
                 $('#infocontainer').slideUp(200);
                 if( $('body').hasClass('overview') ){
@@ -196,6 +227,7 @@ jQuery(function($) {
                     $('body').removeClass( 'practice' );
                     $('body').removeClass( 'filtermenu' );
 
+                    $('body').addClass( 'articlemenu' );
                     $('body').addClass('theory');
 
                 }else if( $('body').hasClass('theory') ){
@@ -208,15 +240,30 @@ jQuery(function($) {
                 }
             });
 
-            $('body').addClass('overview');
-            //$('body').addClass('theory');
-            //$('body').addClass('practice');
+            // button home start content
+            $('#topbar .leftside .custom-logo-link').on( 'click', function( event ){
+                if(event.preventDefault){
+                    event.preventDefault();
+                }else{
+                    event.returnValue = false;
+                }
+                $('#infocontainer').slideUp(200);
+                $('body').removeClass( 'theory' );
+                $('body').removeClass( 'practice' );
+                $('body').removeClass( 'articlemenu' );
+                $('body').removeClass( 'filtermenu' );
+                $('body').addClass('overview');
+            });
 
-            //$('body').addClass('articlemenu');
-            //$('body').addClass('filtermenu');
+            // Init
+            // $('body').addClass('theory');,$('body').addClass('practice'),$('body').addClass('articlemenu'),$('body').addClass('filtermenu');
+            $('body').addClass('overview');
+
 	});
 
     $(window).load(function() {
+
+
     });
 
     $(document).ajaxStart(function() {

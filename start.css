@@ -21,7 +21,7 @@ position:fixed;
 left:0px;
 top:0px;
 width:100%;
-z-index:99;
+z-index:800;
 }
 #leftmenucontainer
 {
@@ -31,7 +31,7 @@ top:0px;
 width:12%;
 overflow-x:hidden;
 height:100%;
-z-index:500;
+z-index:900;
 background-color:darkgreen;
 }
 #leftmenuplaceholder
@@ -83,7 +83,7 @@ position:fixed;
 right:0px;
 top:0px;
 width:12%;
-z-index:600;
+z-index:900;
 }
 
 
@@ -104,7 +104,6 @@ transition: width linear .5s;
 {
 transition: all linear .5s;
 }
-
 
 
 
@@ -171,6 +170,8 @@ transition: all linear .5s;
 #topcontent #infocontainer.active #infocontent
 {
 }
+
+
 /* left content */
 #leftmenucontainer .togglebox
 {
@@ -189,6 +190,8 @@ width:600px;
 margin-left:-700px;
 max-height:70%;
 }
+
+
 /* right content */
 #rightmenuplaceholder .togglebox
 {
@@ -200,6 +203,14 @@ position: relative;
 width:400px;
 margin-left:100%;
 }
+#rightmenucontainer .contentbox #tagmenu
+{
+position: relative;
+display: block;
+width:90%;
+background-color: aqua;
+}
+
 /* overview (main) content */
 #maincontentcontainer .contentbox
 {
@@ -213,7 +224,7 @@ display:none;
 
 
 
-
+/* switch button */
 #contentswitch
 {
 position:absolute;
@@ -227,7 +238,6 @@ margin-right:0px;
 height:180px;
 width:80px;
 }
-
 .leftswapbutton,
 .rightswapbutton
 {
@@ -235,7 +245,6 @@ font-size:17px;
 font-weight: bold;
 background-color: white;
 }
-
 .leftswapbutton
 {
 display: block;
@@ -258,15 +267,19 @@ margin-left:-50px;
 transform: rotate(90deg);
 z-index: 999;
 }
-#tagmenucontainer.right-contentbar
+
+
+/* tagbuttons */
+.tagbutton
 {
-background-color: white;
+padding:0;
+display: inline-block;
+margin-right:3px;
 }
-
-
-
-
-
+.tagbutton:before
+{
+content: '#';
+}
 /* item content */
 .item .main,
 .item.menubutton .intro img,
@@ -278,6 +291,8 @@ background-color: white;
 {
 display:none;
 }
+
+
 /* moderate */
 .moderate
 {

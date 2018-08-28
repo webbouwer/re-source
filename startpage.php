@@ -119,7 +119,7 @@ $header_image = get_header_image();
             <div class="contentbox">Label menu</div>
         </div>
         <div id="rightmenuplaceholder">
-            <div class="togglebox"><h4>Labels</h4></div>
+            <div class="togglebox"><h4>Labels<span class="tagcount"></span></h4></div>
         </div>
     <?php
     /* default pageframe elements not to use or overwrite:

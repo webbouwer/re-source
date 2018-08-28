@@ -3,10 +3,10 @@ jQuery(function($) {
 
 	$(document).ready(function(){
 
-        var objlist = []; // all posts
-        var tagfilter = [];
-
-       // var catfilter = [];
+        var objlist     = []; // all posts
+        var tagfilter   = [];
+        var catfilter   = [];
+        var postID      = '';
 
             // display posts
             var markupHTMLContent = function(result){
@@ -30,7 +30,7 @@ jQuery(function($) {
                                 itemtype = 1;
                                  objfilterclasses += ' menubutton';
                             }
-                            if( cat == 'examples-1' ){
+                            if( cat == 'examples-2' ){
                                 itemtype = 2;
                                  objfilterclasses += ' overviewcontent';
                             }
@@ -43,17 +43,20 @@ jQuery(function($) {
 
                         html += '<div id="post-'+obj.id+'" data-id="'+obj.id+'" class="item '+objfilterclasses+'" ';
                         html += 'data-author="'+obj.author+'" data-timestamp="'+obj.timestamp+'" data-category="'+catreverse[0]+'" ';
-                        html += 'data-tags="'+obj.tags+'" data-cats="'+obj.cats+'" data-matchweight="0">';
+                        html += 'data-tags="'+obj.tags+'" data-cats="'+obj.cats+'">';
                         html += '<div class="matchweight moderate">0</div>';
-                        html += '<div class="itemcontent">';
-                        html += '<div class="intro"><div class="title"><h3>'+obj.title+'</h3><div class="author">'+obj.author+'</div></div>';
+                        html += '<div class="itemcontent"><div class="intro">';
+
                         if(obj.image && obj.image != ''){
                             html += '<div class="coverimage">'+obj.image+'</div>';
                         }else{
                             html += '<div class="mediaplaceholder"><h3>'+obj.title+'</h3>Media placeholder</div>';
                         } //html += '<div class="excerpt">'+obj.excerpt+'</div>';
-                        html += '<div class="itemcatbox">'+display_cats+'</div><div class="itemtagbox">'+display_tags+'</div></div>';
+                        html += '<div class="title"><h3>'+obj.title+'</h3><div class="author">'+obj.author+'</div></div></div>';
+                        html += '<div class="itemcatbox">'+display_cats+'</div><div class="itemtagbox">'+display_tags+'</div>';
+
                         html += '<div class="main"><div class="textbox"></div></div>'; //'+obj.content+'
+
                         html += '</div>';
                         html += '<div class="infotoggle button"><span>+</span></div>';
                         html += '</div>';
@@ -86,7 +89,6 @@ jQuery(function($) {
                 return html;
             };
 
-
             // display clickable categories
             var gethtmlListCats = function( itemcats ){
                 var cats = JSON.parse(site_data['catdata']);
@@ -110,22 +112,11 @@ jQuery(function($) {
                     html += '<a href="#tags='+tags[i]['slug']+'" class="tagbutton '+tags[i]['slug']+'" data-tag="'+tags[i]['slug']+'">'+tags[i]['name']+'</a>';
                 }
                 $('#rightmenucontainer .contentbox').html( html );
-            };
 
-            // display selected clickable tags
-            var sethtmlSelectedTags = function( el ){
-                tagfilter = [];
-                el.toggleClass('selected');
                 if( $('#rightmenucontainer #tagmenu').length < 1 ){
                     $('#rightmenucontainer .contentbox').prepend('<div id="tagmenu"></div>');
                 }
-                $('#tagmenu').html('');
-                $('#rightmenucontainer .tagbutton.selected').each( function(idx,obj){
-                    $('#tagmenu').append( $(obj).clone() );
-                    tagfilter.push( $(obj).data('tag') );
-                });
-                console.log(tagfilter);
-            }
+            };
 
             // set Data
             if( site_data['postdata'].length > 0 ){
@@ -135,73 +126,243 @@ jQuery(function($) {
                 markupHTMLTagMenu( JSON.parse(site_data['tagdata']) );
             }
 
-            // click event left menubutton
-            var setLeftContent = function( el ){
-                var content = el.clone();
-                $('#leftcontentcontainer .contentbox').html( content.removeClass('menubutton') );
+
+            // match tag weights
+            var calculateTagWeight = function( obj ){
+                    var mc = 0;
+                    var tags = $(obj).data('tags').split(',');
+                    if( tags.length > 0  && tagfilter.length > 0){
+                        for(i=0;i<tags.length;i++){
+                            if( $.inArray( tags[i], tagfilter ) > -1 ){
+                                mc++;
+                            }
+                        }
+                    }
+                    $(obj).find('.matchweight').text(mc);
+
+                    // Apply Item Matchweight Size
+                    $(obj).removeClass('size-l size-m size-s');
+                    var percent = 100 / tagfilter.length * mc;
+                    var newSize = 'size-s';
+                    if( percent > 80 ){
+                        newSize = 'size-l';
+                    }else if( percent > 40 ){
+                        newSize = 'size-m';
+                    }$(obj).addClass(newSize);
+                    if( $(obj).parent('#rightcontentcontainer .contentbox').length  ){
+                        $(obj).addClass(newSize);
+                    }
+
+            }
+
+
+            // order items by tagweight
+            var applyTagWeight = function (){
+                // calc match weight
+                $('.item').each( function( idx, obj ){
+                    calculateTagWeight( obj );
+                });
+
+                // order items by match weight
+                var container = $('#rightcontentcontainer .contentbox');
+                var items = $.makeArray(container.children(".item"));
+                items.sort(function(a, b) {
+                  var textA = +$(a).find('.matchweight').text();
+                  var textB = +$(b).find('.matchweight').text();
+                  if (textA < textB) return 1;
+                  if (textA > textB) return -1;
+                  return 0;
+                });
+                container.empty();
+                $.each(items, function( idx, obj) {
+                    container.append(obj);
+                });
+
+                // order left menu items by match weight
+                var menu = $('#leftmenucontainer .contentbox');
+                var options = $.makeArray(menu.children(".menubutton"));
+                options.sort(function(a, b) {
+                  var textA = +$(a).find('.matchweight').text();
+                  var textB = +$(b).find('.matchweight').text();
+                  if (textA < textB) return 1;
+                  if (textA > textB) return -1;
+                  return 0;
+                });
+                menu.empty();
+                $.each(options, function( idx, obj) {
+                    menu.append(obj);
+                });
+
+                // TODO.. apply Masonry (isotope)
+            }
+
+            // On select clickable tags
+            var applyTagSelection = function( ){
+
+                tagfilter = [];
+                catfilter = [];
+                postID = '';
+                // set Tag Menu
+                $('#tagmenu').html('');
+                $('#rightmenucontainer .contentbox > .tagbutton.selected').each( function(idx,obj){
+                    $('#tagmenu').append( $(obj).clone() );
+                    tagfilter.push( $(obj).data('tag') );
+                });
+
+                // set Selected Tagbuttons Active
+                $( '.tagbutton' ).removeClass( 'selected' );
+                for(i=0;i<tagfilter.length;i++){
+                    $( '.tagbutton.'+tagfilter[i] ).addClass('selected');
+                }
+
+                $('#rightmenuplaceholder .togglebox h4 .tagcount').html('');
+                if( tagfilter.length > 0 ){
+                    $('#rightmenuplaceholder .togglebox h4 .tagcount').html(' ['+tagfilter.length+']');
+                }
+
+                // order
+                applyTagWeight();
+
+                $('html, body').animate({scrollTop:0}, 400);
+                console.log(tagfilter);
+
+            }
+
+            // On select clickable Items
+            var applyItemSelection = function(){
+
+                tagfilter = $('.item.selected').data('tags').split(',');
+
+                $('#tagmenu').empty();
+                $('.tagbutton').removeClass( 'selected' );
+                for(i=0;i<tagfilter.length;i++){
+                    $( '.tagbutton.'+tagfilter[i] ).addClass('selected');
+                }
+
+
+                catfilter = $('.item.selected').data('cats').split(',');
+                postID = $('.item.selected').data('id');
+
+                // order by tags
+                applyTagSelection();
+
+                console.log( catfilter );
+                console.log( postID );
+
+            }
+
+            // On select clickable LeftMenu Items
+            var applyLeftContent = function(){
+                    $('.item').removeClass('selected');
+                    $('.item .main .textbox').html('');
+                    var content = $('#leftmenucontainer .menubutton:first').clone();
+                    $('#leftmenucontainer .menubutton:first').addClass('active');
+                    $('#leftcontentcontainer .contentbox').html( content.removeClass('menubutton').addClass('selected') );
+                    applyItemSelection();
             }
 
 
 
+
             // toggle left menu
-            $('#leftmenucontainer .togglebox').on( 'click', function(){
+            $('body').on('click', '#leftmenucontainer .togglebox', function(){
                 $('#infocontainer').slideUp(200);
                 $('body').toggleClass('articlemenu');
             });
+
             // toggle right menu
-            $('#rightmenuplaceholder .togglebox').on( 'click', function(){
+            $('body').on('click', '#rightmenuplaceholder .togglebox', function(){
                 $('#infocontainer').slideUp(200);
                 $('body').toggleClass('filtermenu');
             });
 
-            $('#rightmenucontainer .tagbutton').on( 'click', function( event ){
+            // toggle tag from main menu
+            $('body').on('click', '#rightmenucontainer .tagbutton', function( event ){
                 if(event.preventDefault){
                     event.preventDefault();
                 }else{
                     event.returnValue = false;
                 }
-
                 // contentfilter
-                sethtmlSelectedTags( $(this) );
+                $( '.item' ).removeClass( 'selected' );
+                $(this).toggleClass('selected');
+
+                // order by tags
+                applyTagSelection( );
 
                 // display
                 $('#infocontainer').slideUp(200);
-                $('body').removeClass('overview');
-                $('body').removeClass('theory');
+                $('body').removeClass('overview theory');
                 $('body').addClass('practice');
             });
 
-            // button right menu (tag deselect button)
-            $('body').on('click', '#tagmenu .tagbutton', function( event ){
+            // toggle tag from item or right menu (tag deselect button)
+            $('body').on('click', '#tagmenu .tagbutton, .item .tagbutton', function( event ){
                 if(event.preventDefault){
                     event.preventDefault();
                 }else{
                     event.returnValue = false;
                 }
-
                 // contentfilter
-                var el = $('#rightmenucontainer .'+ $(this).data('tag') );
-                sethtmlSelectedTags( el );
+                var el = $('#rightmenucontainer .contentbox > .tagbutton.'+ $(this).data('tag') );
+                el.toggleClass('selected');
+
+                // order by tags
+                applyTagSelection();
 
                 // display
                 $('#infocontainer').slideUp(200);
-                $('body').removeClass('overview');
-                $('body').removeClass('theory');
+                $('body').removeClass('overview theory');
                 $('body').addClass('practice');
             });
+
 
 
             // button left menu
-            $('#leftmenucontainer .menubutton').on( 'click', function(){
+            $('body').on('click', '#leftmenucontainer .menubutton', function(){
                 $('#infocontainer').slideUp(200);
-                $('body').removeClass( 'overview' );
-                $('body').removeClass( 'practice' );
+                $('body').removeClass( 'overview practice' );
                 $('body').addClass('theory');
-                setLeftContent( $(this) );
+
+                $(this).prependTo($(this).parent());
+                $('html, body').animate({scrollTop:0}, 400);
+
+                // order by selected button id
+                applyLeftContent();
+            });
+
+            // item right content click
+            $('body').on('click', '#rightcontentcontainer .item .itemcontent .intro', function(){
+
+                // display
+                $('#infocontainer').slideUp(200);
+                $('body').removeClass('overview theory');
+                $('body').addClass('practice');
+
+                // contentfilter
+                var selecteditem =  $(this).parent().parent();
+                selecteditem.prependTo( selecteditem.parent() );
+                $('html, body').animate({scrollTop:0}, 400);
+                $('.item').removeClass('selected');
+                $('.item .main .textbox').empty();
+                selecteditem.addClass('selected');
+
+                // order by selected item id
+                applyItemSelection();
+
+            });
+
+            $('body').on('click', '.item .button', function(){
+                if( $(this).parent().find('.main .textbox').html() == ''){
+                    $('.item .main .textbox').empty();
+                    $(this).parent().find('.main .textbox').html( objlist[$(this).parent().data('id')].content );
+                }else{
+                    $('.item .main .textbox').empty();
+                }
             });
 
             // toggle slide info content
-            $('#topbar .leftside .menubutton').on( 'click', function( event ){
+            $('body').on('click', '#topbar .leftside .menubutton', function( event ){
                 if(event.preventDefault){
                     event.preventDefault();
                 }else{
@@ -211,52 +372,47 @@ jQuery(function($) {
                 $('#infocontainer').toggleClass( 'active' );
             });
 
+
             // toggle slide main content
-            $('.switchbutton span').on( 'click', function( event ){
+            $('body').on('click', '.switchbutton span', function( event ){
                 $('#infocontainer').slideUp(200);
                 if( $('body').hasClass('overview') ){
 
-                    $('body').removeClass( 'overview' );
-                    $('body').removeClass( 'filtermenu' );
+                    $('body').removeClass( 'overview filtermenu' );
 
-                    $('body').addClass( 'articlemenu' );
-                    $('body').addClass('theory');
+                    // order by (first) left button id
+                    applyLeftContent();
+
+                    $('body').addClass( 'articlemenu theory');
 
                 }else if( $('body').hasClass('practice') ){
 
-                    $('body').removeClass( 'practice' );
-                    $('body').removeClass( 'filtermenu' );
+                    $('body').removeClass( 'practice filtermenu' );
 
-                    $('body').addClass( 'articlemenu' );
-                    $('body').addClass('theory');
+                    applyLeftContent();
+                    $('body').addClass( 'articlemenu theory');
 
                 }else if( $('body').hasClass('theory') ){
 
-                    $('body').removeClass( 'theory' );
-                    $('body').removeClass( 'overview' );
-
-                    $('body').removeClass( 'articlemenu' );
+                    $('body').removeClass( 'theory overview articlemenu' );
                     $('body').addClass('practice');
                 }
             });
 
             // button home start content
-            $('#topbar .leftside .custom-logo-link').on( 'click', function( event ){
+            $('body').on('click', '#topbar .leftside .custom-logo-link', function( event ){
                 if(event.preventDefault){
                     event.preventDefault();
                 }else{
                     event.returnValue = false;
                 }
                 $('#infocontainer').slideUp(200);
-                $('body').removeClass( 'theory' );
-                $('body').removeClass( 'practice' );
-                $('body').removeClass( 'articlemenu' );
-                $('body').removeClass( 'filtermenu' );
+                $('body').removeClass( 'theory practice articlemenu filtermenu' );
                 $('body').addClass('overview');
             });
 
             // Init
-            // $('body').addClass('theory');,$('body').addClass('practice'),$('body').addClass('articlemenu'),$('body').addClass('filtermenu');
+            // $('body').addClass('theory'),$('body').addClass('practice'),$('body').addClass('articlemenu'),$('body').addClass('filtermenu');
             $('body').addClass('overview');
 
 	});

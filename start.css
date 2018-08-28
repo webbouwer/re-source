@@ -99,6 +99,7 @@ z-index:900;
 {
 transition: width linear .5s;
 }
+.item,
 #leftcontentcontainer,
 .contentbox
 {
@@ -143,6 +144,13 @@ display: block;
 float: left;
 width:46%;
 }
+
+#topbar .leftside .menubutton,
+#topbar .leftside .custom-logo-link
+{
+display: inline-block;
+}
+
 #topbar .rightside
 {
 display: block;
@@ -269,34 +277,68 @@ z-index: 999;
 }
 
 
+
+
 /* tagbuttons */
 .tagbutton
 {
 padding:0;
 display: inline-block;
+text-decoration:none;
 margin-right:3px;
 }
 .tagbutton:before
 {
 content: '#';
 }
-/* item content */
-.item .main,
-.item.menubutton .intro img,
-.item.menubutton .intro .mediaplaceholder,
-.item.menubutton .itemcatbox,
-.item.menubutton .itemtagbox,
-.item.menubutton .infotoggle,
-.item.overviewcontent .author
+.tagbutton.selected
+{
+font-weight:bold;
+}
+#rightmenucontainer .contentbox > .tagbutton.selected
 {
 display:none;
 }
 
 
+
+/* item globals content */
+.item.menubutton .itemcontent .coverimage,
+.item.menubutton .itemcontent .mediaplaceholder,
+.item.menubutton .itemcatbox,
+.practice .item .itemcatbox,
+.item.menubutton .itemtagbox,
+.item.menubutton .infotoggle,
+.item.overviewcontent .author,
+.overview #rightcontentcontainer .item .author,
+.practice #rightcontentcontainer .item .author,
+.item .button
+{
+display:none;
+}
+.item.selected .button,
+.item.itemcontent .author
+{
+display: block;
+}
+
+/* item sizes */
+.practice #rightcontentcontainer .item
+{
+width:25%;
+}
+.practice #rightcontentcontainer .item.selected
+{
+width:50%;
+}
+
 /* moderate */
 .moderate
 {
-display: none;
+display: inline-block;
+background-color:blue;
+color:white;
+font-size:25px;
 }
 
 

@@ -27,11 +27,11 @@ jQuery(function($) {
                         var itemtype = 0;
                         $(obj.cats).each(function( x , cat ){
                             if( cat == 'uncategorized' ){
-                                itemtype = 1;
+                                itemtype = 1; // left content
                                  objfilterclasses += ' menubutton';
                             }
                             if( cat == 'examples-2' ){
-                                itemtype = 2;
+                                itemtype = 2; // main/start content
                                  objfilterclasses += ' overviewcontent';
                             }
                             objfilterclasses += ' '+cat;
@@ -41,18 +41,23 @@ jQuery(function($) {
                             objfilterclasses += ' base';
                         }
 
-                        html += '<div id="post-'+obj.id+'" data-id="'+obj.id+'" class="item '+objfilterclasses+'" ';
+                        html += '<div id="post-'+obj.id+'" data-id="'+obj.id+'" class="item '+obj.imgorient+' '+objfilterclasses+'" ';
                         html += 'data-author="'+obj.author+'" data-timestamp="'+obj.timestamp+'" data-category="'+catreverse[0]+'" ';
                         html += 'data-tags="'+obj.tags+'" data-cats="'+obj.cats+'">';
-                        html += '<div class="matchweight moderate">0</div>';
                         html += '<div class="itemcontent"><div class="intro">';
 
+                        html += '<div class="coverimage">';
                         if(obj.image && obj.image != ''){
-                            html += '<div class="coverimage">'+obj.image+'</div>';
+                            html += '<div class="stage '+obj.imgorient+'" data-url="'+obj.imgurl+'">'+obj.image;
+                            html += '<div class="optionfullscreen button">[]</div>';
+                            html += '</div>';
                         }else{
-                            html += '<div class="mediaplaceholder"><h3>'+obj.title+'</h3>Media placeholder</div>';
+                            html += '<div class="mediaplaceholder '+obj.imgorient+'"><h3>'+obj.title+'</h3>Media placeholder<div class="optionfullscreen button">[]</div></div>';
                         } //html += '<div class="excerpt">'+obj.excerpt+'</div>';
-                        html += '<div class="title"><h3>'+obj.title+'</h3><div class="author">'+obj.author+'</div></div></div>';
+                        html += '</div>';
+                        html += '<div class="title"><h3>'+obj.title+'</h3>';
+                        html += '<div class="matchweight moderate">0</div>';
+                        html += '<div class="author">'+obj.author+'</div></div></div>';
                         html += '<div class="itemcatbox">'+display_cats+'</div><div class="itemtagbox">'+display_tags+'</div>';
 
                         html += '<div class="main"><div class="textbox"></div></div>'; //'+obj.content+'
@@ -144,9 +149,9 @@ jQuery(function($) {
                     $(obj).removeClass('size-l size-m size-s');
                     var percent = 100 / tagfilter.length * mc;
                     var newSize = 'size-s';
-                    if( percent > 80 ){
+                    if( percent > 65 ){
                         newSize = 'size-l';
-                    }else if( percent > 40 ){
+                    }else if( percent > 30 ){
                         newSize = 'size-m';
                     }$(obj).addClass(newSize);
                     if( $(obj).parent('#rightcontentcontainer .contentbox').length  ){
@@ -204,6 +209,7 @@ jQuery(function($) {
                 postID = '';
                 // set Tag Menu
                 $('#tagmenu').html('');
+                $('.item .main').removeClass('active');
                 $('#rightmenucontainer .contentbox > .tagbutton.selected').each( function(idx,obj){
                     $('#tagmenu').append( $(obj).clone() );
                     tagfilter.push( $(obj).data('tag') );
@@ -304,6 +310,7 @@ jQuery(function($) {
                     event.returnValue = false;
                 }
                 // contentfilter
+                $( '.item' ).removeClass( 'selected' );
                 var el = $('#rightmenucontainer .contentbox > .tagbutton.'+ $(this).data('tag') );
                 el.toggleClass('selected');
 
@@ -356,7 +363,9 @@ jQuery(function($) {
                 if( $(this).parent().find('.main .textbox').html() == ''){
                     $('.item .main .textbox').empty();
                     $(this).parent().find('.main .textbox').html( objlist[$(this).parent().data('id')].content );
+                    $(this).parent().find('.main').addClass('active');
                 }else{
+                    $(this).parent().find('.main').removeClass('active');
                     $('.item .main .textbox').empty();
                 }
             });

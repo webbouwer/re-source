@@ -128,15 +128,15 @@ margin:0px auto;
 #topspace
 {
 position: relative;
-padding:0px 5%;
+padding:0px 10%;
 margin:0p;
-min-width: 320px;
 background-color: burlywood;
 }
 
 
 #topbar
 {
+min-width: 480px;
 }
 #topbar .leftside
 {
@@ -188,8 +188,8 @@ margin-left:8%;
 #leftmenucontainer .contentbox
 {
 position: relative;
-width:400px;
-margin-left:-100%;
+width:300px;
+margin-left:-400px;
 }
 #leftcontentcontainer .contentbox
 {
@@ -322,15 +322,145 @@ display:none;
 display: block;
 }
 
-/* item sizes */
+
+/* Practice items */
 .practice #rightcontentcontainer .item
 {
+position: relative;
+float:left;
+}
+
+
+
+/* Practice item sizes */
+.practice #rightcontentcontainer .item.size-s
+{
+width:20%;
+}
+.practice #rightcontentcontainer .item.portrait.size-s
+{
+width:15%;
+background-color:red;
+}
+.practice #rightcontentcontainer .size-s .mediaplaceholder
+{
+min-height:240px;
+}
+.practice #rightcontentcontainer .item.size-m
+{
+width:30%;
+}
+.practice #rightcontentcontainer .item.portrait.size-m
+{
 width:25%;
+}
+.practice #rightcontentcontainer .size-m .mediaplaceholder
+{
+min-height:320px;
+}
+.practice #rightcontentcontainer .item.size-l
+{
+width:45%;
+}
+.practice #rightcontentcontainer .item.portrait.size-l
+{
+width:30%;
+}
+.practice #rightcontentcontainer .size-l .mediaplaceholder
+{
+min-height:360px;
 }
 .practice #rightcontentcontainer .item.selected
 {
 width:50%;
 }
+
+.practice #rightcontentcontainer .item.landscape.selected
+{
+width:55%;
+}
+.practice #rightcontentcontainer .item.portrait.selected
+{
+width:50%;
+}
+.practice #rightcontentcontainer .selected .mediaplaceholder
+{
+min-height:420px;
+}
+
+.practice .item .itemcontent .intro .coverimage .stage
+{
+position: relative;
+}
+
+.practice .item .itemcontent .intro .coverimage .stage img
+{
+width:100%;
+}
+.mediaplaceholder
+{
+text-align: center;
+color:white;
+background-color:black;
+}
+.mediaplaceholder h3
+{
+padding-top:30%;
+}
+
+
+.item .infotoggle.button
+{
+position:absolute;
+right:0px;
+top:0px;
+width:6%;
+text-align:center;
+font-size:50px;
+}
+.item .main
+{
+display:none;
+}
+.item .main.active
+{
+position:absolute;
+display: block;
+left:0px;
+top:0px;
+width:94%;
+padding:6px 3px;
+color: black;
+background-color:white;
+border-bottom:5px solid black;
+}
+.item .optionfullscreen.button
+{
+position:absolute;
+right:0px;
+bottom:0px;
+font-size:50px;
+color:white;
+}
+
+.practice #rightcontentcontainer .item.selected .stage,
+.practice #rightcontentcontainer .item.selected .mediaplaceholder
+{
+position: relative;
+width:94%;
+}
+
+/* overview items */
+.overview #maincontentcontainer .contentbox
+{
+}
+.overview #maincontentcontainer .contentbox .item
+{
+display:block;
+width:80%;
+margin:0px auto;
+}
+
 
 /* moderate */
 .moderate
@@ -340,6 +470,15 @@ background-color:blue;
 color:white;
 font-size:25px;
 }
+.matchweight
+{
+display: inline;
+}
+
+
+
+
+
 
 
 #leftcontentcontainer .contentbox,

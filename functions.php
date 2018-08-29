@@ -110,6 +110,8 @@ function wp_main_theme_get_postdata(){
                     'link' => get_the_permalink(),
                     'title' => get_the_title(),
                     'image' => get_the_post_thumbnail(),
+                    'imgurl' => wp_get_attachment_url( get_post_thumbnail_id( $post->id ) ),
+                    'imgorient' => check_image_orientation( $post->id ),
                     'excerpt' => $excerpt,
                     'content' => $content,
                     'cats' => wp_get_post_terms( get_the_ID(), 'category', array("fields" => "slugs")),
@@ -341,18 +343,20 @@ function wp_time_ago( $t ) {
 
 // image orient
 function check_image_orientation($pid){
-	$orient = 'square';
+	$orient = 'landscape';
     $image = wp_get_attachment_image_src( get_post_thumbnail_id($pid), '');
-    $image_w = $image[1];
-    $image_h = $image[2];
-			if ($image_w > $image_h) {
-				$orient = 'landscape';
-			}elseif ($image_w == $image_h) {
-				$orient = 'square';
-			}else {
-				$orient = 'portrait';
-			}
-			return $orient;
+    if($image){
+        $image_w = $image[1];
+        $image_h = $image[2];
+        if ($image_w > $image_h) {
+            $orient = 'landscape';
+        }elseif ($image_w == $image_h) {
+            $orient = 'square';
+        }else {
+            $orient = 'portrait';
+        }
+    }
+    return $orient;
 }
 
 // get categories

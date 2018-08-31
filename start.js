@@ -55,11 +55,11 @@ jQuery(function($) {
                             html += '<div class="mediaplaceholder '+obj.imgorient+'"><h3>'+obj.title+'</h3>Media placeholder<div class="optionfullscreen button">[]</div></div>';
                         } //html += '<div class="excerpt">'+obj.excerpt+'</div>';
                         html += '</div>';
-                        html += '<div class="title"><h3>'+obj.title+'</h3>';
-                        html += '<div class="matchweight moderate">0</div>';
+                        html += '<div class="title"><div class="matchweight moderate">0</div>';
+                        html += '<h3>'+obj.title+'</h3>';
                         html += '<div class="author">'+obj.author+'</div></div></div>';
                         html += '<div class="itemcatbox">'+display_cats+'</div><div class="itemtagbox">'+display_tags+'</div>';
-
+                        //html += JSON.stringify( obj.tags );
                         html += '<div class="main"><div class="textbox"></div></div>'; //'+obj.content+'
 
                         html += '</div>';
@@ -86,7 +86,7 @@ jQuery(function($) {
                 var html = '';
                 for(i=0;i<tags.length;i++){
                     for(t=0;t<itemtags.length;t++){
-                        if( tags[i]['name'] == itemtags[t] ){
+                        if( tags[i]['slug'] == itemtags[t] ){
                             html += '<a href="#tags='+tags[i]['slug']+'" class="tagbutton '+tags[i]['slug']+'" data-tag="'+tags[i]['slug']+'">'+tags[i]['name']+'</a> ';
                         }
                     }
@@ -96,9 +96,14 @@ jQuery(function($) {
 
             // display clickable categories
             var gethtmlListCats = function( itemcats ){
+                //alert(JSON.stringify(site_data['catdata']));
                 var cats = JSON.parse(site_data['catdata']);
                 //console.log(cats);
                 var html = '';
+                for(t=0;t<itemcats.length;t++){
+                    html += '<div class="categoryname">'+itemcats[t]+'</div> ';
+                }
+                /*
                 for(i=0;i<cats.length;i++){
 
                     for(t=0;t<itemcats.length;t++){
@@ -106,7 +111,7 @@ jQuery(function($) {
                             html += '<a href="#cats='+cats[i]['slug']+'" class="catbutton '+cats[i]['slug']+'" data-cats="'+cats[i]['slug']+'">'+cats[i]['cat_name']+'</a> ';
                         }
                     }
-                }
+                }*/
                 return html;
             };
 
@@ -123,9 +128,46 @@ jQuery(function($) {
                 }
             };
 
+            var markupHTMLSlideContents = function( container ){
+
+                container.find('.contentbox').append('<div class="slidebar"></div>');
+                var items  = container.find('.item').css({ 'display':'none' }).appendTo('.slidebar');
+
+                container.find('.contentbox').append('<div class="leftslidenav button"> < </div><div class="rightslidenav button"> > </div>');
+
+                items.first().addClass('active').slideDown();
+
+               container.find('.rightslidenav').click(function(){
+                    container.find('.slidebar .active').removeClass('active').addClass('oldActive').slideUp();
+
+                    if ( container.find('.slidebar .oldActive').is(':last-child') ) {
+                        items.first().addClass('active').slideDown();
+                    }else{
+                        container.find('.slidebar .oldActive').next().addClass('active').slideDown();
+                    }
+                    items.removeClass('oldActive');
+                });
+
+               container.find('.leftslidenav').click(function(){
+                    container.find('.slidebar .active').removeClass('active').addClass('oldActive').slideUp();
+
+                    if ( container.find('.slidebar .oldActive').is(':first-child')) {
+                        items.last().addClass('active').slideDown();
+                    }else{
+                        container.find('.slidebar .oldActive').prev().addClass('active').slideDown();
+                    }
+                    container.find('.slidebar .oldActive').removeClass('oldActive');
+                });
+
+
+
+
+            }
+
             // set Data
             if( site_data['postdata'].length > 0 ){
                 markupHTMLContent( JSON.parse(site_data['postdata']) );
+                markupHTMLSlideContents( $('#maincontentcontainer') );
             }
             if( site_data['tagdata'].length > 0 ){
                 markupHTMLTagMenu( JSON.parse(site_data['tagdata']) );
@@ -263,7 +305,11 @@ jQuery(function($) {
                     $('.item .main .textbox').html('');
                     var content = $('#leftmenucontainer .menubutton:first').clone();
                     $('#leftmenucontainer .menubutton:first').addClass('active');
+                    content.find('.main .textbox').html( objlist[content.data('id')].content );
+                    content.find('.main').addClass('active');
+
                     $('#leftcontentcontainer .contentbox').html( content.removeClass('menubutton').addClass('selected') );
+                    $('#leftcontentcontainer .contentbox .title, #leftcontentcontainer .contentbox .main').insertAfter('#leftcontentcontainer .contentbox .intro');
                     applyItemSelection();
             }
 

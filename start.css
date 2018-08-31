@@ -169,6 +169,10 @@ display: none;
 #topcontent #infocontainer.active
 {
 }
+#topcontent #infocontainer #infomenu ul li
+{
+display:inline-block;
+}
 #topcontent #infocontainer #infomenu,
 #topcontent #infocontainer #infocontent
 {
@@ -311,6 +315,9 @@ display:none;
 .item.menubutton .infotoggle,
 .item.overviewcontent .author,
 .overview #rightcontentcontainer .item .author,
+.overview #rightcontentcontainer .item .itemtagbox,
+.theory #rightcontentcontainer .item .author,
+.theory #rightcontentcontainer .item .itemtagbox,
 .practice #rightcontentcontainer .item .author,
 .item .button
 {
@@ -397,6 +404,13 @@ position: relative;
 {
 width:100%;
 }
+
+
+.item .itemcontent .intro .title h3,
+.item .itemcontent .intro .matchweight
+{
+display: inline-block;
+}
 .mediaplaceholder
 {
 text-align: center;
@@ -405,9 +419,8 @@ background-color:black;
 }
 .mediaplaceholder h3
 {
-padding-top:30%;
+padding:30% 0px;
 }
-
 
 .item .infotoggle.button
 {
@@ -450,6 +463,9 @@ position: relative;
 width:94%;
 }
 
+
+
+
 /* overview items */
 .overview #maincontentcontainer .contentbox
 {
@@ -457,8 +473,47 @@ width:94%;
 .overview #maincontentcontainer .contentbox .item
 {
 display:block;
-width:80%;
+width:94%;
+}
+
+.overview #maincontentcontainer .infotoggle
+{
+display: block;
+}
+
+
+
+/* Theory items */
+.theory #leftcontentcontainer .contentbox
+{
+}
+.theory #leftcontentcontainer .contentbox .item,
+.theory #leftcontentcontainer .contentbox .item .itemcontent,
+.theory #leftcontentcontainer .contentbox .item .itemcontent .coverimage .stage img
+{
+display:block;
+width:100%;
 margin:0px auto;
+}
+/*
+.theory #leftcontentcontainer .contentbox .item.portrait .intro
+{
+width:50%;
+float:left;
+}
+*/
+.theory #leftcontentcontainer .contentbox .item.landscape
+{
+
+}
+.theory #leftcontentcontainer .contentbox .item .main
+{
+position:relative;
+display: block;
+}
+.theory #leftcontentcontainer .contentbox .button
+{
+display: none;
 }
 
 
@@ -470,10 +525,6 @@ background-color:blue;
 color:white;
 font-size:25px;
 }
-.matchweight
-{
-display: inline;
-}
 
 
 
@@ -481,6 +532,7 @@ display: inline;
 
 
 
+/* Frame elements */
 #leftcontentcontainer .contentbox,
 #maincontentcontainer .contentbox,
 #rightcontentcontainer .contentbox
@@ -488,23 +540,51 @@ display: inline;
 background-color: cornflowerblue;
 }
 
-/* overview */
+/* Frame elements overview */
 .overview #maincontentcontainer
 {
 width:86%; /* width:0%; overflow-x:hidden;*/
 }
 .overview #maincontentcontainer .contentbox
 {
-min-height:360px;
-max-height:70%;
+display: block;
+position: relative;
+min-height:480px;
+height:60%;
+max-height:560px;
 float:right;
 width:69.8%;
 margin-right:23.2%;
 }
-.overview #maincontentcontainer .contentbox .item:first-child
+.overview #maincontentcontainer .slidebar
 {
-display:block;
+
+display: block;
+position: relative;
+width:90%;
+margin-left:8%;
 }
+.overview #maincontentcontainer .leftslidenav,
+.overview #maincontentcontainer .rightslidenav
+{
+position:absolute;
+top:0px;
+margin-top:22%;
+width:40px;
+height:40px;
+background-color:aqua;
+
+}
+
+.overview #maincontentcontainer .leftslidenav
+{
+left:-1%;
+}
+.overview #maincontentcontainer .rightslidenav
+{
+right:-1%;
+}
+
 .overview #rightcontentcontainer
 {
 position:relative;
@@ -532,7 +612,7 @@ width:76%;
 margin-right:20%;
 }
 
-/* practice */
+/* Frame elements practice */
 .practice #rightcontentcontainer
 {
 position:relative;
@@ -577,7 +657,7 @@ width:600px;
 margin-left:-2400px;
 }
 
-/* theory */
+/* Frame elements theory */
 .theory #leftcontentcontainer
 {
 position: relative;

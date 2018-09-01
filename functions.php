@@ -85,7 +85,7 @@ function wp_main_theme_get_postdata(){
         $args = array(
             //'tag'               => json_encode($this->tagfilter),
             //'category_name'     => json_encode($this->catfilter),
-            //'post_type'         => 'post', // 'any',  = incl pages
+            'post_type'         => 'any', //'post', //   = incl pages
             //'post__not_in'      => $this->loadedID,
             'post_status'       => 'publish',
             'orderby'           => 'date',
@@ -105,10 +105,17 @@ function wp_main_theme_get_postdata(){
                 $fulltext = $post->post_content;//  str_replace( '<!--more-->', '',);
                 $content = apply_filters('the_content', $fulltext );
                 $excerpt = truncate( $content, $excerpt_length, '', false, true );  // get_the_excerpt()
+
+                $type = 'post';
+                if( $post->post_type === 'page' ){
+                    $type = 'page';
+                }
                 $response[] = array(
                     'id' => get_the_ID(),
+                    'type' => $type,
                     'link' => get_the_permalink(),
                     'title' => get_the_title(),
+                    'slug' => $post->post_name,
                     'image' => get_the_post_thumbnail(),
                     'imgurl' => wp_get_attachment_url( get_post_thumbnail_id( $post->id ) ),
                     'imgorient' => check_image_orientation( $post->id ),

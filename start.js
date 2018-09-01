@@ -10,27 +10,30 @@ jQuery(function($) {
 
             // display posts
             var markupHTMLContent = function(result){
-                $('#leftmenucontainer .contentbox, #maincontentcontainer .contentbox, #rightcontentcontainer .contentbox').html('');
+                $('#leftmenucontainer .contentbox, #maincontentcontainer .contentbox, #rightcontentcontainer .contentbox, #infocontent .contentbox').empty();
                 var htmllist = '', oc = 0;
+
                 $.each( result, function(idx,obj){
 
                         objlist[obj.id] = obj;
 
                         var html = '',
                         objfilterclasses = '',
+                        itemtype = 0,
                         display_tags = gethtmlListTags( obj.tags ),
                         display_cats = gethtmlListCats( obj.cats );
+
 
                         $(obj.tags).each(function( x , tag ){
                             objfilterclasses += ' '+tag;
                         });
-                        var itemtype = 0;
+
                         $(obj.cats).each(function( x , cat ){
-                            if( cat == 'uncategorized' ){
+                            if( cat == 'examples-2' ){
                                 itemtype = 1; // left content
                                  objfilterclasses += ' menubutton';
                             }
-                            if( cat == 'examples-2' ){
+                            if( cat == 'examples-1' ){
                                 itemtype = 2; // main/start content
                                  objfilterclasses += ' overviewcontent';
                             }
@@ -41,8 +44,14 @@ jQuery(function($) {
                             objfilterclasses += ' base';
                         }
 
-                        html += '<div id="post-'+obj.id+'" data-id="'+obj.id+'" class="item '+obj.imgorient+' '+objfilterclasses+'" ';
-                        html += 'data-author="'+obj.author+'" data-timestamp="'+obj.timestamp+'" data-category="'+catreverse[0]+'" ';
+                        if( obj.type == 'page' ){
+                            itemtype = 3; // left content
+                            objfilterclasses += ' contentpage';
+                        }
+
+
+                        html += '<div id="'+obj.type+'-'+obj.id+'" data-id="'+obj.id+'" data-slug="'+obj.slug+'" class="item '+obj.imgorient+' '+objfilterclasses+'" ';
+                        html += 'data-link="'+obj.link+'" data-author="'+obj.author+'" data-timestamp="'+obj.timestamp+'" data-category="'+catreverse[0]+'" ';
                         html += 'data-tags="'+obj.tags+'" data-cats="'+obj.cats+'">';
                         html += '<div class="itemcontent"><div class="intro">';
 
@@ -51,7 +60,7 @@ jQuery(function($) {
                             html += '<div class="stage '+obj.imgorient+'" data-url="'+obj.imgurl+'">'+obj.image;
                             html += '<div class="optionfullscreen button">[]</div>';
                             html += '</div>';
-                        }else{
+                        }else if( obj.type == 'post' ){
                             html += '<div class="mediaplaceholder '+obj.imgorient+'"><h3>'+obj.title+'</h3>Media placeholder<div class="optionfullscreen button">[]</div></div>';
                         } //html += '<div class="excerpt">'+obj.excerpt+'</div>';
                         html += '</div>';
@@ -73,11 +82,13 @@ jQuery(function($) {
                             $('#leftmenucontainer .contentbox').append( html );
                         }else if( itemtype == 2 ){
                             $('#maincontentcontainer .contentbox').append( html );
+                        }else if( itemtype == 3 ){
+                            $('#infocontent .contentbox').append( html );
                         }else{
                             $('#rightcontentcontainer .contentbox').append( html );
                         }
                 });
-
+                console.log( JSON.stringify(objlist) );
             };
 
             // display clickable tags
@@ -131,32 +142,33 @@ jQuery(function($) {
             var markupHTMLSlideContents = function( container ){
 
                 container.find('.contentbox').append('<div class="slidebar"></div>');
-                var items  = container.find('.item').css({ 'display':'none' }).appendTo('.slidebar');
+                var items  = container.find('.item');
+                items.appendTo('.slidebar');
 
                 container.find('.contentbox').append('<div class="leftslidenav button"> < </div><div class="rightslidenav button"> > </div>');
 
-                items.first().addClass('active').slideDown();
+                items.first().addClass('active');//.slideDown();
 
                container.find('.rightslidenav').click(function(){
-                    container.find('.slidebar .active').removeClass('active').addClass('oldActive').slideUp();
+                    container.find('.slidebar .active').removeClass('active').addClass('oldActive');//.slideUp();
 
                     if ( container.find('.slidebar .oldActive').is(':last-child') ) {
-                        items.first().addClass('active').slideDown();
+                        items.first().css({ 'float':'left' }).addClass('active');//.slideDown();
                     }else{
-                        container.find('.slidebar .oldActive').next().addClass('active').slideDown();
+                        container.find('.slidebar .oldActive').next().css({ 'float':'left' }).addClass('active');//.slideDown();
                     }
-                    items.removeClass('oldActive');
+                    container.find('.slidebar .oldActive').css({ 'float':'right' }).removeClass('oldActive');
                 });
 
                container.find('.leftslidenav').click(function(){
-                    container.find('.slidebar .active').removeClass('active').addClass('oldActive').slideUp();
+                    container.find('.slidebar .active').removeClass('active').addClass('oldActive');//.slideUp();
 
                     if ( container.find('.slidebar .oldActive').is(':first-child')) {
-                        items.last().addClass('active').slideDown();
+                        items.last().addClass('active').css({ 'float':'left' });//.slideDown();
                     }else{
-                        container.find('.slidebar .oldActive').prev().addClass('active').slideDown();
+                        container.find('.slidebar .oldActive').prev().addClass('active').css({ 'float':'right' });//.slideDown();
                     }
-                    container.find('.slidebar .oldActive').removeClass('oldActive');
+                    container.find('.slidebar .oldActive').css({ 'float':'left' }).removeClass('oldActive');
                 });
 
 
@@ -425,8 +437,23 @@ jQuery(function($) {
                 }
                 $('#infocontainer').slideToggle(300);
                 $('#infocontainer').toggleClass( 'active' );
+                $('#infocontainer .contentpage.active').toggleClass( 'active' );
             });
 
+            // toggle info pages
+            $('body').on('click', '#infomenu ul li a', function( event ){
+
+                if(event.preventDefault){
+                    event.preventDefault();
+                }else{
+                    event.returnValue = false;
+                }
+
+                $('#infocontainer .contentpage.active').removeClass('active');
+
+                $('#infocontainer .contentpage[data-link="'+$(this).attr('href')+'"]').addClass('active');
+
+            });
 
             // toggle slide main content
             $('body').on('click', '.switchbutton span', function( event ){

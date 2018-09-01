@@ -174,13 +174,27 @@ display: none;
 display:inline-block;
 }
 #topcontent #infocontainer #infomenu,
-#topcontent #infocontainer #infocontent
+#topcontent #infocontainer #infocontent,
+#infocontainer #infocontent .contentpage
 {
 transition: all linear .5s;
 }
 #topcontent #infocontainer.active #infomenu,
 #topcontent #infocontainer.active #infocontent
 {
+}
+
+#topcontent #infocontainer #infocontent .item.contentpage
+{
+position:absolute;
+height:0px;
+overflow:hidden;
+}
+#topcontent #infocontainer #infocontent .item.contentpage.active
+{
+position:relative;
+height:auto;
+overflow:auto;
 }
 
 
@@ -330,81 +344,6 @@ display: block;
 }
 
 
-/* Practice items */
-.practice #rightcontentcontainer .item
-{
-position: relative;
-float:left;
-}
-
-
-
-/* Practice item sizes */
-.practice #rightcontentcontainer .item.size-s
-{
-width:20%;
-}
-.practice #rightcontentcontainer .item.portrait.size-s
-{
-width:15%;
-background-color:red;
-}
-.practice #rightcontentcontainer .size-s .mediaplaceholder
-{
-min-height:240px;
-}
-.practice #rightcontentcontainer .item.size-m
-{
-width:30%;
-}
-.practice #rightcontentcontainer .item.portrait.size-m
-{
-width:25%;
-}
-.practice #rightcontentcontainer .size-m .mediaplaceholder
-{
-min-height:320px;
-}
-.practice #rightcontentcontainer .item.size-l
-{
-width:45%;
-}
-.practice #rightcontentcontainer .item.portrait.size-l
-{
-width:30%;
-}
-.practice #rightcontentcontainer .size-l .mediaplaceholder
-{
-min-height:360px;
-}
-.practice #rightcontentcontainer .item.selected
-{
-width:50%;
-}
-
-.practice #rightcontentcontainer .item.landscape.selected
-{
-width:55%;
-}
-.practice #rightcontentcontainer .item.portrait.selected
-{
-width:50%;
-}
-.practice #rightcontentcontainer .selected .mediaplaceholder
-{
-min-height:420px;
-}
-
-.practice .item .itemcontent .intro .coverimage .stage
-{
-position: relative;
-}
-
-.practice .item .itemcontent .intro .coverimage .stage img
-{
-width:100%;
-}
-
 
 .item .itemcontent .intro .title h3,
 .item .itemcontent .intro .matchweight
@@ -456,12 +395,91 @@ font-size:50px;
 color:white;
 }
 
+
+
+
+
+/* Practice items */
+.practice #rightcontentcontainer .item
+{
+position: relative;
+float:left;
+}
+
+
+
+/* Practice item sizes */
+.practice #rightcontentcontainer .item.size-s
+{
+width:20%;
+}
+.practice #rightcontentcontainer .item.portrait.size-s
+{
+width:15%;
+background-color:red;
+}
+.practice #rightcontentcontainer .size-s .mediaplaceholder
+{
+min-height:240px;
+}
+.practice #rightcontentcontainer .item.size-m
+{
+width:30%;
+}
+.practice #rightcontentcontainer .item.portrait.size-m
+{
+width:25%;
+}
+.practice #rightcontentcontainer .size-m .mediaplaceholder
+{
+min-height:320px;
+}
+.practice #rightcontentcontainer .item.size-l
+{
+width:45%;
+}
+.practice #rightcontentcontainer .item.portrait.size-l
+{
+width:30%;
+}
+.practice #rightcontentcontainer .size-l .mediaplaceholder
+{
+min-height:360px;
+}
+.practice #rightcontentcontainer .item.selected
+{
+width:50%;
+}
+.practice #rightcontentcontainer .item.landscape.selected
+{
+width:55%;
+}
+.practice #rightcontentcontainer .item.portrait.selected
+{
+width:50%;
+}
+.practice #rightcontentcontainer .selected .mediaplaceholder
+{
+min-height:420px;
+}
+.practice .item .itemcontent .intro .coverimage .stage
+{
+position: relative;
+}
+.practice .item .itemcontent .intro .coverimage .stage img
+{
+width:100%;
+}
 .practice #rightcontentcontainer .item.selected .stage,
 .practice #rightcontentcontainer .item.selected .mediaplaceholder
 {
 position: relative;
 width:94%;
 }
+
+
+
+
 
 
 
@@ -473,13 +491,35 @@ width:94%;
 .overview #maincontentcontainer .contentbox .item
 {
 display:block;
-width:94%;
+position:relative;
+width:0%;
+float:left;
+transition: width linear .6s;
+overflow:hidden;
 }
-
+.overview #maincontentcontainer .contentbox .item.active
+{
+width:94%;
+overflow-x:hidden;
+overflow-y:auto;
+}
 .overview #maincontentcontainer .infotoggle
 {
 display: block;
 }
+.overview .item .itemcontent .intro .coverimage
+{
+width:94%;
+}
+.overview .item .itemcontent .intro .coverimage .stage img
+{
+}
+
+
+
+
+
+
 
 
 
@@ -563,6 +603,7 @@ display: block;
 position: relative;
 width:90%;
 margin-left:8%;
+float:left;
 }
 .overview #maincontentcontainer .leftslidenav,
 .overview #maincontentcontainer .rightslidenav

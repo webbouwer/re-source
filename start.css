@@ -99,12 +99,14 @@ z-index:900;
 {
 transition: width linear .5s;
 }
-.item,
 #leftcontentcontainer,
 .contentbox
 {
 transition: all linear .5s;
 }
+
+
+
 
 
 
@@ -133,7 +135,19 @@ margin:0p;
 background-color: burlywood;
 }
 
-
+#topspace .closebutton
+{
+position: absolute;
+right:0px;
+top:0px;
+width:60px;
+height:60px;
+display:none;
+}
+#topspace .closebutton.active
+{
+display:block;
+}
 #topbar
 {
 min-width: 480px;
@@ -166,23 +180,33 @@ width:54%;
 {
 display: none;
 }
-#topcontent #infocontainer.active
+#topcontent #infocontainer.active .contentpage .main
 {
+position:relative;
+display:block;
 }
+
 #topcontent #infocontainer #infomenu ul li
 {
 display:inline-block;
 }
+
 #topcontent #infocontainer #infomenu,
 #topcontent #infocontainer #infocontent,
 #infocontainer #infocontent .contentpage
 {
 transition: all linear .5s;
 }
+
+
 #topcontent #infocontainer.active #infomenu,
 #topcontent #infocontainer.active #infocontent
 {
 }
+
+
+
+
 
 #topcontent #infocontainer #infocontent .item.contentpage
 {
@@ -333,6 +357,7 @@ display:none;
 .theory #rightcontentcontainer .item .author,
 .theory #rightcontentcontainer .item .itemtagbox,
 .practice #rightcontentcontainer .item .author,
+.item.contentpage .author,
 .item .button
 {
 display:none;
@@ -401,14 +426,29 @@ color:white;
 
 /* Practice items */
 .practice #rightcontentcontainer .item
+{/*
+width:25%;
+overflow: hidden;
+border:none;
+    float:left;
+    */
+}
+.theory #rightcontentcontainer .item
 {
 position: relative;
-float:left;
+width:100%;
+overflow: hidden;
+}
+
+.practice #rightcontentcontainer .item.size-l
+{
+width:50%;
 }
 
 
+/* Practice item sizes
 
-/* Practice item sizes */
+
 .practice #rightcontentcontainer .item.size-s
 {
 width:20%;
@@ -446,10 +486,14 @@ width:30%;
 {
 min-height:360px;
 }
+
+*/
+
 .practice #rightcontentcontainer .item.selected
 {
 width:50%;
 }
+/*
 .practice #rightcontentcontainer .item.landscape.selected
 {
 width:55%;
@@ -462,6 +506,7 @@ width:50%;
 {
 min-height:420px;
 }
+*/
 .practice .item .itemcontent .intro .coverimage .stage
 {
 position: relative;

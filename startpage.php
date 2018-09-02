@@ -52,8 +52,15 @@ $header_image = get_header_image();
     $bgsize = get_theme_mod('background_size', 'cover');
     $headerbgstyle = ' style="background-image:url('.esc_url( get_background_image() ).');background-position:'.$bgposition.';background-attachment:'.$bgattacht.';background-size:'.$bgsize.';background-repeat:'.$bgrepeat.';"';
 
+
+
+    $isotopestyle = get_template_directory_uri().'/assets/isotope.css';
+    echo '<link rel="stylesheet" id="wp-theme-isotope-style"  href="'.$isotopestyle.'" type="text/css" media="all" />';
+
     $stylesheet = get_template_directory_uri().'/start.css';
     echo '<link rel="stylesheet" id="wp-theme-custom-style"  href="'.$stylesheet.'" type="text/css" media="all" />';
+    $isotope = get_template_directory_uri().'/assets/isotope.js';
+    echo '<script type="text/javascript" src="'.$isotope.'"></script>';
     $javascript = get_template_directory_uri().'/start.js';
     echo '<script type="text/javascript" src="'.$javascript.'"></script>';
 
@@ -85,6 +92,7 @@ $header_image = get_header_image();
                             </div>
                         </div>
                     </div>
+                    <div class="closebutton">x</div>
 
                 </div>
             </div>

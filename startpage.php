@@ -78,7 +78,7 @@ $header_image = get_header_image();
                             <div class="menubutton"><span>Menu</span></div>
                             <?php wp_main_theme_toplogo_html(); ?>
                         </div>
-                        <div class="rightside">searchbar</div>
+                        <div class="rightside"><input id="searchbox" class="basic-search" placeholder="in development" size="24" /></div>
                         <div class="clr"></div>
                     </div>
 

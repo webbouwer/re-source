@@ -10,131 +10,130 @@ jQuery(function($) {
         var selectedCat = false;
         var postID      = '';
 
-            // display posts
-            var markupHTMLContent = function(result){
-                $('#leftmenucontainer .contentbox, #maincontentcontainer .contentbox, #rightcontentcontainer .contentbox, #infocontent .contentbox').empty();
-                var htmllist = '', oc = 0;
+        // setup display posts
+        var markupHTMLContent = function(result){
 
-                $.each( result, function(idx,obj){
+            $('#leftmenucontainer .contentbox, #maincontentcontainer .contentbox, #rightcontentcontainer .contentbox, #infocontent .contentbox').empty();
+            var htmllist = '', oc = 0;
 
-                        objlist[obj.id] = obj;
+            $.each( result, function(idx,obj){
 
-                        var html = '',
-                        objfilterclasses = '',
-                        itemtype = 0,
-                        display_tags = gethtmlListTags( obj.tags ),
-                        display_cats = gethtmlListCats( obj.cats );
+                objlist[obj.id] = obj;
 
+                var html = '',
+                objfilterclasses = '',
+                itemtype = 0,
+                display_tags = gethtmlListTags( obj.tags ),
+                display_cats = gethtmlListCats( obj.cats );
 
-                        $(obj.tags).each(function( x , tag ){
-                            objfilterclasses += ' '+tag;
-                        });
+                $(obj.tags).each(function( x , tag ){
+                    objfilterclasses += ' '+tag;
+                });
+                $(obj.cats).each(function( x , cat ){
+                    if( cat == 'artikelen' ){
+                        itemtype = 1; // left content
+                        objfilterclasses += ' menubutton';
+                    }
+                    if( cat == 'bulletin' ){
+                        itemtype = 2; // main/start content
+                        objfilterclasses += ' overviewcontent';
+                    }
+                    objfilterclasses += ' '+cat;
+                });
+                var catreverse = obj.cats.reverse();
+                if(oc = 0){
+                    objfilterclasses += ' base';
+                }
+                if( obj.type == 'page' ){
+                    itemtype = 3; // left content
+                    objfilterclasses += ' contentpage';
+                }
 
-                        $(obj.cats).each(function( x , cat ){
-                            if( cat == 'artikelen' ){
-                                itemtype = 1; // left content
-                                 objfilterclasses += ' menubutton';
-                            }
-                            if( cat == 'bulletin' ){
-                                itemtype = 2; // main/start content
-                                 objfilterclasses += ' overviewcontent';
-                            }
-                            objfilterclasses += ' '+cat;
-                        });
-                        var catreverse = obj.cats.reverse();
-                        if(oc = 0){
-                            objfilterclasses += ' base';
-                        }
+                html += '<div id="'+obj.type+'-'+obj.id+'" data-id="'+obj.id+'" data-slug="'+obj.slug+'" class="item '+obj.imgorient+' '+objfilterclasses+'" ';
+                html += 'data-link="'+obj.link+'" data-author="'+obj.author+'" data-timestamp="'+obj.timestamp+'" data-category="'+catreverse[0]+'" ';
+                html += 'data-tags="'+obj.tags+'" data-cats="'+obj.cats+'">';
+                html += '<div class="itemcontent"><div class="intro">';
 
-                        if( obj.type == 'page' ){
-                            itemtype = 3; // left content
-                            objfilterclasses += ' contentpage';
-                        }
+                html += '<div class="coverimage">';
+                if(obj.image && obj.image != ''){
+                    html += '<div class="stage '+obj.imgorient+'" data-url="'+obj.imgurl+'">'+obj.image;
+                    html += '<div class="optionfullscreen button">[]</div>';
+                    html += '</div>';
+                }else if( obj.type == 'post' ){
+                    html += '<div class="mediaplaceholder '+obj.imgorient+'"><h3>'+obj.title+'</h3>Media placeholder<div class="optionfullscreen button">[]</div></div>';
+                } //html += '<div class="excerpt">'+obj.excerpt+'</div>';
+                html += '</div>';
+                html += '<div class="title"><div class="matchweight moderate">0</div>';
+                html += '<h3>'+obj.title+'</h3>';
+                html += '<div class="author">'+obj.author+'</div></div></div>';
+                html += '<div class="itemcatbox">'+display_cats+'</div><div class="itemtagbox">'+display_tags+'</div>';
+                //html += JSON.stringify( obj.tags );
+                html += '<div class="main"><div class="textbox"></div></div>'; //'+obj.content+'
 
+                html += '</div>';
+                html += '<div class="infotoggle button"><span>+</span></div>';
+                html += '</div>';
+                oc++;
 
-                        html += '<div id="'+obj.type+'-'+obj.id+'" data-id="'+obj.id+'" data-slug="'+obj.slug+'" class="item '+obj.imgorient+' '+objfilterclasses+'" ';
-                        html += 'data-link="'+obj.link+'" data-author="'+obj.author+'" data-timestamp="'+obj.timestamp+'" data-category="'+catreverse[0]+'" ';
-                        html += 'data-tags="'+obj.tags+'" data-cats="'+obj.cats+'">';
-                        html += '<div class="itemcontent"><div class="intro">';
+                htmllist += html;
 
-                        html += '<div class="coverimage">';
-                        if(obj.image && obj.image != ''){
-                            html += '<div class="stage '+obj.imgorient+'" data-url="'+obj.imgurl+'">'+obj.image;
-                            html += '<div class="optionfullscreen button">[]</div>';
-                            html += '</div>';
-                        }else if( obj.type == 'post' ){
-                            html += '<div class="mediaplaceholder '+obj.imgorient+'"><h3>'+obj.title+'</h3>Media placeholder<div class="optionfullscreen button">[]</div></div>';
-                        } //html += '<div class="excerpt">'+obj.excerpt+'</div>';
-                        html += '</div>';
-                        html += '<div class="title"><div class="matchweight moderate">0</div>';
-                        html += '<h3>'+obj.title+'</h3>';
-                        html += '<div class="author">'+obj.author+'</div></div></div>';
-                        html += '<div class="itemcatbox">'+display_cats+'</div><div class="itemtagbox">'+display_tags+'</div>';
-                        //html += JSON.stringify( obj.tags );
-                        html += '<div class="main"><div class="textbox"></div></div>'; //'+obj.content+'
+                if( itemtype == 1 ){
+                    $('#leftmenucontainer .contentbox').append( html );
+                }else if( itemtype == 2 ){
+                    $('#maincontentcontainer .contentbox').append( html );
+                }else if( itemtype == 3 ){
+                    $('#infocontent .contentbox').append( html );
+                }else{
+                    $('#rightcontentcontainer .contentbox').append( html );
+                }
 
-                        html += '</div>';
-                        html += '<div class="infotoggle button"><span>+</span></div>';
-                        html += '</div>';
-                        oc++;
-
-                        htmllist += html;
-
-                        if( itemtype == 1 ){
-                            $('#leftmenucontainer .contentbox').append( html );
-                        }else if( itemtype == 2 ){
-                            $('#maincontentcontainer .contentbox').append( html );
-                        }else if( itemtype == 3 ){
-                            $('#infocontent .contentbox').append( html );
-                        }else{
-                            $('#rightcontentcontainer .contentbox').append( html );
-                        }
-
-                        // reorder specifics
-                        $('#maincontentcontainer .intro .title').each( function( ){
-                            $(this).parent().parent().find('.main').css({ 'top': '40px' }).appendTo( $(this).parent() );
-                            $(this).height('40px').prependTo( $(this).parent() );
-                        });
-
+                // reorder specifics
+                $('#maincontentcontainer .intro .title').each( function( ){
+                    $(this).parent().parent().find('.main').css({ 'top': '40px' }).appendTo( $(this).parent() );
+                    $(this).height('40px').prependTo( $(this).parent() );
                 });
 
-                console.log( JSON.stringify(objlist) );
-            };
+            });
 
-            // display clickable tags
-            var gethtmlListTags = function( itemtags ){
-                var tags = JSON.parse(site_data['tagdata']); //console.log(tags);
-                var html = '';
-                for(i=0;i<tags.length;i++){
-                    for(t=0;t<itemtags.length;t++){
-                        if( tags[i]['slug'] == itemtags[t] ){
-                            html += '<a href="#tags='+tags[i]['slug']+'" class="tagbutton '+tags[i]['slug']+'" data-tag="'+tags[i]['slug']+'">'+tags[i]['name']+'</a> ';
-                        }
+            console.log( JSON.stringify(objlist) );
+
+        };
+
+        // display clickable tags
+        var gethtmlListTags = function( itemtags ){
+            var tags = JSON.parse(site_data['tagdata']); //console.log(tags);
+            var html = '';
+            for(i=0;i<tags.length;i++){
+                for(t=0;t<itemtags.length;t++){
+                    if( tags[i]['slug'] == itemtags[t] ){
+                        html += '<a href="#tags='+tags[i]['slug']+'" class="tagbutton '+tags[i]['slug']+'" data-tag="'+tags[i]['slug']+'">'+tags[i]['name']+'</a> ';
                     }
                 }
-                return html;
-            };
+            }
+            return html;
+        };
 
-            // display clickable categories
-            var gethtmlListCats = function( itemcats ){
+        // display clickable categories
+        var gethtmlListCats = function( itemcats ){
                 //alert(JSON.stringify(site_data['catdata']));
-                var cats = JSON.parse(site_data['catdata']);
+            var cats = JSON.parse(site_data['catdata']);
                 //console.log(cats);
-                var html = '';
-                for(t=0;t<itemcats.length;t++){
+            var html = '';
+            for(t=0;t<itemcats.length;t++){
+                if( itemcats[t] != 'bulletin' && itemcats[t] != 'artikelen'){
                     html += '<div class="categoryname">'+itemcats[t]+'</div> ';
                 }
+            }
                 /*
                 for(i=0;i<cats.length;i++){
-
                     for(t=0;t<itemcats.length;t++){
                         if( cats[i]['slug'] == itemcats[t] ){
                             html += '<a href="#cats='+cats[i]['slug']+'" class="catbutton '+cats[i]['slug']+'" data-cats="'+cats[i]['slug']+'">'+cats[i]['cat_name']+'</a> ';
                         }
                     }
                 }*/
-                return html;
-            };
+            return html;
+        };
 
             // display tag menu
             var markupHTMLTagMenu = function( tags ){
@@ -154,31 +153,28 @@ jQuery(function($) {
                 container.find('.contentbox').append('<div class="slidebar"></div>');
                 var items  = container.find('.item');
                 items.appendTo('.slidebar');
-
                 container.find('.contentbox').append('<div class="leftslidenav button"> < </div><div class="rightslidenav button"> > </div>');
 
                 items.first().addClass('active');//.slideDown();
 
-               container.find('.rightslidenav').click(function(){
-                    container.find('.slidebar .active').removeClass('active').addClass('oldActive');//.slideUp();
-
-                    if ( container.find('.slidebar .oldActive').is(':last-child') ) {
-                        items.first().css({ 'float':'left' }).addClass('active');//.slideDown();
+                container.find('.rightslidenav').click(function(){
+                    container.find('.slidebar .active').removeClass('active').addClass('oldActive');
+                    if ( container.find('.slidebar .oldActive').is(':first-child')) {
+                        items.last().addClass('active').css({ 'float':'left' });
                     }else{
-                        container.find('.slidebar .oldActive').next().css({ 'float':'left' }).addClass('active');//.slideDown();
+                        container.find('.slidebar .oldActive').prev().addClass('active').css({ 'float':'right' });
                     }
-                    container.find('.slidebar .oldActive').css({ 'float':'right' }).removeClass('oldActive');
+                    container.find('.slidebar .oldActive').css({ 'float':'left' }).removeClass('oldActive');
                 });
 
                container.find('.leftslidenav').click(function(){
-                    container.find('.slidebar .active').removeClass('active').addClass('oldActive');//.slideUp();
-
-                    if ( container.find('.slidebar .oldActive').is(':first-child')) {
-                        items.last().addClass('active').css({ 'float':'left' });//.slideDown();
+                    container.find('.slidebar .active').removeClass('active').addClass('oldActive');
+                    if ( container.find('.slidebar .oldActive').is(':last-child') ) {
+                        items.first().css({ 'float':'left' }).addClass('active');
                     }else{
-                        container.find('.slidebar .oldActive').prev().addClass('active').css({ 'float':'right' });//.slideDown();
+                        container.find('.slidebar .oldActive').next().css({ 'float':'left' }).addClass('active');
                     }
-                    container.find('.slidebar .oldActive').css({ 'float':'left' }).removeClass('oldActive');
+                    container.find('.slidebar .oldActive').css({ 'float':'right' }).removeClass('oldActive');
                 });
 
             }
@@ -295,7 +291,7 @@ jQuery(function($) {
                 });
 
                 // order items by match weight
-                /*
+                 /*
                 var container = $('#rightcontentcontainer .contentbox');
                 var items = $.makeArray(container.children(".item"));
                 items.sort(function(a, b) {
@@ -308,11 +304,12 @@ jQuery(function($) {
                 container.empty();
                 $.each(items, function( idx, obj) {
                     container.append(obj);
-                });
-                */
+                });*/
+
 
 
                 // order left menu items by match weight
+                if( $('body.articlemenu').length > 0 ){
                 var menu = $('#leftmenucontainer .contentbox');
                 var options = $.makeArray(menu.children(".menubutton"));
                 options.sort(function(a, b) {
@@ -326,7 +323,7 @@ jQuery(function($) {
                 $.each(options, function( idx, obj) {
                     menu.append(obj);
                 });
-
+                }
                 // TODO.. apply Masonry (isotope)
             }
 
@@ -363,26 +360,6 @@ jQuery(function($) {
                 var selected = $('#rightcontentcontainer .contentbox .selected').prepend();
                 var container = $('#rightcontentcontainer .contentbox');
 
-                //container.isotope({ filter: filterClass });
-                //box.one('webkitTransitionEnd otransitionend oTransitionEnd msTransisitonEnd transitionend', function(e){
-                /*
-                var w = container.innerWidth()/4;
-                container
-                    .isotope({ filter: filterClass })
-                    .isotope({ masonry: { w } })
-                    .isotope({
-                        sortBy : 'byTagWeight', //[ 'byCategory', 'byTagWeight' ], //
-                        sortAscending: {
-                              //byCategory: true, // name ascendingly
-                              byTagWeight: false, // weight descendingly
-                        },
-                    });
-
-                box.one('webkitTransitionEnd otransitionend oTransitionEnd msTransisitonEnd transitionend', function(e){
-                    container.isotope('layout');
-                });
-                */
-
                 container
                     .isotope('updateSortData')
                     .isotope({ filter: filterClass })
@@ -400,26 +377,6 @@ jQuery(function($) {
                     container.isotope('updateSortData').isotope({ masonry: { columnWidth: w } }).isotope('layout');
                     //container.isotope('reLayout');
                 });
-
-                 /*
-                 setTimeout(function(){
-                //container.isotope('reloadItems')
-                container
-                .isotope('updateSortData')
-                .isotope({ filter: filterClass })
-                .isotope({ masonry: { w } })
-                .isotope({
-                    sortBy : 'byTagWeight', //[ 'byCategory', 'byTagWeight' ], //
-                    sortAscending: {
-                          //byCategory: true, // name ascendingly
-                          byTagWeight: false, // weight descendingly
-                    },
-                })
-                .isotope('layout');
-
-                }, 600);
-                //});*/
-
 
                 $('html, body').animate({scrollTop:0}, 400);
                 console.log(tagfilter);

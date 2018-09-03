@@ -181,10 +181,71 @@ jQuery(function($) {
                     container.find('.slidebar .oldActive').css({ 'float':'left' }).removeClass('oldActive');
                 });
 
-
-
-
             }
+
+
+
+            function activateIsotope(){
+
+            // init isotope
+            //filterClass
+
+            var container = $('#rightcontentcontainer .contentbox');
+            container.isotope({
+
+                itemSelector: '.item',
+                layoutMode: 'masonry',
+                animationEngine: 'best-available',
+                transitionDuration: '0.6s',
+                masonry: {
+                    //isFitWidth: true,
+                    columnWidth: container.innerWidth()/4,
+                    gutter: 0,
+                },
+                getSortData: {
+                    /*byCategory: function (elem) { // sort randomly
+                            return $(elem).data('category') === selectedCat ? 0 : 1;
+                    },*/
+                    byTagWeight: '.matchweight parseInt',
+                },
+                sortBy : 'byTagWeight', //[ 'byCategory', 'byTagWeight' ],
+                sortAscending: {
+                          //byCategory: true, // name ascendingly
+                          byTagWeight: false, // weight descendingly
+                },
+            });
+
+            var w = container.innerWidth()/4;
+            container
+            .isotope('reloadItems')
+            .isotope('updateSortData')
+            .isotope({ masonry: { columnWidth: w } })
+            .isotope({ filter: filterClass })
+            .isotope({
+                sortBy : 'byTagWeight', //[ 'byCategory', 'byTagWeight' ], //
+                sortAscending: {
+                    //byCategory: true, // name ascendingly
+                    byTagWeight: false, // weight descendingly
+                },
+            }).isotope( 'layout' );
+
+			/* if more content loaded use:
+            .isotope('updateSortData')
+	        .isotope('reloadItems')*/
+
+            };
+
+
+
+
+
+
+
+
+
+
+
+
 
             // set Data
             if( site_data['postdata'].length > 0 ){
@@ -234,7 +295,7 @@ jQuery(function($) {
                 });
 
                 // order items by match weight
-
+                /*
                 var container = $('#rightcontentcontainer .contentbox');
                 var items = $.makeArray(container.children(".item"));
                 items.sort(function(a, b) {
@@ -248,6 +309,7 @@ jQuery(function($) {
                 $.each(items, function( idx, obj) {
                     container.append(obj);
                 });
+                */
 
 
                 // order left menu items by match weight
@@ -297,9 +359,50 @@ jQuery(function($) {
                 applyTagWeight();
 
                // activateIsotope();
+                var box = $('#rightcontentcontainer');
                 var selected = $('#rightcontentcontainer .contentbox .selected').prepend();
                 var container = $('#rightcontentcontainer .contentbox');
+
+                //container.isotope({ filter: filterClass });
+                //box.one('webkitTransitionEnd otransitionend oTransitionEnd msTransisitonEnd transitionend', function(e){
+                /*
                 var w = container.innerWidth()/4;
+                container
+                    .isotope({ filter: filterClass })
+                    .isotope({ masonry: { w } })
+                    .isotope({
+                        sortBy : 'byTagWeight', //[ 'byCategory', 'byTagWeight' ], //
+                        sortAscending: {
+                              //byCategory: true, // name ascendingly
+                              byTagWeight: false, // weight descendingly
+                        },
+                    });
+
+                box.one('webkitTransitionEnd otransitionend oTransitionEnd msTransisitonEnd transitionend', function(e){
+                    container.isotope('layout');
+                });
+                */
+
+                container
+                    .isotope('updateSortData')
+                    .isotope({ filter: filterClass })
+                    .isotope({
+                        sortBy : 'byTagWeight', //[ 'byCategory', 'byTagWeight' ], //
+                        sortAscending: {
+                              //byCategory: true, // name ascendingly
+                              byTagWeight: false, // weight descendingly
+                        },
+                    })
+                    .isotope('layout');
+
+                box.one('webkitTransitionEnd otransitionend oTransitionEnd msTransisitonEnd transitionend', function(e){
+                    var w = container.innerWidth()/4;
+                    container.isotope('updateSortData').isotope({ masonry: { columnWidth: w } }).isotope('layout');
+                    //container.isotope('reLayout');
+                });
+
+                 /*
+                 setTimeout(function(){
                 //container.isotope('reloadItems')
                 container
                 .isotope('updateSortData')
@@ -312,24 +415,12 @@ jQuery(function($) {
                           byTagWeight: false, // weight descendingly
                     },
                 })
-                //.isotope('updateSortData')
-                .isotope('reLayout');
-                //;
+                .isotope('layout');
 
-               //
-                /*
-                .isotope({
-                    sortBy : 'byTagWeight', //[ 'byCategory', 'byTagWeight' ], //
-                    sortAscending: {
-                          //byCategory: true, // name ascendingly
-                          byTagWeight: false, // weight descendingly
-                    },
-                })
-                */
-                //.isotope('reloadItems')
-                //.isotope('updateSortData')
-                //.isotope( 'layout' );
-                //container.isotope( 'reLayout' );
+                }, 600);
+                //});*/
+
+
                 $('html, body').animate({scrollTop:0}, 400);
                 console.log(tagfilter);
 
@@ -346,10 +437,11 @@ jQuery(function($) {
                     $( '.tagbutton.'+tagfilter[i] ).addClass('selected');
                 }
 
-
                 catfilter = $('.item.selected').data('cats').split(',');
                 postID = $('.item.selected').data('id');
+
                 filterClass = '';
+
                 if( tagfilter.length > 0 ){
 				filterClass = '.'+tagfilter.join(',.');
                 }
@@ -375,58 +467,6 @@ jQuery(function($) {
                     $('#leftcontentcontainer .contentbox .title, #leftcontentcontainer .contentbox .main').insertAfter('#leftcontentcontainer .contentbox .intro');
                     applyItemSelection();
             }
-
-
-
-            function activateIsotope(){
-
-            // init isotope
-            //filterClass
-
-            var container = $('#rightcontentcontainer .contentbox');
-            container.isotope({
-
-                itemSelector: '.item',
-                layoutMode: 'masonry',
-                animationEngine: 'best-available',
-                transitionDuration: '0.9s',
-                masonry: {
-                    //isFitWidth: true,
-                    columnWidth: container.innerWidth()/4,
-                    gutter: 0,
-                },
-                getSortData: {
-                    /*byCategory: function (elem) { // sort randomly
-                            return $(elem).data('category') === selectedCat ? 0 : 1;
-                    },*/
-                    byTagWeight: '.matchweight parseInt',
-                },
-                sortBy : 'byTagWeight', //[ 'byCategory', 'byTagWeight' ],
-                sortAscending: {
-                          //byCategory: true, // name ascendingly
-                          byTagWeight: false, // weight descendingly
-                },
-            });
-
-            var w = container.innerWidth()/4;
-            container
-            .isotope('reloadItems')
-            .isotope('updateSortData')
-            .isotope({ masonry: { w } })
-            .isotope({ filter: filterClass })
-            .isotope({
-                sortBy : 'byTagWeight', //[ 'byCategory', 'byTagWeight' ], //
-                sortAscending: {
-                    //byCategory: true, // name ascendingly
-                    byTagWeight: false, // weight descendingly
-                },
-            }).isotope( 'layout' );
-
-			/* if more content loaded use:
-            .isotope('updateSortData')
-	        .isotope('reloadItems')*/
-
-            };
 
 
 
@@ -602,6 +642,8 @@ jQuery(function($) {
                 }else if( $('body').hasClass('theory') ){
 
                     $('body').removeClass( 'theory overview articlemenu' );
+
+                    applyTagSelection();
                     $('body').addClass('practice');
                 }
             });
@@ -615,6 +657,17 @@ jQuery(function($) {
                 }
                 $('#infocontainer').slideUp(200).removeClass('active');
                 $('#topspace .closebutton').removeClass('active');
+
+
+                // set Data
+                if( site_data['postdata'].length > 0 ){
+                    markupHTMLContent( JSON.parse(site_data['postdata']) );
+                    markupHTMLSlideContents( $('#maincontentcontainer') );
+                }
+                if( site_data['tagdata'].length > 0 ){
+                    markupHTMLTagMenu( JSON.parse(site_data['tagdata']) );
+                }
+                activateIsotope();
 
                 $('body').removeClass( 'theory practice articlemenu filtermenu' );
                 $('body').addClass('overview');

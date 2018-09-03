@@ -1,15 +1,122 @@
-/* custom start */
-
-img
+/* moderate */
+.moderate
 {
-max-width:100%;
-height:auto;
+display: inline-block;
+background-color:blue;
+color:white;
+font-size:25px;
+}
+
+
+/*
+#topspace
+{
+background-color: burlywood;
+}
+#rightmenucontainer .contentbox #tagmenu
+{
+background-color: aqua;
+}
+#leftmenucontainer
+{
+background-color:darkgreen;
+}
+#leftcontentcontainer
+{
+background-color:green;
+}
+#maincontentcontainer
+{
+background-color: blue;
+}
+#rightcontentcontainer,
+#rightmenucontainer
+{
+background-color: orange;
+}
+
+#leftcontentcontainer .contentbox,
+#maincontentcontainer .contentbox,
+#rightcontentcontainer .contentbox
+{
+background-color: cornflowerblue;
+}
+*/
+
+#topspace
+{
+background-color: white;
+}
+#rightmenucontainer .contentbox #tagmenu
+{
+background-color: white;
+}
+#leftmenucontainer
+{
+background-color:gray;
+}
+#leftcontentcontainer
+{
+background-color:gray;
+}
+#maincontentcontainer
+{
+background-color: white;
+}
+#rightcontentcontainer,
+#rightmenucontainer
+{
+background-color: white;
+}
+
+#leftcontentcontainer .contentbox,
+#maincontentcontainer .contentbox,
+#rightcontentcontainer .contentbox
+{
+background-color: white;
 }
 
 
 
 
+/* filtermenu */
+.filtermenu #rightmenuplaceholder
+{
+width:18%;
+}
+.filtermenu #rightmenucontainer
+{
+width:18%;
+}
+.filtermenu #rightmenucontainer .contentbox
+{
+width:84%;
+margin-left:8%;
+}
 
+
+
+/* articlemenu */
+.articlemenu #leftmenucontainer
+{
+width:20%;
+}
+.articlemenu #leftmenuplaceholder
+{
+width:20%;
+}
+.articlemenu #leftmenucontainer .togglebox
+{
+}
+.articlemenu #leftmenucontainer .contentbox
+{
+height:auto;
+margin-left:8%;
+}
+
+
+
+/* global elements */
 #pagecontainer
 {
 position: relative;
@@ -32,7 +139,6 @@ width:12%;
 overflow-x:hidden;
 height:100%;
 z-index:900;
-background-color:darkgreen;
 }
 #leftmenuplaceholder
 {
@@ -47,7 +153,6 @@ position: relative;
 float:left;
 width:2%;
 min-height:100%;
-background-color:green;
 }
 #maincontentcontainer
 {
@@ -55,7 +160,6 @@ position: relative;
 float:left;
 width:0%; /* start elese width:0%;  */
 height:100%;
-background-color: blue;
 }
 #rightcontentcontainer
 {
@@ -64,7 +168,6 @@ float:left;
 width:0%; /* width:88%; */
 min-height:100%;
 max-height:100%;
-background-color: orange;
 }
 #rightmenucontainer
 {
@@ -75,7 +178,6 @@ width:0%;
 overflow-x:hidden;
 height:100%;
 z-index:500;
-background-color: orange;
 }
 #rightmenuplaceholder
 {
@@ -89,21 +191,7 @@ z-index:900;
 
 
 
-#leftmenucontainer,
-#leftmenuplaceholder,
-#leftcontentcontainer,
-#maincontentcontainer,
-#rightcontentcontainer,
-#rightmenucontainer,
-#rightmenuplaceholder
-{
-transition: width linear .5s;
-}
-#leftcontentcontainer,
-.contentbox
-{
-transition: all linear .5s;
-}
+
 
 
 
@@ -132,7 +220,6 @@ margin:0px auto;
 position: relative;
 padding:0px 10%;
 margin:0p;
-background-color: burlywood;
 }
 
 #topspace .closebutton
@@ -184,6 +271,7 @@ display: none;
 {
 position:relative;
 display:block;
+max-width:100%;
 }
 
 #topcontent #infocontainer #infomenu ul li
@@ -403,6 +491,8 @@ display:none;
 {
 position:absolute;
 display: block;
+max-height:100%;
+overflow-y:auto;
 left:0px;
 top:0px;
 width:94%;
@@ -410,6 +500,32 @@ padding:6px 3px;
 color: black;
 background-color:white;
 border-bottom:5px solid black;
+}
+.item .main .textbox
+{
+position: relative;
+padding:0px 0px 24px;
+font-size:18px;
+font-weight:bold;
+line-height:20px;
+}
+.main.active .textbox img,
+.main .textbox img,
+img
+{
+max-width:100% !important;
+height:auto;
+}
+.item iframe
+{
+max-width:100% !important;
+height:auto !important;
+}
+.item.active iframe
+{
+width:100% !important;
+height:auto !important;
+min-height: 300px;
 }
 .item .optionfullscreen.button
 {
@@ -423,15 +539,13 @@ color:white;
 
 
 
-
 /* Practice items */
 .practice #rightcontentcontainer .item
-{/*
+{
 width:25%;
 overflow: hidden;
 border:none;
-    float:left;
-    */
+min-height:240px;
 }
 .theory #rightcontentcontainer .item
 {
@@ -442,7 +556,7 @@ overflow: hidden;
 
 .practice #rightcontentcontainer .item.size-l
 {
-width:50%;
+/*width:50%;*/
 }
 
 
@@ -525,10 +639,6 @@ width:94%;
 
 
 
-
-
-
-
 /* overview items */
 .overview #maincontentcontainer .contentbox
 {
@@ -539,7 +649,7 @@ display:block;
 position:relative;
 width:0%;
 float:left;
-transition: width linear .6s;
+transition: width linear .3s;
 overflow:hidden;
 }
 .overview #maincontentcontainer .contentbox .item.active
@@ -602,15 +712,6 @@ display: none;
 }
 
 
-/* moderate */
-.moderate
-{
-display: inline-block;
-background-color:blue;
-color:white;
-font-size:25px;
-}
-
 
 
 
@@ -622,7 +723,6 @@ font-size:25px;
 #maincontentcontainer .contentbox,
 #rightcontentcontainer .contentbox
 {
-background-color: cornflowerblue;
 }
 
 /* Frame elements overview */
@@ -643,17 +743,24 @@ margin-right:23.2%;
 }
 .overview #maincontentcontainer .slidebar
 {
-
 display: block;
 position: relative;
 width:90%;
 margin-left:8%;
 float:left;
 }
+
+
+#maincontentcontainer .leftslidenav,
+#maincontentcontainer .rightslidenav
+{
+display:none;
+}
 .overview #maincontentcontainer .leftslidenav,
 .overview #maincontentcontainer .rightslidenav
 {
 position:absolute;
+display: block;
 top:0px;
 margin-top:22%;
 width:40px;
@@ -661,7 +768,6 @@ height:40px;
 background-color:aqua;
 
 }
-
 .overview #maincontentcontainer .leftslidenav
 {
 left:-1%;
@@ -670,7 +776,6 @@ left:-1%;
 {
 right:-1%;
 }
-
 .overview #rightcontentcontainer
 {
 position:relative;
@@ -678,14 +783,12 @@ float:right;
 width:0%;
 overflow:hidden;
 }
-
 .overview #leftcontentcontainer .contentbox,
 .overview #rightcontentcontainer .contentbox
 {
 width:800px;
 margin-left:-900px;
 }
-
 .overview.articlemenu #maincontentcontainer
 {
 width:78%; /* width:0%; overflow-x:hidden;*/
@@ -796,36 +899,23 @@ margin-right:8%;
 }
 
 
-/* filtermenu */
-.filtermenu #rightmenuplaceholder
-{
-width:18%;
-}
-.filtermenu #rightmenucontainer
-{
-width:18%;
-}
-.filtermenu #rightmenucontainer .contentbox
-{
-width:84%;
-margin-left:8%;
-}
 
-/* articlemenu */
 
-.articlemenu #leftmenucontainer
+
+
+/* movements / transistion */
+#leftmenucontainer,
+#leftmenuplaceholder,
+#leftcontentcontainer,
+#maincontentcontainer,
+#rightcontentcontainer,
+#rightmenucontainer,
+#rightmenuplaceholder
 {
-width:20%;
+transition: width linear .3s;
 }
-.articlemenu #leftmenuplaceholder
+#leftcontentcontainer,
+.contentbox
 {
-width:20%;
-}
-.articlemenu #leftmenucontainer .togglebox
-{
-}
-.articlemenu #leftmenucontainer .contentbox
-{
-height:auto;
-margin-left:8%;
+transition: all linear .3s;
 }

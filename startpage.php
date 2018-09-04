@@ -92,7 +92,7 @@ $header_image = get_header_image();
                             </div>
                         </div>
                     </div>
-                    <div class="closebutton">x</div>
+                    <div class="closebutton"><span>close menu</span></div>
 
                 </div>
             </div>

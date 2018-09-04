@@ -10,6 +10,9 @@ jQuery(function($) {
         var selectedCat = false;
         var postID      = '';
 
+        var theoryCategory = 'artikelen';
+        var overviewCategory = 'bulletin';
+
         // setup display posts
         var markupHTMLContent = function(result){
 
@@ -30,11 +33,11 @@ jQuery(function($) {
                     objfilterclasses += ' '+tag;
                 });
                 $(obj.cats).each(function( x , cat ){
-                    if( cat == 'artikelen' ){
+                    if( cat == theoryCategory ){
                         itemtype = 1; // left content
                         objfilterclasses += ' menubutton';
                     }
-                    if( cat == 'bulletin' ){
+                    if( cat == overviewCategory ){
                         itemtype = 2; // main/start content
                         objfilterclasses += ' overviewcontent';
                     }
@@ -60,11 +63,11 @@ jQuery(function($) {
                     html += '<div class="optionfullscreen button">[]</div>';
                     html += '</div>';
                 }else if( obj.type == 'post' ){
-                    html += '<div class="mediaplaceholder '+obj.imgorient+'"><h3>'+obj.title+'</h3>Media placeholder<div class="optionfullscreen button">[]</div></div>';
+                    html += '<div class="mediaplaceholder '+obj.imgorient+'"><h3>'+obj.title+'</h3><div class="optionfullscreen button">[]</div></div>';
                 } //html += '<div class="excerpt">'+obj.excerpt+'</div>';
                 html += '</div>';
-                html += '<div class="title"><div class="matchweight moderate">0</div>';
-                html += '<h3>'+obj.title+'</h3>';
+                html += '<div class="title">';
+                html += '<h3>'+obj.title+'</h3><div class="matchweight moderate">0</div>';
                 html += '<div class="author">'+obj.author+'</div></div></div>';
                 html += '<div class="itemcatbox">'+display_cats+'</div><div class="itemtagbox">'+display_tags+'</div>';
                 //html += JSON.stringify( obj.tags );
@@ -120,7 +123,7 @@ jQuery(function($) {
                 //console.log(cats);
             var html = '';
             for(t=0;t<itemcats.length;t++){
-                if( itemcats[t] != 'bulletin' && itemcats[t] != 'artikelen'){
+                if( itemcats[t] != overviewCategory && itemcats[t] != theoryCategory ){
                     html += '<div class="categoryname">'+itemcats[t]+'</div> ';
                 }
             }
@@ -150,14 +153,17 @@ jQuery(function($) {
 
             var markupHTMLSlideContents = function( container ){
 
-                container.find('.contentbox').append('<div class="slidebar"></div>');
-                var items  = container.find('.item');
-                items.appendTo('.slidebar');
-                container.find('.contentbox').append('<div class="leftslidenav button"> < </div><div class="rightslidenav button"> > </div>');
-
+                if( container.find('.contentbox .slidebar').length < 1){
+                    container.find('.contentbox').append('<div class="slidebar"></div>');
+                    var items  = container.find('.item');
+                    items.appendTo('.slidebar');
+                    container.find('.contentbox').append('<div class="leftslidenav button"><span> < </span></div><div class="rightslidenav button"><span> > </span></div>');
+                }else{
+                    var items  = container.find('.slidebar .item').removeClass('active');
+                }
                 items.first().addClass('active');//.slideDown();
 
-                container.find('.rightslidenav').click(function(){
+                container.on( 'click', '.rightslidenav', function(){
                     container.find('.slidebar .active').removeClass('active').addClass('oldActive');
                     if ( container.find('.slidebar .oldActive').is(':first-child')) {
                         items.last().addClass('active').css({ 'float':'left' });
@@ -167,7 +173,7 @@ jQuery(function($) {
                     container.find('.slidebar .oldActive').css({ 'float':'left' }).removeClass('oldActive');
                 });
 
-               container.find('.leftslidenav').click(function(){
+               container.on( 'click', '.leftslidenav', function(){
                     container.find('.slidebar .active').removeClass('active').addClass('oldActive');
                     if ( container.find('.slidebar .oldActive').is(':last-child') ) {
                         items.first().css({ 'float':'left' }).addClass('active');
@@ -237,12 +243,6 @@ jQuery(function($) {
 
 
 
-
-
-
-
-
-
             // set Data
             if( site_data['postdata'].length > 0 ){
                 markupHTMLContent( JSON.parse(site_data['postdata']) );
@@ -252,6 +252,10 @@ jQuery(function($) {
                 markupHTMLTagMenu( JSON.parse(site_data['tagdata']) );
             }
             activateIsotope();
+
+
+
+
 
 
             // match tag weights
@@ -309,21 +313,22 @@ jQuery(function($) {
 
 
                 // order left menu items by match weight
-                if( $('body.articlemenu').length > 0 ){
-                var menu = $('#leftmenucontainer .contentbox');
-                var options = $.makeArray(menu.children(".menubutton"));
-                options.sort(function(a, b) {
-                  var textA = +$(a).find('.matchweight').text();
-                  var textB = +$(b).find('.matchweight').text();
-                  if (textA < textB) return 1;
-                  if (textA > textB) return -1;
-                  return 0;
-                });
-                menu.empty();
-                $.each(options, function( idx, obj) {
-                    menu.append(obj);
-                });
-                }
+                //if( $('body.articlemenu').length > 0 ){
+                    var menu = $('#leftmenucontainer .contentbox');
+                    var options = $.makeArray(menu.children(".menubutton"));
+                    options.sort(function(a, b) {
+                      var textA = +$(a).find('.matchweight').text();
+                      var textB = +$(b).find('.matchweight').text();
+                      if (textA < textB) return 1;
+                      if (textA > textB) return -1;
+                      return 0;
+                    });
+                    menu.empty();
+                    $.each(options, function( idx, obj) {
+                        menu.append(obj);
+                    });
+
+                //}
                 // TODO.. apply Masonry (isotope)
             }
 
@@ -533,6 +538,7 @@ jQuery(function($) {
             });
 
             $('body').on('click', '.item .button', function(){
+                $(this).toggleClass('active');
                 if( $(this).parent().find('.main .textbox').html() == ''){
                     $('.item .main .textbox').empty();
                     $(this).parent().find('.main .textbox').html( objlist[$(this).parent().data('id')].content );
@@ -615,7 +621,7 @@ jQuery(function($) {
                 $('#infocontainer').slideUp(200).removeClass('active');
                 $('#topspace .closebutton').removeClass('active');
 
-
+                /*
                 // set Data
                 if( site_data['postdata'].length > 0 ){
                     markupHTMLContent( JSON.parse(site_data['postdata']) );
@@ -625,8 +631,12 @@ jQuery(function($) {
                     markupHTMLTagMenu( JSON.parse(site_data['tagdata']) );
                 }
                 activateIsotope();
+                */
 
                 $('body').removeClass( 'theory practice articlemenu filtermenu' );
+
+                markupHTMLSlideContents( $('#maincontentcontainer') );
+
                 $('body').addClass('overview');
             });
 

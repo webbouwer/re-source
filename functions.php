@@ -214,7 +214,7 @@ function wp_main_theme_toplogo_html(){
         wp_get_attachment_image( $custom_logo_id, 'full', false, $custom_logo_attr )
         );
     }else{
-        echo sprintf( '<a href="%1$s" class="custom-logo-link text" rel="home" itemprop="url">%2$s</a>',
+        echo sprintf( '<a href="%1$s" class="custom-logo-link text" rel="home" itemprop="url"><span>%2$s</span></a>',
         esc_url( home_url( '/' ) ),
         esc_attr( get_bloginfo( 'name', 'display' ) ) //get_bloginfo( 'description' )
         );

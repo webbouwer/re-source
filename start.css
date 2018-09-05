@@ -1,0 +1,1136 @@
+
+/* moderate */
+.moderate,
+.matchweight
+{
+display:inline-block;
+}
+
+#topspace
+{
+background-color: white;
+}
+#rightmenucontainer .contentbox #tagmenu
+{
+background-color: white;
+}
+#leftmenucontainer
+{
+background-color: white;
+/*background-color:#CACACA;*/
+}
+#leftcontentcontainer
+{
+/*box-shadow: 0px 0px 10px 0px #444 inset;*/
+
+background-color: white;
+/*background-color:#CACACA;*/
+background-image:url('images/shadowleft.jpg');
+background-position: right;
+background-repeat: repeat-y;
+}
+#maincontentcontainer
+{
+background-color: white;
+}
+#rightcontentcontainer,
+#rightmenucontainer
+{
+background-color: white;
+}
+
+#leftcontentcontainer .contentbox,
+#maincontentcontainer .contentbox,
+#rightcontentcontainer .contentbox
+{
+background-color: white;
+}
+
+
+
+
+
+
+/* side menu toggles */
+ .togglebox h4
+{
+font-size:21px;
+font-weight:normal;
+line-height:85px;
+text-transform: uppercase;
+border-bottom:5px solid black;
+background-position: right 32px;
+background-repeat: no-repeat;
+background-size: 24px 24px;
+}
+.articlemenu #leftmenucontainer .togglebox h4,
+.filtermenu #rightmenuplaceholder .togglebox h4
+{
+font-weight:bold;
+}
+
+.faded
+{
+opacity:0.4;
+}
+
+/* filtermenu */
+.filtermenu #rightmenuplaceholder
+{
+width:18%;
+}
+.filtermenu #rightmenucontainer
+{
+width:18%;
+}
+.filtermenu #rightmenucontainer .contentbox
+{
+width:84%;
+margin-left:8%;
+}
+.filtermenu #rightmenuplaceholder .togglebox h4
+{
+background-image:url('images/kruis.png');
+margin-right:8%;
+}
+
+
+
+
+
+/* articlemenu */
+#leftmenucontainer .togglebox h4
+{
+}
+
+.articlemenu #leftmenucontainer
+{
+width:20%;
+}
+.articlemenu #leftmenuplaceholder
+{
+width:20%;
+}
+.articlemenu #leftmenucontainer .togglebox h4
+{
+background-image:url('images/kruis.png');
+}
+.articlemenu #leftmenucontainer .contentbox
+{
+height:auto;
+max-height:82%;
+margin-left:8%;
+width:92%;
+overflow-x:hidden;
+}
+
+
+/* global elements */
+#pagecontainer
+{
+position: relative;
+height:100%;
+}
+#topcontentcontainer
+{
+position:fixed;
+left:0px;
+top:0px;
+width:100%;
+z-index:800;
+background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff',GradientType=0 ); /* IE6-9 */
+}
+#leftmenucontainer
+{
+position:fixed;
+left:0px;
+top:0px;
+width:12%;
+overflow:hidden;
+height:100%;
+z-index:900;
+}
+#leftmenuplaceholder
+{
+position: relative;
+float:left;
+width:12%;
+height:100%;
+}
+#leftcontentcontainer
+{
+position: relative;
+float:left;
+width:2%;
+min-height:100%;
+}
+#maincontentcontainer
+{
+position: relative;
+float:left;
+width:0%; /* start elese width:0%;  */
+height:100%;
+}
+#rightcontentcontainer
+{
+position: relative;
+float:left;
+width:0%; /* width:88%; */
+min-height:100%;
+max-height:100%;
+}
+#rightmenucontainer
+{
+position:fixed;
+right:0px;
+top:0px;
+width:0%;
+overflow-x:hidden;
+height:100%;
+z-index:500;
+}
+#rightmenuplaceholder
+{
+position:fixed;
+right:0px;
+top:0px;
+width:12%;
+z-index:900;
+}
+#rightmenuplaceholder .togglebox h4
+{
+}
+
+
+
+
+
+
+
+
+
+
+/* top content */
+#topcontentcontainer,
+.topplaceholder,
+.togglebox
+{
+height:120px;
+}
+
+
+#topcontentbox
+{
+position: relative;
+width:60%;
+margin:0px auto;
+}
+#topspace
+{
+position: relative;
+padding:0px 8%;
+margin:0p;
+}
+
+#topspace .closebutton
+{
+position: absolute;
+right:0px;
+top:0px;
+width:48px;
+height:48px;
+display:none;
+
+background-position: center;
+background-repeat: no-repeat;
+background-size: 24px 24px;
+
+}
+
+#topspace .closebutton span
+{
+display:none;
+}
+#topspace .closebutton.active
+{
+display:block;
+background-image:url('images/kruis.png');
+}
+
+#topbar
+{
+    min-width:560px;
+padding:25px 0px 8px;
+border-bottom:5px solid black;
+}
+#topbar .leftside
+{
+display: block;
+float: left;
+width:58%;
+}
+#topbar .leftside .menubutton
+{
+display: inline-block;
+width:54px;
+height:48px;
+background-image:url('images/menu.png');
+background-position: left center;
+background-size: 40px;
+background-repeat: no-repeat;
+}
+#topbar .leftside .menubutton span
+{
+display: none;
+}
+#topbar .leftside .custom-logo-link
+{
+display: inline-block;
+width:260px;
+height:47px;
+background-image: url('images/resource.png');
+background-repeat: no-repeat;
+background-position:center;
+background-size: 250px auto;
+}
+#topbar .leftside .custom-logo-link span
+{
+display: none;
+}
+#topbar .rightside
+{
+display: block;
+float: right;
+width:42%;
+}
+
+
+#topcontent
+{
+}
+#topcontent #infocontainer
+{
+display: none;
+}
+#topcontent #infocontainer.active .contentpage .main
+{
+position:relative;
+display:block;
+max-width:100%;
+}
+
+#topcontent #infocontainer #infomenu ul li
+{
+display:inline-block;
+padding:16px 0px 16px;
+}
+#topcontent #infocontainer #infomenu ul li:last-child
+{
+float:right;
+}
+#topcontent #infocontainer #infomenu ul li a
+{
+color:black;
+font-size:18px;
+font-weight:bold;
+text-decoration:none;
+}
+#topcontent #infocontainer .itemcontent
+{
+padding:24px 0px;
+}
+
+#topcontent #infocontainer .itemcontent .textbox
+{
+font-size:12px;
+}
+
+
+#topcontent #infocontainer #infomenu,
+#topcontent #infocontainer #infocontent,
+#infocontainer #infocontent .contentpage
+{
+transition: all linear .5s;
+}
+
+
+#topcontent #infocontainer.active #infomenu,
+#topcontent #infocontainer.active #infocontent
+{
+}
+
+#topcontent #infocontainer #infocontent .item.contentpage
+{
+position:absolute;
+height:0px;
+overflow:hidden;
+}
+#topcontent #infocontainer #infocontent .item.contentpage.active
+{
+position:relative;
+height:auto;
+overflow:auto;
+}
+
+
+
+/* left content */
+#leftmenucontainer .togglebox h4
+{
+padding-left:8%;
+}
+.articlemenu #leftmenucontainer .togglebox
+{
+margin-left:8%;
+}
+.articlemenu #leftmenucontainer .togglebox h4
+{
+padding-left:0%;
+}
+#leftmenucontainer .contentbox
+{
+position: relative;
+width:300px;
+margin-left:-400px;
+}
+#leftcontentcontainer .contentbox
+{
+position: relative;
+width:600px;
+margin-left:-700px;
+max-height:70%;
+}
+#leftmenucontainer .contentbox .itemcontent .title h3
+{
+font-size:21px;
+margin-bottom:4px;
+font-weight:bold;
+display: inline-block;
+}
+#leftmenucontainer .contentbox .itemcontent .itemcatbox
+{
+font-size: 11px;
+font-weight:bold;
+padding-bottom:10px;
+}
+
+
+
+/* right content */
+#rightmenuplaceholder .togglebox
+{
+margin-left:8%;
+}
+#rightmenucontainer .contentbox
+{
+position: relative;
+width:400px;
+margin-left:100%;
+}
+#rightmenucontainer .contentbox #tagmenu
+{
+position: relative;
+display: block;
+width:90%;
+background-color: aqua;
+}
+
+/* overview (main) content */
+#maincontentcontainer .contentbox
+{
+width:600px;
+margin-right:-100%;
+}
+#maincontentcontainer .contentbox .item
+{
+display:none;
+}
+
+
+
+/* switch button */
+#contentswitch
+{
+position:absolute;
+top:30%;
+right:0px;
+overflow:visible;
+z-index: 909;
+}
+
+#switchbutton
+{
+display: block;
+width:60px;
+margin-right:0px;
+}
+
+.leftswapbutton,
+.rightswapbutton
+{
+position: absolute;
+height: 180px;
+width:30px;
+left:-40px;
+background-position: center;
+background-repeat: no-repeat;
+background-size:  20px 168px;
+background-image: url('images/TheorieenReflectie.png');
+
+z-index: 999;
+}
+.rightswapbutton
+{
+background-image: url('images/PraktijkenDesign.png');
+left:-10px;
+}
+.leftswapbutton span,
+.rightswapbutton span
+{
+display:none;
+}
+/*
+.leftswapbutton
+{
+display: block;
+width:160px;
+padding:2px 3px;
+height: 30px;
+margin-left:-70px;
+margin-top:80px;
+transform: rotate(-90deg);
+z-index: 999;
+}
+.rightswapbutton
+{
+display: block;
+width:160px;
+padding:2px 3px;
+height: 20px;
+margin-top:-25px;
+margin-left:-50px;
+transform: rotate(90deg);
+z-index: 999;
+}
+*/
+
+
+
+
+/* tagbuttons */
+.tagbutton
+{
+display: inline-block;
+text-decoration:none;
+color:black;
+padding:0px 4px 5px 0px;
+font-size:16px;
+}
+.tagbutton:before
+{
+content: '#';
+}
+.tagbutton.selected
+{
+font-weight:bold;
+}
+#rightmenucontainer .contentbox > .tagbutton.selected
+{
+display:none;
+}
+
+
+
+/* item globals content */
+.item.menubutton .itemcontent .coverimage,
+.item.menubutton .itemcontent .mediaplaceholder,
+.practice #rightcontentcontainer .item .itemcatbox,
+.item.menubutton .itemtagbox,
+.item.menubutton .infotoggle,
+.item.overviewcontent .author,
+.item.menubutton .author,
+.overview #rightcontentcontainer .item .author,
+.overview #rightcontentcontainer .item .itemtagbox,
+.theory #rightcontentcontainer .item .author,
+.theory #rightcontentcontainer .item .itemtagbox,
+.practice #rightcontentcontainer .item .author,
+.item.contentpage .author,
+.item .button
+{
+display:none;
+}
+.item.selected .button,
+.item.itemcontent .author
+{
+display: block;
+}
+
+
+.itemcontent .intro .title h3
+{
+font-size:21px;
+margin-bottom:4px;
+font-weight:normal;
+display: inline-block;
+}
+.itemcontent .author
+{
+font-size:12px;
+font-weight:bold;
+}
+
+.item .matchweight
+{
+/*display: none;*/
+}
+.item .matchweight
+{
+padding-left:5px;
+display: inline-block;
+font-size:23px;
+}
+
+#infocontainer .item .matchweight
+/*#leftmenucontainer .item .matchweight */
+{
+display: none;
+}
+.item .matchweight:before
+{
+content: '[';
+}
+.item .matchweight:after
+{
+content: ']';
+}
+.mediaplaceholder
+{
+text-align: left;
+color:black;
+max-width:100%;
+background-color:white;
+}
+.item .mediaplaceholder h3
+{
+padding:1% 0px;
+font-size:40px;
+}
+#maincontentcontainer .item .mediaplaceholder,
+.item.selected .mediaplaceholder
+{
+min-height:320px;
+}
+#maincontentcontainer .item .mediaplaceholder h3,
+.item.selected .mediaplaceholder h3
+{
+padding:5% 0px;
+font-size:64px;
+}
+.item .infotoggle.button
+{
+position:absolute;
+right:0px;
+top:0px;
+width:6%;
+text-align:center;
+font-size:50px;
+height:48px;
+background-position: center;
+background-repeat: no-repeat;
+background-size: 24px 24px;
+background-image: url('images/plus.png');
+}
+
+.item .infotoggle.button.active
+{
+background-image: url('images/min.png');
+}
+.item .infotoggle.button span
+{
+display: none;
+}
+.item .main
+{
+display:none;
+}
+.item .main.active
+{
+position:absolute;
+display: block;
+max-height:100%;
+overflow-y:auto;
+left:0px;
+top:0px;
+width:94%;
+padding:6px 3px;
+color: black;
+background-color:white;
+border-bottom:5px solid black;
+}
+.item .main .textbox
+{
+position: relative;
+padding:0px 0px 24px;
+font-size:18px;
+font-weight:bold;
+line-height:20px;
+}
+.main.active .textbox img,
+.main .textbox img,
+img
+{
+max-width:100% !important;
+height:auto;
+}
+.item .wp-caption-text
+{
+font-weight:normal;
+font-size:15px;
+padding:3px 0px 5px;
+}
+.item .wp-caption
+{
+max-width:100%;
+}
+.item .wp-caption img
+{
+padding:8px 0px 0px;
+max-width:100%;
+height:auto;
+}
+.item iframe
+{
+max-width:100% !important;
+height:auto !important;
+}
+.item.active iframe
+{
+width:100% !important;
+height:auto !important;
+min-height: 460px;
+padding:8px 0px 0px;
+}
+.item .optionfullscreen.button
+{
+position:absolute;
+right:0px;
+bottom:0px;
+font-size:50px;
+color:white;
+}
+
+
+
+
+/* Practice items */
+
+.practice #rightcontentcontainer .contentbox .item
+{
+width:20%;
+overflow: hidden;
+border:none;
+min-height:240px;
+font-size:15px;
+margin-bottom:2%;
+}
+.practice #rightcontentcontainer .contentbox .item.size-m
+{
+    width: 23%;
+}
+.practice #rightcontentcontainer .contentbox .item.size-l
+{
+    width: 42%;
+}
+
+.practice #rightcontentcontainer .contentbox .item.portrait.size-l
+{
+    width: 39%;
+}
+.practice #rightcontentcontainer .contentbox .item.portrait.selected,
+.practice #rightcontentcontainer .contentbox .item.selected
+{
+    width: 49%;
+}
+.practice .item .itemcontent .intro h3
+{
+margin:7px 0px 5px;
+}
+.practice .item .itemcontent .intro .coverimage .stage
+{
+position: relative;
+}
+.practice .item .itemcontent .intro .coverimage .stage img
+{
+width:100%;
+}
+.practice #rightcontentcontainer .item.selected .stage,
+.practice #rightcontentcontainer .item.selected .mediaplaceholder
+{
+position: relative;
+width:94%;
+}
+
+
+
+
+/* overview items */
+.overview #maincontentcontainer .contentbox
+{
+}
+.overview #maincontentcontainer .contentbox .item
+{
+display:block;
+position:relative;
+width:0%;
+float:left;
+transition: width linear .6s;
+overflow:hidden;
+}
+.overview #maincontentcontainer .contentbox .item.active
+{
+width:100%;
+overflow-x:hidden;
+overflow-y:auto;
+}
+.overview #maincontentcontainer .infotoggle
+{
+display: block;
+}
+.overview .itemcontent .intro .title h3
+{
+font-weight:bold;
+}
+.overview .item .itemcontent .intro .coverimage
+{
+width:94%;
+}
+.overview .item .itemcontent .intro .coverimage .stage img
+{
+}
+
+
+
+
+
+
+
+
+
+/* Theory items */
+.theory #leftcontentcontainer .contentbox
+{
+}
+
+.theory #rightcontentcontainer .item
+{
+position: relative;
+width:100%;
+overflow: hidden;
+}
+
+.theory #leftcontentcontainer .item .title
+{
+margin-top:8px;
+margin-bottom:8px;
+}
+.theory #leftcontentcontainer .item .title h3
+{
+font-size:21px;
+font-weight:normal;
+display: inline-block;
+}
+
+.theory #leftcontentcontainer .contentbox .item,
+.theory #leftcontentcontainer .contentbox .item .itemcontent,
+.theory #leftcontentcontainer .contentbox .item .itemcontent .coverimage .stage img
+{
+display:block;
+width:100%;
+margin:0px auto;
+}
+/*
+.theory #leftcontentcontainer .contentbox .item.portrait .intro
+{
+width:50%;
+float:left;
+}
+*/
+.theory #leftcontentcontainer .contentbox .item.landscape
+{
+
+}
+.theory #leftcontentcontainer .contentbox .item .main
+{
+position:relative;
+display: block;
+}
+
+.theory #leftcontentcontainer .contentbox .button
+{
+display: none;
+}
+
+
+
+
+
+
+
+
+
+/* Frame elements */
+#leftcontentcontainer .contentbox,
+#maincontentcontainer .contentbox,
+#rightcontentcontainer .contentbox
+{
+}
+
+/* Frame elements overview */
+.overview #maincontentcontainer
+{
+width:86%; /* width:0%; overflow-x:hidden;*/
+}
+.overview #maincontentcontainer .contentbox
+{
+display: block;
+position: relative;
+min-height:480px;
+height:60%;
+max-height:560px;
+float:right;
+width:69.8%;
+margin-right:23.2%;
+}
+.overview #maincontentcontainer .slidebar
+{
+display: block;
+position: relative;
+width:90%;
+margin-left:8%;
+float:left;
+}
+
+
+#maincontentcontainer .leftslidenav,
+#maincontentcontainer .rightslidenav,
+#maincontentcontainer .leftslidenav span,
+#maincontentcontainer .rightslidenav span
+{
+display:none;
+}
+
+.overview #maincontentcontainer .leftslidenav,
+.overview #maincontentcontainer .rightslidenav
+{
+position:absolute;
+display: block;
+top:0px;
+margin-top:22%;
+width:40px;
+height:40px;
+background-image:url('images/pijl_links.png');
+background-position: center;
+background-size:24px;
+background-repeat: no-repeat;
+}
+.overview #maincontentcontainer .rightslidenav
+{
+}
+.overview #maincontentcontainer .leftslidenav
+{
+left:10px;
+}
+.overview #maincontentcontainer .rightslidenav
+{
+background-image:url('images/pijl_rechts.png');
+right:10px;
+}
+.overview #rightcontentcontainer
+{
+position:relative;
+float:right;
+width:0%;
+overflow:hidden;
+}
+.overview #leftcontentcontainer .contentbox,
+.overview #rightcontentcontainer .contentbox
+{
+width:800px;
+margin-left:-900px;
+}
+.overview.articlemenu #maincontentcontainer
+{
+width:78%; /* width:0%; overflow-x:hidden;*/
+float:right;
+}
+.overview.articlemenu #maincontentcontainer .contentbox
+{
+float:right;
+width:76%;
+margin-right:20%;
+}
+
+/* Frame elements practice */
+.practice #rightcontentcontainer
+{
+position:relative;
+float:right;
+max-height:none;
+width:86%; /* width:0%; overflow-x:hidden;*/
+}
+.practice #rightcontentcontainer .contentbox
+{
+float:right;
+width:94%;
+margin-right:3%;
+}
+.practice.articlemenu #rightcontentcontainer
+{
+width:78%; /* width:0%; overflow-x:hidden;*/
+float:right;
+}
+.practice #leftcontentcontainer
+{
+position: fixed;
+top:0px;
+left:12%;
+min-height:100%;
+z-index: 400;
+}
+.practice.articlemenu #leftcontentcontainer
+{
+left:20%;
+}
+.practice #leftcontentcontainer .contentbox
+{
+height:600px;
+width:800px;
+margin-left:-900px;
+overflow-y:auto;
+}
+.practice #maincontentcontainer .contentbox
+{
+height:600px;
+width:600px;
+margin-left:-2400px;
+}
+
+
+
+/* Frame elements theory */
+.theory #leftcontentcontainer
+{
+position: relative;
+/*overflow-y: auto;*/
+height:100%;
+float:left;
+width:66%; /* width:0%; overflow-x:hidden;*/
+}
+.theory #leftcontentcontainer .contentbox
+{
+float:left;
+width:86%;
+/*max-height:70%;*/
+margin-left:8%;
+overflow-y:auto;
+/*
+float:right;
+width:80%;
+margin-right:8%;
+*/
+}
+.theory.articlemenu #leftcontentcontainer
+{
+width:58%; /* width:0%; overflow-x:hidden;*/
+float:left;
+}
+.theory.articlemenu #leftcontentcontainer .contentbox
+{
+/*
+float:left;
+width:92%;
+margin-left:4%;
+*/
+}
+
+.theory #rightcontentcontainer
+{
+position:fixed;
+top:0px;
+right:0px;
+/*float:right;*/
+height:100%;
+overflow-y: auto;
+width:22%;
+}
+.theory #rightcontentcontainer .contentbox
+{
+float:right;
+width:82%;
+margin-right:8%;
+}
+
+
+
+
+
+
+/* movements / transistion */
+#leftmenucontainer,
+#leftmenuplaceholder,
+#leftcontentcontainer,
+#maincontentcontainer,
+#rightcontentcontainer,
+#rightmenucontainer,
+#rightmenuplaceholder
+{
+transition: width linear .3s;
+}
+#leftcontentcontainer,
+.contentbox
+{
+transition: all linear .3s;
+}
+
+
+
+
+
+
+/*
+#topspace
+{
+background-color: burlywood;
+}
+#rightmenucontainer .contentbox #tagmenu
+{
+background-color: aqua;
+}
+#leftmenucontainer
+{
+background-color:darkgreen;
+}
+#leftcontentcontainer
+{
+background-color:green;
+}
+#maincontentcontainer
+{
+background-color: blue;
+}
+#rightcontentcontainer,
+#rightmenucontainer
+{
+background-color: orange;
+}
+
+#leftcontentcontainer .contentbox,
+#maincontentcontainer .contentbox,
+#rightcontentcontainer .contentbox
+{
+background-color: cornflowerblue;
+}
+*/

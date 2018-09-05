@@ -418,18 +418,26 @@ jQuery(function($) {
 
             // On select clickable LeftMenu Items
             var applyLeftContent = function(){
+
+                    // all items
                     $('.item').removeClass('selected');
                     $('.item .main .textbox').html('');
+
+                    // selected
                     var content = $('#leftmenucontainer .menubutton:first').clone();
                     $('#leftmenucontainer .menubutton:first').addClass('active');
+
                     content.find('.main .textbox').html( objlist[content.data('id')].content );
                     content.find('.main').addClass('active');
 
+                    var boxheight = $(window).height() - $('#topcontentcontainer').height()  + 'px';
+                    $('.theory #leftcontentcontainer .contentbox').css({ 'min-height': boxheight, 'max-height': boxheight  });
+
                     $('#leftcontentcontainer .contentbox').html( content.removeClass('menubutton').addClass('selected') );
                     $('#leftcontentcontainer .contentbox .title, #leftcontentcontainer .contentbox .main').insertAfter('#leftcontentcontainer .contentbox .intro');
+
                     applyItemSelection();
             }
-
 
 
 
@@ -582,7 +590,7 @@ jQuery(function($) {
             });
 
             // toggle slide main content
-            $('body').on('click', '.switchbutton span', function( event ){
+            $('body').on('click', '.switchbutton .leftswapbutton, .switchbutton .rightswapbutton', function( event ){
                 $('#infocontainer').slideUp(200).removeClass('active');
                 $('#topspace .closebutton').removeClass('active');
 
@@ -592,7 +600,6 @@ jQuery(function($) {
 
                     // order by (first) left button id
                     applyLeftContent();
-
                     $('body').addClass( 'articlemenu theory');
 
                 }else if( $('body').hasClass('practice') ){

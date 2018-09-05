@@ -325,7 +325,29 @@ max-width:100%;
 #topcontent #infocontainer #infomenu ul li
 {
 display:inline-block;
+padding:16px 0px 16px;
 }
+#topcontent #infocontainer #infomenu ul li:last-child
+{
+float:right;
+}
+#topcontent #infocontainer #infomenu ul li a
+{
+color:black;
+font-size:18px;
+font-weight:bold;
+text-decoration:none;
+}
+#topcontent #infocontainer .itemcontent
+{
+padding:24px 0px;
+}
+
+#topcontent #infocontainer .itemcontent .textbox
+{
+font-size:12px;
+}
+
 
 #topcontent #infocontainer #infomenu,
 #topcontent #infocontainer #infocontent,
@@ -434,23 +456,43 @@ display:none;
 {
 position:absolute;
 top:30%;
-right:-92px;
+right:0px;
 overflow:visible;
+z-index: 909;
 }
-/*
+
 #switchbutton
 {
+display: block;
+width:60px;
 margin-right:0px;
-height:180px;
-width:80px;
 }
+
 .leftswapbutton,
 .rightswapbutton
 {
-font-size:17px;
-font-weight: bold;
-background-color: white;
+position: absolute;
+height: 180px;
+width:30px;
+left:-40px;
+background-position: center;
+background-repeat: no-repeat;
+background-size:  20px 168px;
+background-image: url('images/TheorieenReflectie.png');
+
+z-index: 999;
 }
+.rightswapbutton
+{
+background-image: url('images/PraktijkenDesign.png');
+left:-10px;
+}
+.leftswapbutton span,
+.rightswapbutton span
+{
+display:none;
+}
+/*
 .leftswapbutton
 {
 display: block;
@@ -542,19 +584,25 @@ font-weight:bold;
 
 .item .matchweight
 {
-display: none;
+/*display: none;*/
 }
-.practice .item .matchweight
+.item .matchweight
 {
 padding-left:5px;
 display: inline-block;
 font-size:23px;
 }
-.practice .item .matchweight:before
+
+#infocontainer .item .matchweight
+/*#leftmenucontainer .item .matchweight */
+{
+display: none;
+}
+.item .matchweight:before
 {
 content: '[';
 }
-.practice .item .matchweight:after
+.item .matchweight:after
 {
 content: ']';
 }
@@ -562,14 +610,25 @@ content: ']';
 {
 text-align: left;
 color:black;
+max-width:100%;
 background-color:white;
 }
-.mediaplaceholder h3
+.item .mediaplaceholder h3
 {
-padding:2% 0px;
+padding:1% 0px;
+font-size:40px;
+}
+#maincontentcontainer .item .mediaplaceholder,
+.item.selected .mediaplaceholder
+{
+min-height:320px;
+}
+#maincontentcontainer .item .mediaplaceholder h3,
+.item.selected .mediaplaceholder h3
+{
+padding:5% 0px;
 font-size:64px;
 }
-
 .item .infotoggle.button
 {
 position:absolute;
@@ -626,6 +685,22 @@ img
 max-width:100% !important;
 height:auto;
 }
+.item .wp-caption-text
+{
+font-weight:normal;
+font-size:15px;
+padding:3px 0px 5px;
+}
+.item .wp-caption
+{
+max-width:100%;
+}
+.item .wp-caption img
+{
+padding:8px 0px 0px;
+max-width:100%;
+height:auto;
+}
 .item iframe
 {
 max-width:100% !important;
@@ -635,7 +710,8 @@ height:auto !important;
 {
 width:100% !important;
 height:auto !important;
-min-height: 300px;
+min-height: 460px;
+padding:8px 0px 0px;
 }
 .item .optionfullscreen.button
 {
@@ -754,6 +830,19 @@ position: relative;
 width:100%;
 overflow: hidden;
 }
+
+.theory #leftcontentcontainer .item .title
+{
+margin-top:8px;
+margin-bottom:8px;
+}
+.theory #leftcontentcontainer .item .title h3
+{
+font-size:21px;
+font-weight:normal;
+display: inline-block;
+}
+
 .theory #leftcontentcontainer .contentbox .item,
 .theory #leftcontentcontainer .contentbox .item .itemcontent,
 .theory #leftcontentcontainer .contentbox .item .itemcontent .coverimage .stage img
@@ -778,10 +867,12 @@ float:left;
 position:relative;
 display: block;
 }
+
 .theory #leftcontentcontainer .contentbox .button
 {
 display: none;
 }
+
 
 
 
@@ -941,9 +1032,9 @@ width:66%; /* width:0%; overflow-x:hidden;*/
 .theory #leftcontentcontainer .contentbox
 {
 float:left;
-width:92%;
-max-height:70%;
-margin-left:4%;
+width:86%;
+/*max-height:70%;*/
+margin-left:8%;
 overflow-y:auto;
 /*
 float:right;

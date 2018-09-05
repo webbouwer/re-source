@@ -108,7 +108,7 @@ $header_image = get_header_image();
             <div class="contentbox">Artikel content</div>
 
             <div id="contentswitch">
-                    <div class="switchbutton"><span class="leftswapbutton">Theorie & Reflectie</span><span class="rightswapbutton">Praktijk en Design</span></div>
+                    <div class="switchbutton"><div class="leftswapbutton"><span>Theorie & Reflectie</span></div><div class="rightswapbutton"><span>Praktijk en Design</span></div></div>
             </div>
         </div>
 

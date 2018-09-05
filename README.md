@@ -1,4 +1,4 @@
 # RE-source WP Theme
 
-Wordpress theme for Poject RE-source 
+Wordpress theme for Project RE-source 
 https://www.re-source.info

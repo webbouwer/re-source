@@ -1,5 +1,4 @@
-# RE-source_wptheme
+# RE-source WP Theme
 
-Re-source wordpress theme development (part 2)
-
-New developments, prototype 2 remake
+Wordpress theme for Poject RE-source 
+https://www.re-source.info

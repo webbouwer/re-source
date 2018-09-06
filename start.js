@@ -98,7 +98,14 @@ jQuery(function($) {
 
             });
 
-            console.log( JSON.stringify(objlist) );
+
+            /*var catlist = JSON.parse(site_data['catdata']); //console.log(tags);
+
+            $.each( catlist, function( idx, cat){
+                    console.log( cat );
+            });*/
+            //console.log( catlist[0].slug );
+            //console.log( JSON.stringify(objlist) );
 
         };
 
@@ -118,23 +125,27 @@ jQuery(function($) {
 
         // display clickable categories
         var gethtmlListCats = function( itemcats ){
-                //alert(JSON.stringify(site_data['catdata']));
-            var cats = JSON.parse(site_data['catdata']);
-                //console.log(cats);
+            //console.log( JSON.stringify(site_data['catdata']) );
+            var catlist = JSON.parse(site_data['catdata']);
             var html = '';
             for(t=0;t<itemcats.length;t++){
                 if( itemcats[t] != overviewCategory && itemcats[t] != theoryCategory ){
-                    html += '<div class="categoryname">'+itemcats[t]+'</div> ';
+                    $.each( catlist, function( idx, cat){
+                        if( cat.slug ==  itemcats[t] ){
+                            //html += '<div class="categoryname">'+itemcats[t]+'</div> ';
+                            html += '<a href="#cats='+cat['slug']+'" class="categoryname catbutton '+cat['slug']+'" data-cats="'+cat['slug']+'">'+cat['name']+'</a> ';
+                        }
+                    });
+                    //html += '<a href="#cats='+cats[i]['slug']+'" class="categoryname catbutton '+cats[i]['slug']+'" data-cats="'+cats[i]['slug']+'">'+cats[i]['cat_name']+'</a> ';
                 }
             }
-                /*
-                for(i=0;i<cats.length;i++){
-                    for(t=0;t<itemcats.length;t++){
-                        if( cats[i]['slug'] == itemcats[t] ){
-                            html += '<a href="#cats='+cats[i]['slug']+'" class="catbutton '+cats[i]['slug']+'" data-cats="'+cats[i]['slug']+'">'+cats[i]['cat_name']+'</a> ';
-                        }
+            //$(cats).each(function( idx, cat){
+                /*for(t=0;t<itemcats.length;t++){
+                    if( cats[i]['slug'] == itemcats[t] ){
+                        html += '<a href="#cats='+cats[i]['slug']+'" class="catbutton '+cats[i]['slug']+'" data-cat="'+cats[i]['slug']+'">'+cats[i]['name']+'</a> ';
                     }
                 }*/
+
             return html;
         };
 
@@ -151,39 +162,7 @@ jQuery(function($) {
                 }
             };
 
-            var markupHTMLSlideContents = function( container ){
 
-                if( container.find('.contentbox .slidebar').length < 1){
-                    container.find('.contentbox').append('<div class="slidebar"></div>');
-                    var items  = container.find('.item');
-                    items.appendTo('.slidebar');
-                    container.find('.contentbox').append('<div class="leftslidenav button"><span> < </span></div><div class="rightslidenav button"><span> > </span></div>');
-                }else{
-                    var items  = container.find('.slidebar .item').removeClass('active');
-                }
-                items.first().addClass('active');//.slideDown();
-
-                container.on( 'click', '.rightslidenav', function(){
-                    container.find('.slidebar .active').removeClass('active').addClass('oldActive');
-                    if ( container.find('.slidebar .oldActive').is(':first-child')) {
-                        items.last().addClass('active').css({ 'float':'left' });
-                    }else{
-                        container.find('.slidebar .oldActive').prev().addClass('active').css({ 'float':'right' });
-                    }
-                    container.find('.slidebar .oldActive').css({ 'float':'left' }).removeClass('oldActive');
-                });
-
-               container.on( 'click', '.leftslidenav', function(){
-                    container.find('.slidebar .active').removeClass('active').addClass('oldActive');
-                    if ( container.find('.slidebar .oldActive').is(':last-child') ) {
-                        items.first().css({ 'float':'left' }).addClass('active');
-                    }else{
-                        container.find('.slidebar .oldActive').next().css({ 'float':'left' }).addClass('active');
-                    }
-                    container.find('.slidebar .oldActive').css({ 'float':'right' }).removeClass('oldActive');
-                });
-
-            }
 
 
 
@@ -241,17 +220,6 @@ jQuery(function($) {
 
 
 
-
-
-            // set Data
-            if( site_data['postdata'].length > 0 ){
-                markupHTMLContent( JSON.parse(site_data['postdata']) );
-                markupHTMLSlideContents( $('#maincontentcontainer') );
-            }
-            if( site_data['tagdata'].length > 0 ){
-                markupHTMLTagMenu( JSON.parse(site_data['tagdata']) );
-            }
-            activateIsotope();
 
 
 
@@ -345,6 +313,7 @@ jQuery(function($) {
                     $('#tagmenu').append( $(obj).clone() );
                     tagfilter.push( $(obj).data('tag') );
                 });
+                $('#tagmenu').append( '<a class="cleartags" href="#">X</a>' );
 
                 // set Selected Tagbuttons Active
                 $( '.tagbutton' ).removeClass( 'selected' );
@@ -384,37 +353,110 @@ jQuery(function($) {
                 });
 
                 $('html, body').animate({scrollTop:0}, 400);
-                console.log(tagfilter);
+                //console.log(tagfilter);
 
             }
 
             // On select clickable Items
             var applyItemSelection = function(){
 
-                tagfilter = $('.item.selected').data('tags').split(',');
+                if( $('.item.selected').data('tags').length > 0 ){
 
-                $('#tagmenu').empty();
-                $('.tagbutton').removeClass( 'selected' );
-                for(i=0;i<tagfilter.length;i++){
-                    $( '.tagbutton.'+tagfilter[i] ).addClass('selected');
+                    tagfilter = $('.item.selected').data('tags').split(',');
+
+                    $('#tagmenu').empty();
+                    $('.tagbutton').removeClass( 'selected' );
+                    for(i=0;i<tagfilter.length;i++){
+                        $( '.tagbutton.'+tagfilter[i] ).addClass('selected');
+                    }
+
+                    catfilter = $('.item.selected').data('cats').split(',');
+                    postID = $('.item.selected').data('id');
+
+                    filterClass = '';
+
+                    if( tagfilter.length > 0 ){
+                    filterClass = '.'+tagfilter.join(',.');
+                    }
+
+                }else{
+                    tagfilter = ['*'];
                 }
-
-                catfilter = $('.item.selected').data('cats').split(',');
-                postID = $('.item.selected').data('id');
-
-                filterClass = '';
-
-                if( tagfilter.length > 0 ){
-				filterClass = '.'+tagfilter.join(',.');
-                }
-
                 // order by tags
                 applyTagSelection();
 
+                console.log( tagfilter );
                 console.log( catfilter );
                 console.log( postID );
 
             }
+
+            var markupHTMLSlideContents = function( container ){
+
+                if( container.find('.contentbox .slidebar').length < 1){
+                    container.find('.contentbox').append('<div class="slidebar"></div>');
+                    var items  = container.find('.item');
+                    items.appendTo('.slidebar');
+                    container.find('.contentbox').append('<div class="leftslidenav button"><span> < </span></div><div class="rightslidenav button"><span> > </span></div>');
+                }else{
+                    var items  = container.find('.slidebar .item').removeClass('active');
+                }
+                items.first().addClass('active');//.slideDown();
+                $('.selected').removeClass('selected');
+                container.find('.active').addClass('selected');
+
+               //container.find('.active').one('webkitTransitionEnd otransitionend oTransitionEnd msTransisitonEnd transitionend', function(e){
+                    applyItemSelection();
+               //});
+
+
+               $('body').on( 'click', '#maincontentcontainer .rightslidenav', function(event){
+                    if(event.preventDefault){
+                        event.preventDefault();
+                    }else{
+                        event.returnValue = false;
+                    }
+                    $('.selected').removeClass('selected');
+                    container.find('.slidebar .active').removeClass('active').addClass('oldActive');
+                    if ( container.find('.slidebar .oldActive').is(':first-child')) {
+                        items.last().addClass('active').css({ 'float':'left' });
+                    }else{
+                        container.find('.slidebar .oldActive').prev().addClass('active').css({ 'float':'right' });
+                    }
+                    container.find('.slidebar .oldActive').css({ 'float':'left' }).removeClass('oldActive');
+                    container.find('.active').addClass('selected');
+
+                    container.find('.active').one('webkitTransitionEnd otransitionend oTransitionEnd msTransisitonEnd transitionend', function(e){
+                        applyItemSelection();
+                    });
+                    //applyItemSelection();
+                });
+
+               $('body').on( 'click', '#maincontentcontainer .leftslidenav', function(event){
+                    if(event.preventDefault){
+                        event.preventDefault();
+                    }else{
+                        event.returnValue = false;
+                    }
+                    $('.selected').removeClass('selected');
+                    container.find('.slidebar .active').removeClass('active').addClass('oldActive');
+                    if ( container.find('.slidebar .oldActive').is(':last-child') ) {
+                        items.first().css({ 'float':'left' }).addClass('active');
+                    }else{
+                        container.find('.slidebar .oldActive').next().css({ 'float':'left' }).addClass('active');
+                    }
+                    container.find('.slidebar .oldActive').css({ 'float':'right' }).removeClass('oldActive');
+                    container.find('.active').addClass('selected');
+
+                    container.find('.active').one('webkitTransitionEnd otransitionend oTransitionEnd msTransisitonEnd transitionend', function(e){
+                        applyItemSelection();
+                    });
+                    //applyItemSelection();
+                });
+
+            }
+
+
 
             // On select clickable LeftMenu Items
             var applyLeftContent = function(){
@@ -481,7 +523,7 @@ jQuery(function($) {
             });
 
             // toggle tag from item or right menu (tag deselect button)
-            $('body').on('click', '#tagmenu .tagbutton, .item .tagbutton', function( event ){
+            $('body').on('click', '.overview .slidebar .item, #tagmenu .tagbutton, .item .tagbutton', function( event ){
                 if(event.preventDefault){
                     event.preventDefault();
                 }else{
@@ -490,10 +532,37 @@ jQuery(function($) {
                 // contentfilter
                 $( '.item' ).removeClass( 'selected' );
                 var el = $('#rightmenucontainer .contentbox > .tagbutton.'+ $(this).data('tag') );
-                el.toggleClass('selected');
+                if( !$('body').hasClass('overview') ){
+                    el.toggleClass('selected');
+                }
+                // order by tags
+                applyTagSelection();
+
+                // display
+                $('#infocontainer').slideUp(200).removeClass('active');
+                $('#topspace .closebutton').removeClass('active');
+
+                $('body').removeClass('overview theory');
+                $('body').addClass('practice');
+            });
+
+            // toggle tag from item or right menu (tag deselect button)
+            $('body').on('click', '#tagmenu .cleartags', function( event ){
+                if(event.preventDefault){
+                    event.preventDefault();
+                }else{
+                    event.returnValue = false;
+                }
+                // contentfilter
+                $( '.item' ).removeClass( 'selected' );
+                $( '.tagbutton' ).removeClass( 'selected' );
+                //var el = $('#rightmenucontainer .contentbox > .tagbutton.'+ $(this).data('tag') );
+                //el.toggleClass('selected');
 
                 // order by tags
                 applyTagSelection();
+
+                $('.cleartags').remove();
 
                 // display
                 $('#infocontainer').slideUp(200).removeClass('active');
@@ -628,17 +697,13 @@ jQuery(function($) {
                 $('#infocontainer').slideUp(200).removeClass('active');
                 $('#topspace .closebutton').removeClass('active');
 
-                /*
+
                 // set Data
                 if( site_data['postdata'].length > 0 ){
-                    markupHTMLContent( JSON.parse(site_data['postdata']) );
                     markupHTMLSlideContents( $('#maincontentcontainer') );
                 }
-                if( site_data['tagdata'].length > 0 ){
-                    markupHTMLTagMenu( JSON.parse(site_data['tagdata']) );
-                }
-                activateIsotope();
-                */
+
+
 
                 $('body').removeClass( 'theory practice articlemenu filtermenu' );
 
@@ -649,6 +714,21 @@ jQuery(function($) {
 
             // Init
             // $('body').addClass('theory'),$('body').addClass('practice'),$('body').addClass('articlemenu'),$('body').addClass('filtermenu');
+
+
+
+
+            // set Data
+            if( site_data['postdata'].length > 0 ){
+                markupHTMLContent( JSON.parse(site_data['postdata']) );
+                markupHTMLSlideContents( $('#maincontentcontainer') );
+            }
+            if( site_data['tagdata'].length > 0 ){
+                markupHTMLTagMenu( JSON.parse(site_data['tagdata']) );
+            }
+            activateIsotope();
+
+
             $('body').addClass('overview');
 
 	});

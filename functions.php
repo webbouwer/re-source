@@ -147,7 +147,7 @@ function wp_main_theme_get_all_tags(){
     return json_encode( get_terms( 'post_tag' ) );
 }
 function wp_main_theme_get_all_categories(){
-    return json_encode( get_categories( array("type"=>"post") ) );
+    return json_encode( get_terms( 'category' ) ); //get_categories( array("type"=>"post") )
 }
 // data for global js
 $wp_global_data['customdata']   = wp_main_theme_get_customizer();

@@ -36,12 +36,12 @@ jQuery(function($) {
                     if( cat == theoryCategory ){
                         itemtype = 1; // left content
                         objfilterclasses += ' menubutton';
-                    }
-                    if( cat == overviewCategory ){
+                    }else if( cat == overviewCategory ){
                         itemtype = 2; // main/start content
                         objfilterclasses += ' overviewcontent';
+                    }else{
+                        objfilterclasses += ' '+cat;
                     }
-                    objfilterclasses += ' '+cat;
                 });
                 var catreverse = obj.cats.reverse();
                 if(oc = 0){
@@ -108,6 +108,42 @@ jQuery(function($) {
             //console.log( JSON.stringify(objlist) );
 
         };
+
+        var getHashUrlVars = function(){
+            var vars = [], hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('#') + 1).split('&');
+            for(var i = 0; i < hashes.length; i++)
+            {
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
+        }
+
+        var setNewHash = function(){
+
+            var newhash = '#';
+            if( tagfilter.length > 0 ){
+                newhash += 'tags='+tagfilter.join();
+            }
+            if( catfilter.length > 0 ){
+                if(tagfilter.length > 0){
+                    newhash += '&';
+                }
+                newhash += 'cats='+catfilter.join();
+            }
+            if(postID != false && postID != typeof undefined && postID != 'undefined'){
+                newhash += '&pid='+postID;
+            }
+
+            //if(history.pushState) {
+                //history.pushState(null, null, newhash );
+            //}else{
+                location.hash = newhash;
+            //}
+
+        }
 
         // display clickable tags
         var gethtmlListTags = function( itemtags ){
@@ -184,14 +220,14 @@ jQuery(function($) {
                     gutter: 0,
                 },
                 getSortData: {
-                    /*byCategory: function (elem) { // sort randomly
+                    byCategory: function (elem) { // sort randomly
                             return $(elem).data('category') === selectedCat ? 0 : 1;
-                    },*/
+                    },
                     byTagWeight: '.matchweight parseInt',
                 },
-                sortBy : 'byTagWeight', //[ 'byCategory', 'byTagWeight' ],
+                sortBy : [ 'byCategory', 'byTagWeight' ],//'byTagWeight', //
                 sortAscending: {
-                          //byCategory: true, // name ascendingly
+                          byCategory: true, // name ascendingly
                           byTagWeight: false, // weight descendingly
                 },
             });
@@ -303,9 +339,12 @@ jQuery(function($) {
             // On select clickable tags
             var applyTagSelection = function( ){
 
+
                 tagfilter = [];
-                catfilter = [];
+                //catfilter = [];
                 postID = '';
+
+
                 // set Tag Menu
                 $('#tagmenu').html('');
                 $('.item .main').removeClass('active');
@@ -326,26 +365,35 @@ jQuery(function($) {
                     $('#rightmenuplaceholder .togglebox h4 .tagcount').html(' ['+tagfilter.length+']');
                 }
 
+
                 // order
                 applyTagWeight();
 
-               // activateIsotope();
+
+                // hash
+                setNewHash();
+
                 var box = $('#rightcontentcontainer');
                 var selected = $('#rightcontentcontainer .contentbox .selected').prepend();
                 var container = $('#rightcontentcontainer .contentbox');
 
-                container
+
+
+                if( !$.isFunction( 'isotope' ) ){
+                    activateIsotope();
+                }else{
+                    container
                     .isotope('updateSortData')
                     .isotope({ filter: filterClass })
                     .isotope({
-                        sortBy : 'byTagWeight', //[ 'byCategory', 'byTagWeight' ], //
+                        sortBy : [ 'byCategory', 'byTagWeight' ], //'byTagWeight', //
                         sortAscending: {
-                              //byCategory: true, // name ascendingly
+                              byCategory: true, // name ascendingly
                               byTagWeight: false, // weight descendingly
                         },
                     })
                     .isotope('layout');
-
+                }
                 box.one('webkitTransitionEnd otransitionend oTransitionEnd msTransisitonEnd transitionend', function(e){
                     var w = container.innerWidth()/4;
                     container.isotope('updateSortData').isotope({ masonry: { columnWidth: w } }).isotope('layout');
@@ -356,6 +404,56 @@ jQuery(function($) {
                 //console.log(tagfilter);
 
             }
+
+            // On select clickable cats
+            var applyCatSelection = function( ){
+
+
+                //catfilter = [];
+                postID = '';
+
+                // set Selected Catbuttons Active
+                $( '.catbutton' ).removeClass( 'selected' );
+                for(i=0;i<catfilter.length;i++){
+                    $( '.catbutton.'+catfilter[i] ).addClass('selected');
+                }
+
+                // order
+                applyTagWeight();
+
+                // hash
+                setNewHash();
+
+                var box = $('#rightcontentcontainer');
+                var selected = $('#rightcontentcontainer .contentbox .selected').prepend();
+                var container = $('#rightcontentcontainer .contentbox');
+
+                if( !$.isFunction( 'isotope' ) ){
+                    activateIsotope();
+                }else{
+                    container
+                    .isotope('updateSortData')
+                    .isotope({ filter: filterClass })
+                    .isotope({
+                        sortBy : [ 'byCategory', 'byTagWeight' ], //'byTagWeight', //
+                        sortAscending: {
+                              byCategory: true, // name ascendingly
+                              byTagWeight: false, // weight descendingly
+                        },
+                    })
+                    .isotope('layout');
+                }
+                box.one('webkitTransitionEnd otransitionend oTransitionEnd msTransisitonEnd transitionend', function(e){
+                    var w = container.innerWidth()/4;
+                    container.isotope('updateSortData').isotope({ masonry: { columnWidth: w } }).isotope('layout');
+                    //container.isotope('reLayout');
+                });
+
+                $('html, body').animate({scrollTop:0}, 400);
+                //console.log(tagfilter);
+
+            }
+
 
             // On select clickable Items
             var applyItemSelection = function(){
@@ -371,6 +469,7 @@ jQuery(function($) {
                     }
 
                     catfilter = $('.item.selected').data('cats').split(',');
+
                     postID = $('.item.selected').data('id');
 
                     filterClass = '';
@@ -378,16 +477,22 @@ jQuery(function($) {
                     if( tagfilter.length > 0 ){
                     filterClass = '.'+tagfilter.join(',.');
                     }
+                    if( catfilter.length > 0 ){
+                    filterClass += '.'+catfilter.join(',.');
+                    }
 
                 }else{
                     tagfilter = ['*'];
                 }
-                // order by tags
-                applyTagSelection();
+
 
                 console.log( tagfilter );
                 console.log( catfilter );
                 console.log( postID );
+
+                // order by tags
+                applyTagSelection();
+
 
             }
 
@@ -508,6 +613,8 @@ jQuery(function($) {
                     event.returnValue = false;
                 }
                 // contentfilter
+                catfilter = [];
+
                 $( '.item' ).removeClass( 'selected' );
                 $(this).toggleClass('selected');
 
@@ -523,7 +630,7 @@ jQuery(function($) {
             });
 
             // toggle tag from item or right menu (tag deselect button)
-            $('body').on('click', '.overview .slidebar .item, #tagmenu .tagbutton, .item .tagbutton', function( event ){
+            $('body').on('click', '#tagmenu .tagbutton, .item .tagbutton', function( event ){
                 if(event.preventDefault){
                     event.preventDefault();
                 }else{
@@ -566,10 +673,34 @@ jQuery(function($) {
 
                 // display
                 $('#infocontainer').slideUp(200).removeClass('active');
-                $('#topspace .closebutton').removeClass('active');
+                $('#topspace,#topspace .closebutton').removeClass('active');
 
                 $('body').removeClass('overview theory');
                 $('body').addClass('practice');
+            });
+
+
+            $('body').on('click', '.item .catbutton', function( event ){
+                if(event.preventDefault){
+                    event.preventDefault();
+                }else{
+                    event.returnValue = false;
+                }
+                // contentfilter
+                $( '.item,.tagbutton,.catbutton' ).removeClass( 'selected' );
+
+                catfilter = [$(this).data('cats')];
+                filterClass = '.'+$(this).data('cats');
+
+                applyCatSelection();
+
+                // display
+                $('#infocontainer').slideUp(200).removeClass('active');
+                $('#topspace,#topspace .closebutton').removeClass('active');
+
+                $('body').removeClass('overview theory');
+                $('body').addClass('practice');
+
             });
 
 
@@ -578,7 +709,7 @@ jQuery(function($) {
             $('body').on('click', '#leftmenucontainer .menubutton', function(){
 
                 $('#infocontainer').slideUp(200).removeClass('active');
-                $('#topspace .closebutton').removeClass('active');
+                $('#topspace,#topspace .closebutton').removeClass('active');
 
                 $('body').removeClass( 'overview practice' );
                 $('body').addClass('theory');
@@ -595,7 +726,7 @@ jQuery(function($) {
 
                 // display
                 $('#infocontainer').slideUp(200).removeClass('active');
-                $('#topspace .closebutton').removeClass('active');
+                $('#topspace,#topspace .closebutton').removeClass('active');
 
                 $('body').removeClass('overview theory');
                 $('body').addClass('practice');
@@ -635,7 +766,7 @@ jQuery(function($) {
                 }
                 $('#infocontainer .contentpage.active').removeClass('active');
 
-                $('#infocontainer,#topspace .closebutton').toggleClass( 'active' );
+                $('#infocontainer,#topspace, #topspace .closebutton').toggleClass( 'active' );
 
                 $('#infocontainer .contentpage[data-link="'+$('#infomenu ul li:first-child a').attr('href')+'"]').addClass( 'active' )
                 .find('.main .textbox').html( objlist[ $('#infocontainer .contentpage[data-link="'+$('#infomenu ul li:first-child a').attr('href')+'"]').data('id') ].content );
@@ -661,7 +792,7 @@ jQuery(function($) {
             // toggle slide main content
             $('body').on('click', '.switchbutton .leftswapbutton, .switchbutton .rightswapbutton', function( event ){
                 $('#infocontainer').slideUp(200).removeClass('active');
-                $('#topspace .closebutton').removeClass('active');
+                $('#topspace,#topspace .closebutton').removeClass('active');
 
                 if( $('body').hasClass('overview') ){
 
@@ -695,15 +826,13 @@ jQuery(function($) {
                     event.returnValue = false;
                 }
                 $('#infocontainer').slideUp(200).removeClass('active');
-                $('#topspace .closebutton').removeClass('active');
+                $('#topspace,#topspace .closebutton').removeClass('active');
 
 
                 // set Data
                 if( site_data['postdata'].length > 0 ){
                     markupHTMLSlideContents( $('#maincontentcontainer') );
                 }
-
-
 
                 $('body').removeClass( 'theory practice articlemenu filtermenu' );
 
@@ -715,21 +844,73 @@ jQuery(function($) {
             // Init
             // $('body').addClass('theory'),$('body').addClass('practice'),$('body').addClass('articlemenu'),$('body').addClass('filtermenu');
 
-
-
+            if(window.location.hash){
+                var hashvars = getHashUrlVars();
+                if( hashvars.tags  ){
+                    tagfilter = hashvars.tags.split(',');
+                }
+                if( hashvars.cats  ){
+                    catfilter = hashvars.cats.split(',');
+                }
+                if( hashvars.pid && hashvars.pid != '' && hashvars.pid != 'undefined' && hashvars.pid != typeof undefined){
+                    postID = hashvars.pid;
+                }
+            }
 
             // set Data
             if( site_data['postdata'].length > 0 ){
                 markupHTMLContent( JSON.parse(site_data['postdata']) );
-                markupHTMLSlideContents( $('#maincontentcontainer') );
+
+                //if( !hashvars || typeof hashvars == undefined || ( !hashvars.tags &&  !hashvars.cats) ){ // hashvars.pid
+                    markupHTMLSlideContents( $('#maincontentcontainer') );
+                //}
             }
+
             if( site_data['tagdata'].length > 0 ){
                 markupHTMLTagMenu( JSON.parse(site_data['tagdata']) );
             }
+
             activateIsotope();
 
 
-            $('body').addClass('overview');
+            if( hashvars.tags || hashvars.cats  || hashvars.pid ){ // hashvars.pid
+
+                if( hashvars.tags  ){
+                    tagfilter = hashvars.tags.split(',');
+                }
+                if( hashvars.cats  ){
+                    catfilter = hashvars.cats.split(',');
+                }
+
+                $('#tagmenu').empty();
+                $('.tagbutton').removeClass( 'selected' );
+                for(i=0;i<tagfilter.length;i++){
+                    $( '.tagbutton.'+tagfilter[i] ).addClass('selected');
+                }
+
+                filterClass = '';
+                if( tagfilter.length > 0 ){
+                    filterClass = '.'+tagfilter.join(',.');
+                }
+                if( catfilter.length > 0 ){
+                    filterClass += '.'+catfilter.join(',.');
+                }
+                applyTagSelection();
+
+                $('.cleartags').remove();
+
+                // display
+                $('#infocontainer').slideUp(200).removeClass('active');
+                $('#topspace,#topspace .closebutton').removeClass('active');
+
+                $('body').removeClass('overview theory');
+                $('body').addClass('practice');
+
+            }else{
+
+                $('body').addClass('overview');
+
+            }
 
 	});
 

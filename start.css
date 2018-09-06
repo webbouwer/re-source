@@ -13,9 +13,12 @@ box-sizing: border-box;
 display:inline-block;
 }
 
-#topspace
+#topspace.active
 {
 background-color: white;
+-webkit-box-shadow: 0px 2px 15px -4px rgba(18,18,18,1);
+-moz-box-shadow: 0px 2px 15px -4px rgba(18,18,18,1);
+box-shadow: 0px 2px 15px -4px rgba(18,18,18,1);
 }
 #rightmenucontainer .contentbox #tagmenu
 {
@@ -67,9 +70,9 @@ font-weight:normal;
 line-height:85px;
 text-transform: uppercase;
 border-bottom:5px solid black;
-background-position: right 32px;
+background-position: right 30px;
 background-repeat: no-repeat;
-background-size: 24px 24px;
+background-size: 30px 30px;
 }
 .articlemenu #leftmenucontainer .togglebox h4,
 .filtermenu #rightmenuplaceholder .togglebox h4
@@ -247,15 +250,15 @@ max-height:100%;
 #topspace .closebutton
 {
 position: absolute;
-right:0px;
-top:0px;
+right:6px;
+top:24px;
 width:48px;
 height:48px;
 display:none;
 
 background-position: center;
 background-repeat: no-repeat;
-background-size: 24px 24px;
+background-size: 30px 30px;
 
 }
 
@@ -317,6 +320,16 @@ float: right;
 width:42%;
 }
 
+#topbar .rightside #searchbox
+{
+margin:6px 0px;
+width:100%;
+padding:2% 2%;
+font-size:20px;
+font-weight:bold;
+text-transform:uppercase;
+border:1px solid black;
+}
 
 #topcontent
 {
@@ -713,6 +726,7 @@ line-height:20px;
 font-size:18px;
 padding:0px 0px 5px;
 color:black;
+font-weight: bold;
 text-decoration: none;
 }
 
@@ -1170,12 +1184,12 @@ margin-right:8%;
 #rightmenucontainer,
 #rightmenuplaceholder
 {
-transition: width linear .3s;
+transition: width linear .6s;
 }
 #leftcontentcontainer,
 .contentbox
 {
-transition: all linear .3s;
+transition: all linear .6s;
 }
 
 

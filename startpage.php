@@ -59,6 +59,8 @@ $header_image = get_header_image();
 
     $stylesheet = get_template_directory_uri().'/start.css';
     echo '<link rel="stylesheet" id="wp-theme-custom-style"  href="'.$stylesheet.'" type="text/css" media="all" />';
+    $imagesloaded = get_template_directory_uri().'/assets/imagesloaded.js';
+    echo '<script type="text/javascript" src="'.$imagesloaded.'"></script>';
     $isotope = get_template_directory_uri().'/assets/isotope.js';
     echo '<script type="text/javascript" src="'.$isotope.'"></script>';
     $javascript = get_template_directory_uri().'/start.js';
@@ -101,11 +103,11 @@ $header_image = get_header_image();
         </div>
         <div id="leftmenucontainer">
             <div class="togglebox"><h4>Artikelen</h4></div>
-            <div class="contentbox">Artikel menu</div>
+            <div class="contentbox"><span class="textloader">Loading</span></div>
         </div>
         <div id="leftcontentcontainer">
             <div class="topplaceholder"></div>
-            <div class="contentbox">Artikel content</div>
+            <div class="contentbox"><span class="textloader">Loading</span></div>
 
             <div id="contentswitch">
                     <div class="switchbutton"><div class="leftswapbutton"><span>Theorie & Reflectie</span></div><div class="rightswapbutton"><span>Praktijk en Design</span></div></div>
@@ -115,16 +117,16 @@ $header_image = get_header_image();
 
         <div id="maincontentcontainer">
             <div class="topplaceholder"></div>
-            <div class="contentbox">Overview content</div>
+            <div class="contentbox"><span class="textloader">Loading</span></div>
         </div>
 
         <div id="rightcontentcontainer">
             <div class="topplaceholder"></div>
-            <div class="contentbox">Label content</div>
+            <div class="contentbox"><span class="textloader">Loading</span></div>
         </div>
         <div id="rightmenucontainer">
             <div class="topplaceholder"></div>
-            <div class="contentbox">Label menu</div>
+            <div class="contentbox"><span class="textloader">Loading</span></div>
         </div>
         <div id="rightmenuplaceholder">
             <div class="togglebox"><h4>Labels<span class="tagcount"></span></h4></div>

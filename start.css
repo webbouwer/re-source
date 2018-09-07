@@ -13,6 +13,28 @@ box-sizing: border-box;
 display:inline-block;
 }
 
+.textloader
+{
+display: block;
+margin:4% auto;
+text-align: center;
+padding:7px 8px 5px;
+width:100px;
+font-weight:bold;
+text-transform: uppercase;
+color:white;
+background-color: black;
+text-decoration: blink;
+animation: loadblink 0.5s linear infite;
+}
+@keyframes loadblink
+{
+    50% {
+        opacity: 0;
+    }
+
+}
+
 #topspace.active
 {
 background-color: white;
@@ -379,7 +401,7 @@ font-size:12px;
 #topcontent #infocontainer #infocontent,
 #infocontainer #infocontent .contentpage
 {
-transition: all linear .5s;
+transition: all linear .3s;
 }
 
 
@@ -809,6 +831,7 @@ margin-bottom:2%;
 .practice .item .itemcontent .intro h3
 {
 margin:7px 0px 5px;
+word-wrap:break-word;
 }
 .practice .item .itemcontent .intro .coverimage .stage
 {
@@ -840,7 +863,7 @@ position:relative;
 width:0%;
 float:left;
 height: 560px;
-transition: width linear .6s;
+transition: width linear .3s;
 overflow:hidden;
 }
 .overview #maincontentcontainer .contentbox .item.active
@@ -1184,12 +1207,12 @@ margin-right:8%;
 #rightmenucontainer,
 #rightmenuplaceholder
 {
-transition: width linear .6s;
+transition: width linear .3s;
 }
 #leftcontentcontainer,
 .contentbox
 {
-transition: all linear .6s;
+transition: all linear .3s;
 }
 
 

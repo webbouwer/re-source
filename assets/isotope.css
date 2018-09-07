@@ -282,19 +282,12 @@ transition: all 0.3s easeIn;
 
 
 #rightcontentcontainer .item {
-   -webkit-transition: all 0.5s easeIn;
-    -moz-transition: all 0.5s easeIn;
-    -o-transition: all 0.5s easeIn;
-    transition: all 0.5s easeIn;
+   -webkit-transition: all 0.3s easeIn;
+    -moz-transition: all 0.3s easeIn;
+    -o-transition: all 0.3s easeIn;
+    transition: all 0.3s easeIn;
 }
 
-
-#rightcontentcontainer .item {
-   -webkit-transition: all 0.5s easeIn;
-    -moz-transition: all 0.5s easeIn;
-    -o-transition: all 0.5s easeIn;
-    transition: all 0.5s easeIn;
-}
 
 #rightcontentcontainer .item{
   -webkit-transition-property: height, width;

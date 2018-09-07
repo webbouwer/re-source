@@ -2,7 +2,8 @@
 jQuery(function($) {
 
 	$(document).ready(function(){
-
+    });
+    $(window).load(function() {
         var objlist     = []; // all posts
         var tagfilter   = [];
         var catfilter   = [];
@@ -213,7 +214,7 @@ jQuery(function($) {
                 itemSelector: '.item',
                 layoutMode: 'masonry',
                 animationEngine: 'best-available',
-                transitionDuration: '0.6s',
+                transitionDuration: '0.9s',
                 masonry: {
                     //isFitWidth: true,
                     columnWidth: container.innerWidth()/4,
@@ -331,7 +332,6 @@ jQuery(function($) {
                     $.each(options, function( idx, obj) {
                         menu.append(obj);
                     });
-
                 //}
                 // TODO.. apply Masonry (isotope)
             }
@@ -581,6 +581,7 @@ jQuery(function($) {
                     $('.theory #leftcontentcontainer .contentbox').css({ 'min-height': boxheight, 'max-height': boxheight  });
 
                     $('#leftcontentcontainer .contentbox').html( content.removeClass('menubutton').addClass('selected') );
+
                     $('#leftcontentcontainer .contentbox .title, #leftcontentcontainer .contentbox .main').insertAfter('#leftcontentcontainer .contentbox .intro');
 
                     applyItemSelection();
@@ -914,10 +915,6 @@ jQuery(function($) {
 
 	});
 
-    $(window).load(function() {
-
-
-    });
 
     $(document).ajaxStart(function() {
     });

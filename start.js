@@ -12,6 +12,7 @@ jQuery(function($) {
         var postID      = '';
 
         var theoryCategory = 'artikelen';
+        var parentCategory = 'reststromen';
         var overviewCategory = 'bulletin';
 
         // setup display posts
@@ -723,7 +724,13 @@ jQuery(function($) {
             });
 
             // item right content click
-            $('body').on('click', '#rightcontentcontainer .item .itemcontent .intro', function(){
+            $('body').on('click', '#rightcontentcontainer .item .itemcontent .intro', function(event){
+
+                if(event.preventDefault){
+                    event.preventDefault();
+                }else{
+                    event.returnValue = false;
+                }
 
                 // display
                 $('#infocontainer').slideUp(200).removeClass('active');
@@ -756,6 +763,13 @@ jQuery(function($) {
                     $(this).parent().find('.main').removeClass('active');
                     $('.item .main .textbox').empty();
                 }
+            });
+
+            $('body').on('click', '.item .optionfullscreen', function(){
+
+                $(this).parent().parent().parent().parent().parent().toggleClass('fullscreen');
+                $('#rightcontentcontainer .contentbox').isotope('layout');
+
             });
 
             // toggle slide info content

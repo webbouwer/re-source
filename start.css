@@ -652,9 +652,9 @@ font-weight:bold;
 }
 .item .matchweight
 {
-padding-left:5px;
-display: inline-block;
-font-size:23px;
+padding-left:3px;
+display:inline;
+font-size:18px;
 }
 
 #infocontainer .item .matchweight
@@ -787,13 +787,29 @@ height:auto !important;
 min-height: 460px;
 padding:8px 0px 0px;
 }
-.item .optionfullscreen.button
+.optionfullscreen.button
+{
+display:none;
+}
+.item.selected .optionfullscreen.button
 {
 position:absolute;
-right:0px;
-bottom:0px;
-font-size:50px;
-color:white;
+display: block;
+content: '';
+right:6px;
+bottom:10px;
+font-size:0px;
+width:46px;
+height:46px;
+background-image: url('images/full.png');
+background-size:cover;
+cursor:hand;
+cursor:pointer;
+z-index:500;
+}
+.item.fullscreen .optionfullscreen.button
+{
+background-image: url('images/small.png');
 }
 
 
@@ -828,6 +844,12 @@ margin-bottom:2%;
 {
     width: 49%;
 }
+.practice #rightcontentcontainer .contentbox .item.portrait.selected.fullscreen,
+.practice #rightcontentcontainer .contentbox .item.selected.fullscreen
+{
+    width: 86%;
+}
+
 .practice .item .itemcontent .intro h3
 {
 margin:7px 0px 5px;

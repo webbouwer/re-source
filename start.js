@@ -54,12 +54,32 @@ jQuery(function($) {
                     objfilterclasses += ' contentpage';
                 }
 
+                /* check obj.content for video content -> display video on click
+                var videoBox = '';
+                var contentHolder = document.createElement('div');
+                contentHolder.innerHTML = obj.content;
+                if( typeof( contentHolder.getElementsByTagName("iframe")[0] ) !== 'undefined'
+                   && contentHolder.getElementsByTagName("iframe")[0] != ''
+                   && contentHolder.getElementsByTagName("iframe")[0].outerHTML != 'undefined' ){
+                    videoBox = contentHolder.getElementsByTagName("iframe")[0].outerHTML;
+                }*/
+
+
+                // check obj.content for gallery content -> create slider
+
                 html += '<div id="'+obj.type+'-'+obj.id+'" data-id="'+obj.id+'" data-slug="'+obj.slug+'" class="item '+obj.imgorient+' '+objfilterclasses+'" ';
                 html += 'data-link="'+obj.link+'" data-author="'+obj.author+'" data-timestamp="'+obj.timestamp+'" data-category="'+catreverse[0]+'" ';
                 html += 'data-tags="'+obj.tags+'" data-cats="'+obj.cats+'">';
                 html += '<div class="itemcontent"><div class="intro">';
 
                 html += '<div class="coverimage">';
+
+                /*if( videoBox != '' && itemtype == 0){
+                    html += '<div class="stage landscape" data-url="'+obj.imgurl+'">'+obj.image;
+                    html += '<div class="mediabox">'+videoBox+'</div>';
+                    html += '<div class="optionfullscreen button">[]</div>';
+                    html += '</div>';
+                }else */
                 if(obj.image && obj.image != ''){
                     html += '<div class="stage '+obj.imgorient+'" data-url="'+obj.imgurl+'">'+obj.image;
                     html += '<div class="optionfullscreen button">[]</div>';
@@ -69,7 +89,7 @@ jQuery(function($) {
                 } //html += '<div class="excerpt">'+obj.excerpt+'</div>';
                 html += '</div>';
                 html += '<div class="title">';
-                html += '<h3>'+obj.title+'</h3><div class="matchweight moderate">0</div>';
+                html += '<h3>'+obj.title+'<span class="matchweight moderate">0</span></h3>';
                 html += '<div class="author">'+obj.author+'</div></div></div>';
                 html += '<div class="itemcatbox">'+display_cats+'</div><div class="itemtagbox">'+display_tags+'</div>';
                 //html += JSON.stringify( obj.tags );
@@ -340,15 +360,14 @@ jQuery(function($) {
             // On select clickable tags
             var applyTagSelection = function( ){
 
-
                 tagfilter = [];
                 //catfilter = [];
                 postID = '';
 
-
                 // set Tag Menu
                 $('#tagmenu').html('');
                 $('.item .main').removeClass('active');
+
                 $('#rightmenucontainer .contentbox > .tagbutton.selected').each( function(idx,obj){
                     $('#tagmenu').append( $(obj).clone() );
                     tagfilter.push( $(obj).data('tag') );
@@ -365,11 +384,8 @@ jQuery(function($) {
                 if( tagfilter.length > 0 ){
                     $('#rightmenuplaceholder .togglebox h4 .tagcount').html(' ['+tagfilter.length+']');
                 }
-
-
                 // order
                 applyTagWeight();
-
 
                 // hash
                 setNewHash();
@@ -387,17 +403,18 @@ jQuery(function($) {
                     .isotope('updateSortData')
                     .isotope({ filter: filterClass })
                     .isotope({
-                        sortBy : [ 'byCategory', 'byTagWeight' ], //'byTagWeight', //
+                        sortBy :'byTagWeight', //  [ 'byCategory', 'byTagWeight' ], //
                         sortAscending: {
-                              byCategory: true, // name ascendingly
+                              //byCategory: true, // name ascendingly
                               byTagWeight: false, // weight descendingly
                         },
-                    })
-                    .isotope('layout');
+                    });
                 }
                 box.one('webkitTransitionEnd otransitionend oTransitionEnd msTransisitonEnd transitionend', function(e){
                     var w = container.innerWidth()/4;
-                    container.isotope('updateSortData').isotope({ masonry: { columnWidth: w } }).isotope('layout');
+                    //container.isotope('updateSortData')
+                    container.isotope({ masonry: { columnWidth: w } });
+                    container.isotope('layout');
                     //container.isotope('reLayout');
                 });
 
@@ -408,8 +425,6 @@ jQuery(function($) {
 
             // On select clickable cats
             var applyCatSelection = function( ){
-
-
                 //catfilter = [];
                 postID = '';
 
@@ -421,7 +436,6 @@ jQuery(function($) {
 
                 // order
                 applyTagWeight();
-
                 // hash
                 setNewHash();
 
@@ -462,19 +476,14 @@ jQuery(function($) {
                 if( $('.item.selected').data('tags').length > 0 ){
 
                     tagfilter = $('.item.selected').data('tags').split(',');
-
                     $('#tagmenu').empty();
                     $('.tagbutton').removeClass( 'selected' );
                     for(i=0;i<tagfilter.length;i++){
                         $( '.tagbutton.'+tagfilter[i] ).addClass('selected');
                     }
-
                     catfilter = $('.item.selected').data('cats').split(',');
-
                     postID = $('.item.selected').data('id');
-
                     filterClass = '';
-
                     if( tagfilter.length > 0 ){
                     filterClass = '.'+tagfilter.join(',.');
                     }
@@ -486,14 +495,12 @@ jQuery(function($) {
                     tagfilter = ['*'];
                 }
 
-
-                console.log( tagfilter );
-                console.log( catfilter );
-                console.log( postID );
+                //console.log( tagfilter );
+                //console.log( catfilter );
+                //console.log( postID );
 
                 // order by tags
                 applyTagSelection();
-
 
             }
 
@@ -568,7 +575,7 @@ jQuery(function($) {
             var applyLeftContent = function(){
 
                     // all items
-                    $('.item').removeClass('selected');
+                    $('.item').removeClass('selected active');
                     $('.item .main .textbox').html('');
 
                     // selected
@@ -587,6 +594,8 @@ jQuery(function($) {
 
                     applyItemSelection();
             }
+
+
 
 
 
@@ -748,6 +757,24 @@ jQuery(function($) {
                 $('.item .main .textbox').empty();
                 selecteditem.addClass('selected active');
 
+                /*
+                var videoBox = '';
+                var content = objlist[$(this).parent().parent().data('id')].content;
+                var contentHolder = document.createElement('div');
+                contentHolder.innerHTML = content;
+                if( typeof( contentHolder.getElementsByTagName("iframe")[0] ) !== 'undefined'
+                   && contentHolder.getElementsByTagName("iframe")[0] != ''
+                   && contentHolder.getElementsByTagName("iframe")[0].outerHTML != 'undefined' ){
+                    videoBox = contentHolder.getElementsByTagName("iframe")[0].outerHTML;
+
+                    selecteditem.find('.intro').append( videoBox );
+
+                    selecteditem.find('.coverimage').slideUp();
+                    selecteditem.find('.intro iframe').slideDown();
+
+                }
+                */
+
                 // order by selected item id
                 applyItemSelection();
 
@@ -783,11 +810,50 @@ jQuery(function($) {
 
                 $('#infocontainer,#topspace, #topspace .closebutton').toggleClass( 'active' );
 
+                $('#topcontent').css({ 'max-height': $(window).height() - $('#topcontentcontainer').height()  + 'px' });
+
                 $('#infocontainer .contentpage[data-link="'+$('#infomenu ul li:first-child a').attr('href')+'"]').addClass( 'active' )
                 .find('.main .textbox').html( objlist[ $('#infocontainer .contentpage[data-link="'+$('#infomenu ul li:first-child a').attr('href')+'"]').data('id') ].content );
-                $('#infocontainer').slideToggle(300);
+
                 //$('#infocontainer .contentpage.active');
+                // section container (selector)
+                markupInfoPages();
+
+                $('#infocontainer').slideToggle(300);
             });
+
+            function markupInfoPages(){
+                //$('.section-intro img').each( function( x , obj ){
+                $('#infocontainer .contentpage.active .section-intro img').each( function(){
+                    var url = $(this).attr('src');
+                    var img = $('<div class="imgwrap"></div>').css({
+                        'background-image': 'url("' + url + '")'
+                    });
+                    $(this).parent().prepend(img);
+                });
+
+                $('.section-container .section').on('click', function(ev) {
+
+                  var el = $(this);
+                  var speed = 400;
+                  $('.section-container').addClass('active'); // main active
+                  $('.section-container .section').removeClass('active');
+                  el.addClass('active').appendTo(el.parent()); // section active
+                  var c = el.find('.section-content').clone();
+                  el.parent().parent().find('.selectedcontentsection').slideUp(speed, function() {
+                    $(this).html(c).slideDown(speed);
+                  });
+
+                    el.parent().parent().parent().parent().parent().animate({
+                        scrollTop: el.offset().top
+                    }, 2000);
+
+                });
+
+            }
+
+
+
 
             // toggle info pages
             $('body').on('click', '#infomenu ul li a', function( event ){
@@ -802,6 +868,7 @@ jQuery(function($) {
                 $('#infocontainer .contentpage[data-link="'+$(this).attr('href')+'"]').find('.main .textbox').html( objlist[ $('#infocontainer .contentpage[data-link="'+$(this).attr('href')+'"]').data('id') ].content );
                 $('#infocontainer .contentpage[data-link="'+$(this).attr('href')+'"]').addClass('active');
 
+                markupInfoPages();
             });
 
             // toggle slide main content
@@ -888,7 +955,7 @@ jQuery(function($) {
             activateIsotope();
 
 
-            if( hashvars.tags || hashvars.cats  || hashvars.pid ){ // hashvars.pid
+            if( typeof( hashvars ) !== 'undefined' && (hashvars.tags || hashvars.cats  || hashvars.pid ) ){ // hashvars.pid
 
                 if( hashvars.tags  ){
                     tagfilter = hashvars.tags.split(',');
@@ -926,6 +993,7 @@ jQuery(function($) {
                 $('body').addClass('overview');
 
             }
+
 
 	});
 

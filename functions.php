@@ -179,10 +179,10 @@ function wp_main_theme_stylesheet(){
 add_action( 'wp_head', 'wp_main_theme_stylesheet', 9999 );
 
 // register style sheet function for editor
-function onepiece_editor_styles() {
+function wp_main_editor_styles() {
     add_editor_style( 'style.css' );
 }
-add_action( 'admin_init', 'onepiece_editor_styles' );
+add_action( 'admin_init', 'wp_main_editor_styles' );
 
 
 
@@ -311,6 +311,7 @@ function wp_main_theme_loop_html(){
                 $post = get_post($post->id);
                 $fulltext = $post->post_content;//  str_replace( '<!--more-->', '',);
                 $content = apply_filters('the_content', $fulltext );
+
                 $excerpt = truncate( $content, $excerpt_length, '', false, true );  // get_the_excerpt()
 
                 if(is_page()){
@@ -336,6 +337,10 @@ function wp_main_theme_loop_html(){
     endif;
     wp_reset_query();
 }
+
+
+
+
 
 
 /**
@@ -381,11 +386,11 @@ function get_categories_select(){
 }
 
 // Category metabox Hierarchy
-function onepiece_wp_terms_checklist_args( $args, $post_id ) {
+function wp_terms_checklist_args( $args, $post_id ) {
    $args[ 'checked_ontop' ] = false;
    return $args;
 }
-add_filter( 'wp_terms_checklist_args', 'onepiece_wp_terms_checklist_args', 1, 2 );
+add_filter( 'wp_terms_checklist_args', 'wp_terms_checklist_args', 1, 2 );
 
 // check active widgets
 function is_sidebar_active( $sidebar_id ){
@@ -409,6 +414,9 @@ function check_sidebar_params( $params ) {
 }
 // Add widget param check for empty html correction
 add_filter( 'dynamic_sidebar_params', 'check_sidebar_params' );
+
+
+
 
 /**
 * Truncates text.

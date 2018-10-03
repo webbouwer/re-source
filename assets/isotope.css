@@ -270,8 +270,9 @@ width:100%;
 */
 
 /**** Isotope CSS3 transitions ***/
-
+/*
 #rightcontentcontainer .item,
+*/
 #rightcontentcontainer .item .main,
 #rightcontentcontainer .item .main .textbox,
 #rightcontentcontainer .item .coverimage,
@@ -280,14 +281,14 @@ width:100%;
 transition: all 0.3s easeIn;
 }
 
-
+/*
 #rightcontentcontainer .item {
    -webkit-transition: all 0.3s easeIn;
     -moz-transition: all 0.3s easeIn;
     -o-transition: all 0.3s easeIn;
     transition: all 0.3s easeIn;
 }
-
+*/
 
 #rightcontentcontainer .item{
   -webkit-transition-property: height, width;

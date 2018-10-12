@@ -116,7 +116,7 @@ function wp_main_theme_get_postdata(){
                     'link' => get_the_permalink(),
                     'title' => get_the_title(),
                     'slug' => $post->post_name,
-                    'image' => get_the_post_thumbnail(),
+                    'image' => get_the_post_thumbnail( $post->id, 'post-thumbnail'),
                     'imgurl' => wp_get_attachment_url( get_post_thumbnail_id( $post->id ) ),
                     'imgorient' => check_image_orientation( $post->id ),
                     'excerpt' => $excerpt,

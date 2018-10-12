@@ -2,8 +2,15 @@
 jQuery(function($) {
 
 	$(document).ready(function(){
+
+        //$('body').prepend('<div id="pageloader"><span class="textloader">Loading</span></div>');
+
     });
     $(window).load(function() {
+
+        //<span class="textloader">Loading</span>
+
+
         var objlist     = []; // all posts
         var tagfilter   = [];
         var catfilter   = [];
@@ -274,16 +281,6 @@ jQuery(function($) {
 
             };
 
-
-
-
-
-
-
-
-
-
-
             // match tag weights
             var calculateTagWeight = function( obj ){
                     var mc = 0;
@@ -335,8 +332,6 @@ jQuery(function($) {
                 $.each(items, function( idx, obj) {
                     container.append(obj);
                 });*/
-
-
 
                 // order left menu items by match weight
                 //if( $('body.articlemenu').length > 0 ){
@@ -523,7 +518,7 @@ jQuery(function($) {
                //});
 
 
-               $('body').on( 'click', '#maincontentcontainer .rightslidenav', function(event){
+               $('body').on( 'click', '#maincontentcontainer .contentbox .rightslidenav', function(event){
                     if(event.preventDefault){
                         event.preventDefault();
                     }else{
@@ -545,7 +540,7 @@ jQuery(function($) {
                     //applyItemSelection();
                 });
 
-               $('body').on( 'click', '#maincontentcontainer .leftslidenav', function(event){
+               $('body').on( 'click', '#maincontentcontainer .contentbox .leftslidenav', function(event){
                     if(event.preventDefault){
                         event.preventDefault();
                     }else{
@@ -923,7 +918,110 @@ jQuery(function($) {
                 $('body').addClass('overview');
             });
 
+
+
+            // setup search
+            var emptysearchtext = 'In development';
+            var emptyhinttext = 'Type a search';
+
+            if( $('#searchhints').length < 1 ){
+              $('<div id="searchhints"><div class="resultcontent">'+emptyhinttext+'</div></div>').insertAfter('#searchbox');
+            }
+            $('#searchhints').css({ 'width': $('#searchbox').outerWidth() });
+            $('#searchbox').val('');
+            $('#searchbox').attr('placeholder', emptysearchtext);
+
+
+            $('body').on('mouseover focus', '#searchbox, #searchhints', function(){
+                $('#searchhints').addClass('active');
+                setSearchHints();
+            });
+
+            $('body').on('mouseout blur', '#searchbox, #searchhints ', function(){
+                if( $('#searchbox:focus').length == 0 && $('#searchhints:hover').length == 0){
+                    $('#searchbox').css({ 'background-color': 'white' });
+                    $('#searchhints .resultcontent').html(emptyhinttext);
+                    $('#searchhints').removeClass('active');
+                }
+            });
+
+            $('body').on( 'keyup', '#searchbox', function(event){
+
+                if(event.preventDefault){
+                    event.preventDefault();
+                }else{
+                    event.returnValue = false;
+                }
+                setSearchHints();
+
+            });
+
+            function setSearchHints(){
+                var searchstring = $('#searchbox').val();
+              var searchresult = '';
+              if( searchstring.length < 1 ){
+                searchresult = emptyhinttext;
+                }else{
+                searchresult = getSearchResult( searchstring );
+              }
+              $('#searchhints .resultcontent').html( searchresult );
+            }
+
+            function getSearchResult( searchstring ){
+
+                var alltags = JSON.parse(site_data['tagdata']); //root.filterdata.alltags;
+                //var catfilter = root.filterdata.allCats;
+
+                var related = searchstring;
+                var unspaced = searchstring.split(' ');
+
+                // get tags by letter/word
+                var taglist = Array();
+
+                if( unspaced.length > 0 ){
+                    related = '<ul>';
+                    $.each( alltags, function( idx, tag ){
+                        var tagstring = tag.name;
+                        $.each( unspaced, function( inx, str ) {
+                            var r = tagstring.indexOf(str);
+                            if( r > -1  && str != ' ' && str != ''){
+                                //console.log( tag +' vs '+ str );
+                                if( $.inArray( tag.name , taglist ) < 0 ){ // no double
+
+                                    taglist.push( tag.name );
+                                    related += '<li><a onclick="alert(\'cehck\');" href="#tags='+tag.slug+'" class="tagbutton ';
+                                    if( $.inArray( tag.name , tagfilter ) > -1 ){
+                                        related += 'selected ';
+                                    }
+                                    related += ''+tag.slug+'" data-tag="'+tag.slug+'">'+tag.name+'</a></li>';
+
+                                }
+                            }
+
+                        });
+                    });
+                    related += '</ul>';
+                }
+
+                return related;
+
+            };
+
+            /*
+            $('body').on('click', '#searchhints .resultcontent .tagbutton', function( event ){
+                if(event.preventDefault){
+                    event.preventDefault();
+                }else{
+                    event.returnValue = false;
+                }
+                $(this).toggleClass('selected');
+                applyTagSelection();
+            });
+            */
+
+
             // Init
+
             // $('body').addClass('theory'),$('body').addClass('practice'),$('body').addClass('articlemenu'),$('body').addClass('filtermenu');
 
             if(window.location.hash){
@@ -952,6 +1050,12 @@ jQuery(function($) {
                 markupHTMLTagMenu( JSON.parse(site_data['tagdata']) );
             }
 
+
+
+
+
+
+
             activateIsotope();
 
 
@@ -977,12 +1081,14 @@ jQuery(function($) {
                 if( catfilter.length > 0 ){
                     filterClass += '.'+catfilter.join(',.');
                 }
+
+
                 applyTagSelection();
 
                 $('.cleartags').remove();
 
                 // display
-                $('#infocontainer').slideUp(200).removeClass('active');
+                $('#infocontainer').hide().removeClass('active'); //$('#infocontainer').slideUp(200).removeClass('active');
                 $('#topspace,#topspace .closebutton').removeClass('active');
 
                 $('body').removeClass('overview theory');
@@ -993,6 +1099,12 @@ jQuery(function($) {
                 $('body').addClass('overview');
 
             }
+
+        /*
+            $('body').imagesLoaded( function( instance ) {
+                $('#pageloader').remove();
+                console.log('all images successfully loaded');
+            }); */
 
 
 	});

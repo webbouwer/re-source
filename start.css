@@ -344,6 +344,32 @@ font-weight:bold;
 text-transform:uppercase;
 border:1px solid black;
 }
+#searchhints
+{
+position:relative;
+}
+#searchhints .resultcontent
+{
+display:none;
+}
+#searchhints.active .resultcontent
+{
+position: absolute;
+display:block;
+max-width:100%;
+height:auto;
+background-color:white;
+z-index:999;
+}
+#searchhints.active .resultcontent ul
+{
+max-width:100%;
+}
+#searchhints.active .resultcontent ul li
+{
+display: inline-block;
+list-style:none;
+}
 
 #topcontent
 {
@@ -371,13 +397,15 @@ max-width:100%;
 {
 display:inline-block;
 padding:16px 0px 16px;
-}#topcontent #infocontainer #infomenu ul li:first-child
+}
+#topcontent #infocontainer #infomenu ul li
 {
 margin-right:16px;
 }
 #topcontent #infocontainer #infomenu ul li:last-child
 {
 float:right;
+margin-right:0px;
 }
 #topcontent #infocontainer #infomenu ul li a
 {
@@ -609,7 +637,17 @@ font-weight:bold;
 {
 display:none;
 }
-
+.button,
+.menubutton,
+.switchbutton,
+.togglebox,
+.catbutton,
+.tagbutton,
+.coverimage img
+{
+cursor:hand;
+cursor: pointer;
+}
 
 
 /* item globals content */
@@ -905,7 +943,7 @@ display:block;
 position:relative;
 width:0%;
 float:left;
-height: 560px;
+min-height: 560px;
 transition: width linear .3s;
 overflow:hidden;
 }
@@ -913,6 +951,12 @@ overflow:hidden;
 {
 width:100%;
 }
+.overview #maincontentcontainer .contentbox .itemcontent .optionfullscreen
+{
+display: none;
+}
+
+
 .overview #maincontentcontainer .slidebar
 {
 overflow:hidden;
@@ -928,6 +972,8 @@ overflow:hidden;
 .overview #maincontentcontainer .slidebar .item .itemtagbox
 {
 }
+
+
 .overview #maincontentcontainer .infotoggle
 {
 }
@@ -1181,6 +1227,7 @@ background-image:url('images/pijl_links.png');
 background-position: center;
 background-size:24px;
 background-repeat: no-repeat;
+z-index:999;
 }
 .overview #maincontentcontainer .rightslidenav
 {
@@ -1278,9 +1325,9 @@ width:66%; /* width:0%; overflow-x:hidden;*/
 .theory #leftcontentcontainer .contentbox
 {
 float:left;
-width:86%;
+width:78%;
 /*max-height:70%;*/
-margin-left:8%;
+margin-left:12%;
 overflow-y:auto;
 /*
 float:right;

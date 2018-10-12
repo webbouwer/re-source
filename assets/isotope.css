@@ -273,22 +273,25 @@ width:100%;
 /*
 #rightcontentcontainer .item,
 */
+
+/*
+
 #rightcontentcontainer .item .main,
 #rightcontentcontainer .item .main .textbox,
 #rightcontentcontainer .item .coverimage,
 #rightcontentcontainer .item .stage
 {
-transition: all 0.3s easeIn;
+transition: all 0.2s easeIn;
 }
 
-/*
+
 #rightcontentcontainer .item {
    -webkit-transition: all 0.3s easeIn;
     -moz-transition: all 0.3s easeIn;
     -o-transition: all 0.3s easeIn;
     transition: all 0.3s easeIn;
 }
-*/
+
 
 #rightcontentcontainer .item{
   -webkit-transition-property: height, width;
@@ -303,4 +306,4 @@ transition: all 0.3s easeIn;
           transition-property:         transform, opacity;
 }
 
-
+*/

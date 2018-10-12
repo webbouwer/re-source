@@ -13,7 +13,14 @@ box-sizing: border-box;
 display:inline-block;
 }
 
-
+#pageloader
+{
+position:fixed;
+width:100%;
+height:100%;
+z-index:9999;
+text-align: center;
+}
 .textloader
 {
 display: block;
@@ -25,6 +32,11 @@ font-weight:bold;
 text-transform: uppercase;
 color:white;
 background-color: black;
+}
+
+#pageloader .textloader
+{
+margin:8% auto;
 }
 
 #topspace.active
@@ -230,7 +242,12 @@ z-index:900;
 }
 
 
-
+.startpage #maincontentcontainer,
+.startpage #leftcontentcontainer,
+.startpage #rightcontentcontainer
+{
+opacity:0;
+}
 
 
 
@@ -432,7 +449,7 @@ font-size:12px;
 #topcontent #infocontainer #infocontent,
 #infocontainer #infocontent .contentpage
 {
-transition: all linear .3s;
+transition: all linear 0.3s;
 }
 
 
@@ -506,6 +523,11 @@ font-size: 11px;
 font-weight:bold;
 text-decoration: none;
 color:black;
+}
+
+#leftmenucontainer .contentbox .nonactive .itemcontent
+{
+opacity:0.4;
 }
 
 
@@ -643,7 +665,8 @@ display:none;
 .togglebox,
 .catbutton,
 .tagbutton,
-.coverimage img
+.coverimage img,
+.coverimage .mediaplaceholder
 {
 cursor:hand;
 cursor: pointer;
@@ -998,8 +1021,9 @@ display:block;
 .overview #maincontentcontainer .item.overviewcontent .itemtagbox
 {
 display:block;
-width:70%;
+width:64%;
 float:right;
+margin-right:6%;
 }
 .overview #maincontentcontainer .item .itemcontent .intro .coverimage .stage img
 {

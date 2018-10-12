@@ -3,7 +3,7 @@ jQuery(function($) {
 
 	$(document).ready(function(){
 
-        //$('body').prepend('<div id="pageloader"><span class="textloader">Loading</span></div>');
+        $('body').prepend('<div id="pageloader"><span class="textloader">Loading</span></div>');
 
     });
     $(window).load(function() {
@@ -294,6 +294,10 @@ jQuery(function($) {
                     }
                     $(obj).find('.matchweight').text(mc);
 
+                    $(obj).removeClass('nonactive');
+                    if( mc == 0 ){
+                       $(obj).addClass('nonactive');
+                    }
                     // Apply Item Matchweight Size
                     $(obj).removeClass('size-l size-m size-s');
                     var percent = 100 / tagfilter.length * mc;
@@ -302,7 +306,8 @@ jQuery(function($) {
                         newSize = 'size-l';
                     }else if( percent > 30 ){
                         newSize = 'size-m';
-                    }$(obj).addClass(newSize);
+                    }
+                    $(obj).addClass(newSize);
                     if( $(obj).parent('#rightcontentcontainer .contentbox').length  ){
                         $(obj).addClass(newSize);
                     }
@@ -348,6 +353,7 @@ jQuery(function($) {
                     $.each(options, function( idx, obj) {
                         menu.append(obj);
                     });
+
                 //}
                 // TODO.. apply Masonry (isotope)
             }
@@ -355,9 +361,12 @@ jQuery(function($) {
             // On select clickable tags
             var applyTagSelection = function( ){
 
+
                 tagfilter = [];
                 //catfilter = [];
                 postID = '';
+
+                filterClass = '';
 
                 // set Tag Menu
                 $('#tagmenu').html('');
@@ -405,6 +414,7 @@ jQuery(function($) {
                         },
                     });
                 }
+
                 box.one('webkitTransitionEnd otransitionend oTransitionEnd msTransisitonEnd transitionend', function(e){
                     var w = container.innerWidth()/4;
                     //container.isotope('updateSortData')
@@ -422,7 +432,7 @@ jQuery(function($) {
             var applyCatSelection = function( ){
                 //catfilter = [];
                 postID = '';
-
+                tagfilter = [];
                 // set Selected Catbuttons Active
                 $( '.catbutton' ).removeClass( 'selected' );
                 for(i=0;i<catfilter.length;i++){
@@ -431,6 +441,7 @@ jQuery(function($) {
 
                 // order
                 applyTagWeight();
+
                 // hash
                 setNewHash();
 
@@ -907,15 +918,15 @@ jQuery(function($) {
 
 
                 // set Data
-                if( site_data['postdata'].length > 0 ){
+                /*if( site_data['postdata'].length > 0 ){
                     markupHTMLSlideContents( $('#maincontentcontainer') );
-                }
+                }*/
 
                 $('body').removeClass( 'theory practice articlemenu filtermenu' );
 
+                $('body').addClass('overview');
                 markupHTMLSlideContents( $('#maincontentcontainer') );
 
-                $('body').addClass('overview');
             });
 
 
@@ -1020,10 +1031,14 @@ jQuery(function($) {
             */
 
 
+
+
+
+
             // Init
+            //$('body').removeClass('overview theory');
 
             // $('body').addClass('theory'),$('body').addClass('practice'),$('body').addClass('articlemenu'),$('body').addClass('filtermenu');
-
             if(window.location.hash){
                 var hashvars = getHashUrlVars();
                 if( hashvars.tags  ){
@@ -1040,9 +1055,8 @@ jQuery(function($) {
             // set Data
             if( site_data['postdata'].length > 0 ){
                 markupHTMLContent( JSON.parse(site_data['postdata']) );
-
                 //if( !hashvars || typeof hashvars == undefined || ( !hashvars.tags &&  !hashvars.cats) ){ // hashvars.pid
-                    markupHTMLSlideContents( $('#maincontentcontainer') );
+                markupHTMLSlideContents( $('#maincontentcontainer') );
                 //}
             }
 
@@ -1051,60 +1065,63 @@ jQuery(function($) {
             }
 
 
-
-
-
-
-
-            activateIsotope();
-
-
-            if( typeof( hashvars ) !== 'undefined' && (hashvars.tags || hashvars.cats  || hashvars.pid ) ){ // hashvars.pid
-
-                if( hashvars.tags  ){
-                    tagfilter = hashvars.tags.split(',');
-                }
-                if( hashvars.cats  ){
-                    catfilter = hashvars.cats.split(',');
-                }
-
-                $('#tagmenu').empty();
-                $('.tagbutton').removeClass( 'selected' );
-                for(i=0;i<tagfilter.length;i++){
-                    $( '.tagbutton.'+tagfilter[i] ).addClass('selected');
-                }
-
-                filterClass = '';
-                if( tagfilter.length > 0 ){
-                    filterClass = '.'+tagfilter.join(',.');
-                }
-                if( catfilter.length > 0 ){
-                    filterClass += '.'+catfilter.join(',.');
-                }
-
-
-                applyTagSelection();
-
-                $('.cleartags').remove();
-
-                // display
-                $('#infocontainer').hide().removeClass('active'); //$('#infocontainer').slideUp(200).removeClass('active');
-                $('#topspace,#topspace .closebutton').removeClass('active');
-
-                $('body').removeClass('overview theory');
-                $('body').addClass('practice');
-
-            }else{
-
-                $('body').addClass('overview');
-
-            }
-
-        /*
+            // on images loaded
             $('body').imagesLoaded( function( instance ) {
-                $('#pageloader').remove();
-                console.log('all images successfully loaded');
-            }); */
+
+                activateIsotope();
+
+
+                if( typeof( hashvars ) !== 'undefined' && (hashvars.tags || hashvars.cats  || hashvars.pid ) ){ // hashvars.pid
+
+                    if( hashvars.tags  ){
+                        tagfilter = hashvars.tags.split(',');
+                    }
+                    if( hashvars.cats  ){
+                        catfilter = hashvars.cats.split(',');
+                    }
+
+                    $('#tagmenu').empty();
+                    $('.tagbutton').removeClass( 'selected' );
+                    for(i=0;i<tagfilter.length;i++){
+                        $( '.tagbutton.'+tagfilter[i] ).addClass('selected');
+                    }
+
+                    filterClass = '';
+                    if( tagfilter.length > 0 ){
+                        filterClass = '.'+tagfilter.join(',.');
+                    }
+                    if( catfilter.length > 0 ){
+                        filterClass += '.'+catfilter.join(',.');
+                    }
+
+
+                    applyTagSelection();
+
+                    $('.cleartags').remove();
+
+                    // display
+                    $('#infocontainer').hide().removeClass('active'); //$('#infocontainer').slideUp(200).removeClass('active');
+                    $('#topspace,#topspace .closebutton').removeClass('active');
+
+                    $('body').removeClass('startpage');
+                    $('body').addClass('practice');
+
+                }else{
+
+                    $('body').removeClass('startpage');
+                    $('body').addClass('overview');
+
+                }
+
+
+                //$('rightcontentcontainer').one('webkitTransitionEnd otransitionend oTransitionEnd msTransisitonEnd transitionend', function(e){
+                //});
+
+                    $('#pageloader').remove();
+                    console.log('Page successfully loaded');
+
+
+            });
 
 
 	});

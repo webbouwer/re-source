@@ -781,6 +781,43 @@ jQuery(function($) {
                 }
                 */
 
+                /*
+                var content = objlist[$(this).parent().parent().data('id')].content;
+                var imgs =  [];
+                // coverimage
+                imgs.push( selecteditem.find('.intro img').attr('src') );
+                // content images
+
+                $(content).find('img').each(function(){
+                    imgs.push( $(this).attr('src') );
+                });
+
+                // add gallery slide show
+                if( selecteditem.find('.imageslides').length < 1 ){
+
+                    var gallerybox =  $('<div class="imageslides" />');
+
+                    $.each( imgs, function(){
+                        gallerybox.append('<img src="'+this+'">');
+                    });
+                    selecteditem.find('.intro').prepend(gallerybox);
+                    //'+ JSON.stringify( imgs ) +
+                }
+                */
+
+                var content = objlist[$(this).parent().parent().data('id')].content;
+                var gallerybox =  $('<div class="imageslides" />');
+                var countimg = 0;
+                $(content).find('img').each(function(){
+                    gallerybox.append( this );
+                    countimg++;
+                });
+
+                if( selecteditem.find('.imageslides').length < 1 && countimg > 1){
+                    selecteditem.find('.intro').prepend( gallerybox );
+                }
+                // selecteditem.find('.coverimage').slideUp();
+
                 // order by selected item id
                 applyItemSelection();
 

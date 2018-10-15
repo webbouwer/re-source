@@ -80,6 +80,7 @@ add_action( 'widgets_init', 'basic_setup_widgets_init' );
 
 // register global variables (options/customizer)
 $wp_global_data = array();
+
 // all post data global
 function wp_main_theme_get_postdata(){
         $args = array(
@@ -137,6 +138,61 @@ function wp_main_theme_get_postdata(){
         //wp_die();
         return $response;
 }
+
+// Hook in content
+add_filter('post_gallery', 'resource_override_gallery', 1, 2);
+
+function resource_override_gallery($empty, $attr){
+    //Extract the attributes
+    //https://wordpress.stackexchange.com/questions/74515/add-filter-and-changing-output-captions-of-image-gallery
+    /*
+    if ( isset( $attr['include'] ) ) {
+        $include =$attr['include'];
+    }
+    if ( isset( $attr['exclude'] ) ) {
+        $exclude =$attr['include'];
+    }
+
+    if ( !empty($include) ) {
+        $include = preg_replace( '/[^0-9,]+/', '', $include );
+        $_attachments = get_posts( array('include' => $include, 'post_status' => 'inherit', 'post_type' => 'attachment', 'post_mime_type' => 'image', 'order' => $order, 'orderby' => $orderby) );
+
+        $attachments = array();
+        foreach ( $_attachments as $key => $val ) {
+            $attachments[$val->ID] = $_attachments[$key];
+        }
+    } elseif ( !empty($exclude) ) {
+        $exclude = preg_replace( '/[^0-9,]+/', '', $exclude );
+        $attachments = get_children( array('post_parent' => $id, 'exclude' => $exclude, 'post_status' => 'inherit', 'post_type' => 'attachment', 'post_mime_type' => 'image', 'order' => $order, 'orderby' => $orderby) );
+    } else {
+        $attachments = get_children( array('post_parent' => $id, 'post_status' => 'inherit', 'post_type' => 'attachment', 'post_mime_type' => 'image', 'order' => $order, 'orderby' => $orderby) );
+    }
+
+    if ( empty($attachments) )
+        return ''; // no gallery
+
+    $output = "";
+    foreach ( $attachments as $att_id => $attachment ){
+        $url = wp_get_attachment_url($att_id);
+        $output .= '<img src="'.$url.'" />'; //$att_id;// wp_get_attachment_image($att_id, 'large'). "\n"; //wp_get_attachment_link($att_id, $size, true) . "\n";
+    }
+    */
+    //return html markup
+    $posts = get_posts(array('include' => $attr['ids'],'post_type' => 'attachment'));
+
+    $output = "";
+    foreach($posts as $imagePost){
+        //$output .= "<div src='".wp_get_attachment_image_src($imagePost->ID, 'small')[0]."'>";
+        //$output .= "<div src='".wp_get_attachment_image_src($imagePost->ID, 'medium')[0]."' data-media=\"(min-width: 400px)\">";
+        $output .= "<img src='".wp_get_attachment_image_src($imagePost->ID, 'large')[0]."' data-media=\"(min-width: 950px)\" />";
+        //$output .= "<div src='".wp_get_attachment_image_src($imagePost->ID, 'extralarge')[0]."' data-media=\"(min-width: 1200px)\">";
+    }
+
+
+
+    return $output;
+}
+
 function wp_main_theme_get_customizer(){
     return json_encode( get_theme_mods() );
 }

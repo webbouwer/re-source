@@ -188,9 +188,7 @@ function resource_override_gallery($empty, $attr){
         //$output .= "<div src='".wp_get_attachment_image_src($imagePost->ID, 'extralarge')[0]."' data-media=\"(min-width: 1200px)\">";
     }
 
-
-
-    return $output;
+    return '<div class="imageslides">'.$output.'</div>';
 }
 
 function wp_main_theme_get_customizer(){

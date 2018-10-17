@@ -808,15 +808,30 @@ jQuery(function($) {
                 var content = objlist[$(this).parent().parent().data('id')].content;
                 var gallerybox =  $('<div class="imageslides" />');
                 var countimg = 0;
-                $(content).find('img').each(function(){
-                    gallerybox.append( this );
+                selecteditem.removeClass('gallery');
+
+                $(content).find('img').each(function( ix, obj ){
+                    gallerybox.append( obj );
                     countimg++;
                 });
+                selecteditem.find('.imagenav').remove();
 
+                var nav = '<div class="imagenav"><div class="navleft"><span>left</span></div><div class="navright"><span>right</span></div></div>';
                 if( selecteditem.find('.imageslides').length < 1 && countimg > 1){
+                    selecteditem.find('.coverimage img').clone().addClass('active').prependTo( selecteditem.find('.imageslides') );
                     selecteditem.find('.intro').prepend( gallerybox );
                 }
-                // selecteditem.find('.coverimage').slideUp();
+                if( selecteditem.find('.imageslides').length > 0){
+                    selecteditem.addClass('gallery');
+                    selecteditem.find('.imageslides').prependTo( selecteditem.find('.intro') );
+                    selecteditem.find('.intro').prepend( nav );
+                }
+
+                /**
+
+                    selecteditem.find('.coverimage').slideUp();
+                    selecteditem.find('.imageslides').slideDown();
+                */
 
                 // order by selected item id
                 applyItemSelection();

@@ -805,6 +805,8 @@ jQuery(function($) {
                 }
                 */
 
+
+                // add gallery slide show
                 var content = objlist[$(this).parent().parent().data('id')].content;
                 var gallerybox =  $('<div class="imageslides" />');
                 var countimg = 0;
@@ -827,19 +829,116 @@ jQuery(function($) {
                     selecteditem.find('.intro').prepend( nav );
                 }
 
-                /**
 
+
+                //.imagenav .navright
+                //.imagenav .navleft
+                /*
+                $('body').on('click', '.item .imagenav .navright', function(){
+
+                    var img = $(this).parent().parent().find('.imageslides .active').next('img');
+                });
+                $('body').on('click', '.item .imagenav .navleft', function(){
+
+                });*/
+
+                /**
                     selecteditem.find('.coverimage').slideUp();
                     selecteditem.find('.imageslides').slideDown();
                 */
+
+                /*$(document).off('click', '.navright, .navleft').on('click', '.navleft, .navright', function(){
+                    var next;
+                    var circler;
+                    if($(this).is('.navleft')){
+                        next = 'prev';
+                        circler = ':last';
+                    }else{
+                        next = 'next';
+                        circler = ':first';
+                    }
+                    var nextTarget = $(this).parent().parent().find('.imageslides img.active')[next]('img');
+                    if( nextTarget.length == 0 ){
+                        nextTarget = $(this).parent().parent().find('.imageslides img' + circler);
+                    }
+                    $(this).parent().parent().find('.imageslides img').removeClass('active');
+                    nextTarget.addClass('active');
+
+                });*/
 
                 // order by selected item id
                 applyItemSelection();
 
             });
 
+
+
+                $('body').on('click', '.navleft, .navright', function(event){
+                    event.stopPropagation();
+                    /*if(event.preventDefault){
+                        event.preventDefault();
+                    }else{
+                        event.returnValue = false;
+                    }*/
+                    /*
+                    var next;
+                    var circler;
+                    if($(this).is('.navleft')){
+                        next = 'prev';
+                        circler = ':last';
+                    }else{
+                        next = 'next';
+                        circler = ':first';
+                    }
+                    var nextTarget = $(this).parent().parent().find('.imageslides img.active')[next]('img');
+                    $(this).parent().parent().find('img.active').removeClass('active');
+                    if( nextTarget.length == 0 ){
+                        nextTarget = $(this).parent().parent().find('.imageslides img' + circler);
+                    }
+                    nextTarget.addClass('active');
+                    */
+                    var currentActive = $(this).parent().parent().find('.imageslides img.active').removeClass('active');
+                    if($(this).hasClass('.navleft')){
+                        var nextTarget = currentActive.prev('img');
+                        if( nextTarget.length == 0 ){
+                            nextTarget = $(this).parent().parent().find('.imageslides img:last');
+                        }
+                        if( nextTarget.attr('src') == $(this).parent().parent().find('.coverimage .stage img').attr('src') ){
+                            var nextTarget = nextTarget.prev('img');
+                        }
+                    }else{
+                         var nextTarget = currentActive.next('img');
+                        if( nextTarget.length == 0 ){
+                            nextTarget = $(this).parent().parent().find('.imageslides img:first');
+                        }
+                        if( nextTarget.attr('src') == $(this).parent().parent().find('.coverimage .stage img').attr('src') ){
+                            var nextTarget = nextTarget.next('img');
+                        }
+                    }
+                    nextTarget.addClass('active');
+                    var imgurl = nextTarget.attr('src');
+                    console.log(imgurl);
+                    //$(this).parent().parent().find('.coverimage .stage').html( '<img src="'+imgurl+'" />');
+                    //$(this).parent().parent().find('.coverimage .stage img').replaceWith('<img src="'+imgurl+'" />');
+
+
+
+                    $(this).parent().parent().find('.coverimage .stage').fadeOut(400, function(){
+                        $(this).parent().parent().find('.coverimage .stage img').replaceWith('<img src="'+imgurl+'" />');
+
+                    }).fadeIn(400, function(){
+                        $('#rightcontentcontainer .contentbox').isotope('layout');
+                    }); //$(this).parent().parent().find('img.active').attr('src');
+
+                });
+
+
+
             $('body').on('click', '.item .button', function(){
                 $(this).toggleClass('active');
+
+                $(this).parent().find('.imagenav').fadeToggle();
+
                 if( $(this).parent().find('.main .textbox').html() == ''){
                     $('.item .main .textbox').empty();
                     $(this).parent().find('.main .textbox').html( objlist[$(this).parent().data('id')].content );

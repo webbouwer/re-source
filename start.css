@@ -907,12 +907,32 @@ z-index:99;
 }
 .item.active .intro .imagenav .navleft
 {
-left:0px;
+left:-10px;
 }
 .item.active .intro .imagenav .navright
 {
-right:5px;
+right:0px;
+margin-right:-10px;
 }
+
+#rightcontentcontainer .navleft,
+#rightcontentcontainer .navright
+{
+width:40px;
+height:40px;
+background-image:url('images/pijl_links.png');
+background-position: center;
+background-size:24px;
+background-repeat: no-repeat;
+}
+#rightcontentcontainer .navright
+{
+background-image:url('images/pijl_rechts.png');
+right:10px;
+}
+
+
+
 .item.active.gallery .coverimage,
 .item.active.gallery .title,
 .item.active.gallery .itemtagbox
@@ -1318,11 +1338,12 @@ float:left;
 #maincontentcontainer .leftslidenav,
 #maincontentcontainer .rightslidenav,
 #maincontentcontainer .leftslidenav span,
-#maincontentcontainer .rightslidenav span
+#maincontentcontainer .rightslidenav span,
+#rightcontentcontainer .navleft span,
+#rightcontentcontainer .navright span
 {
 display:none;
 }
-
 .overview #maincontentcontainer .leftslidenav,
 .overview #maincontentcontainer .rightslidenav
 {
@@ -1338,6 +1359,8 @@ background-size:24px;
 background-repeat: no-repeat;
 z-index:999;
 }
+
+
 .overview #maincontentcontainer .rightslidenav
 {
 }

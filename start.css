@@ -388,6 +388,12 @@ display: inline-block;
 list-style:none;
 }
 
+#searchhints.active .resultcontent ul li .titlebutton
+{
+color:black;
+text-decoration: none;
+}
+
 #topcontent
 {
 position: relative;
@@ -904,6 +910,7 @@ z-index:99;
 position: absolute;
 margin-top:30%;
 z-index:99;
+transition: margin-top linear .3s;
 }
 .item.active .intro .imagenav .navleft
 {
@@ -924,6 +931,8 @@ background-image:url('images/pijl_links.png');
 background-position: center;
 background-size:24px;
 background-repeat: no-repeat;
+cursor:hand;
+cursor:pointer;
 }
 #rightcontentcontainer .navright
 {

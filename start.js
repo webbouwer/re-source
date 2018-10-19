@@ -6,10 +6,8 @@ jQuery(function($) {
         $('body').prepend('<div id="pageloader"><span class="textloader">Loading</span></div>');
 
     });
+
     $(window).load(function() {
-
-        //<span class="textloader">Loading</span>
-
 
         var objlist     = []; // all posts
         var tagfilter   = [];
@@ -610,7 +608,6 @@ jQuery(function($) {
 
                 $('#infocontainer').slideUp(200).removeClass('active');
                 $('#topspace .closebutton').removeClass('active');
-
                 $('body').toggleClass('articlemenu');
             });
 
@@ -618,20 +615,21 @@ jQuery(function($) {
             $('body').on('click', '#rightmenuplaceholder .togglebox', function(){
                 $('#infocontainer').slideUp(200).removeClass('active');
                 $('#topspace .closebutton').removeClass('active');
-
                 $('body').toggleClass('filtermenu');
             });
 
             // toggle tag from main menu
             $('body').on('click', '#rightmenucontainer .tagbutton', function( event ){
+
                 if(event.preventDefault){
                     event.preventDefault();
                 }else{
                     event.returnValue = false;
                 }
+                event.stopPropagation();
+
                 // contentfilter
                 catfilter = [];
-
                 $( '.item' ).removeClass( 'selected' );
                 $(this).toggleClass('selected');
 
@@ -641,7 +639,6 @@ jQuery(function($) {
                 // display
                 $('#infocontainer').slideUp(200).removeClass('active');
                 $('#topspace .closebutton').removeClass('active');
-
                 $('body').removeClass('overview theory');
                 $('body').addClass('practice');
             });
@@ -653,12 +650,15 @@ jQuery(function($) {
                 }else{
                     event.returnValue = false;
                 }
+                event.stopPropagation();
+
                 // contentfilter
                 $( '.item' ).removeClass( 'selected' );
                 var el = $('#rightmenucontainer .contentbox > .tagbutton.'+ $(this).data('tag') );
                 if( !$('body').hasClass('overview') ){
                     el.toggleClass('selected');
                 }
+
                 // order by tags
                 applyTagSelection();
 
@@ -668,6 +668,7 @@ jQuery(function($) {
 
                 $('body').removeClass('overview theory');
                 $('body').addClass('practice');
+
             });
 
             // toggle tag from item or right menu (tag deselect button)
@@ -677,6 +678,8 @@ jQuery(function($) {
                 }else{
                     event.returnValue = false;
                 }
+                event.stopPropagation();
+
                 // contentfilter
                 $( '.item' ).removeClass( 'selected' );
                 $( '.tagbutton' ).removeClass( 'selected' );
@@ -703,6 +706,8 @@ jQuery(function($) {
                 }else{
                     event.returnValue = false;
                 }
+                event.stopPropagation();
+
                 // contentfilter
                 $( '.item,.tagbutton,.catbutton' ).removeClass( 'selected' );
 
@@ -723,7 +728,14 @@ jQuery(function($) {
 
 
             // button left menu
-            $('body').on('click', '#leftmenucontainer .menubutton', function(){
+            $('body').on('click', '#leftmenucontainer .menubutton', function( event ){
+
+                if(event.preventDefault){
+                    event.preventDefault();
+                }else{
+                    event.returnValue = false;
+                }
+                event.stopPropagation();
 
                 $('#infocontainer').slideUp(200).removeClass('active');
                 $('#topspace,#topspace .closebutton').removeClass('active');
@@ -739,13 +751,14 @@ jQuery(function($) {
             });
 
             // item right content click
-            $('body').on('click', '#rightcontentcontainer .item .itemcontent .intro', function(event){
+            $('body').on('click', '#rightcontentcontainer .item .itemcontent .intro', function( event ){
 
                 if(event.preventDefault){
                     event.preventDefault();
                 }else{
                     event.returnValue = false;
                 }
+                event.stopPropagation();
 
                 // display
                 $('#infocontainer').slideUp(200).removeClass('active');
@@ -755,7 +768,6 @@ jQuery(function($) {
                 $('body').addClass('practice');
 
                 // contentfilter
-
                 var selecteditem =  $(this).parent().parent();
                 selecteditem.prependTo( selecteditem.parent() );
                 $('html, body').animate({scrollTop:0}, 400);
@@ -827,46 +839,8 @@ jQuery(function($) {
                     selecteditem.addClass('gallery');
                     selecteditem.find('.imageslides').prependTo( selecteditem.find('.intro') );
                     selecteditem.find('.intro').prepend( nav );
+                    setImageSlideArrowHeight( selecteditem );
                 }
-
-
-
-                //.imagenav .navright
-                //.imagenav .navleft
-                /*
-                $('body').on('click', '.item .imagenav .navright', function(){
-
-                    var img = $(this).parent().parent().find('.imageslides .active').next('img');
-                });
-                $('body').on('click', '.item .imagenav .navleft', function(){
-
-                });*/
-
-                /**
-                    selecteditem.find('.coverimage').slideUp();
-                    selecteditem.find('.imageslides').slideDown();
-                */
-
-                /*$(document).off('click', '.navright, .navleft').on('click', '.navleft, .navright', function(){
-                    var next;
-                    var circler;
-                    if($(this).is('.navleft')){
-                        next = 'prev';
-                        circler = ':last';
-                    }else{
-                        next = 'next';
-                        circler = ':first';
-                    }
-                    var nextTarget = $(this).parent().parent().find('.imageslides img.active')[next]('img');
-                    if( nextTarget.length == 0 ){
-                        nextTarget = $(this).parent().parent().find('.imageslides img' + circler);
-                    }
-                    $(this).parent().parent().find('.imageslides img').removeClass('active');
-                    nextTarget.addClass('active');
-
-                });*/
-
-                // order by selected item id
                 applyItemSelection();
 
             });
@@ -875,28 +849,6 @@ jQuery(function($) {
 
                 $('body').on('click', '.navleft, .navright', function(event){
                     event.stopPropagation();
-                    /*if(event.preventDefault){
-                        event.preventDefault();
-                    }else{
-                        event.returnValue = false;
-                    }*/
-                    /*
-                    var next;
-                    var circler;
-                    if($(this).is('.navleft')){
-                        next = 'prev';
-                        circler = ':last';
-                    }else{
-                        next = 'next';
-                        circler = ':first';
-                    }
-                    var nextTarget = $(this).parent().parent().find('.imageslides img.active')[next]('img');
-                    $(this).parent().parent().find('img.active').removeClass('active');
-                    if( nextTarget.length == 0 ){
-                        nextTarget = $(this).parent().parent().find('.imageslides img' + circler);
-                    }
-                    nextTarget.addClass('active');
-                    */
                     var currentActive = $(this).parent().parent().find('.imageslides img.active').removeClass('active');
                     if($(this).hasClass('.navleft')){
                         var nextTarget = currentActive.prev('img');
@@ -916,25 +868,34 @@ jQuery(function($) {
                         }
                     }
                     nextTarget.addClass('active');
+
                     var imgurl = nextTarget.attr('src');
-                    console.log(imgurl);
-                    //$(this).parent().parent().find('.coverimage .stage').html( '<img src="'+imgurl+'" />');
-                    //$(this).parent().parent().find('.coverimage .stage img').replaceWith('<img src="'+imgurl+'" />');
+                    //console.log(imgurl);
+                    $(this).parent().parent().find('.coverimage .stage').fadeOut(300, function(){
 
-
-
-                    $(this).parent().parent().find('.coverimage .stage').fadeOut(400, function(){
                         $(this).parent().parent().find('.coverimage .stage img').replaceWith('<img src="'+imgurl+'" />');
 
-                    }).fadeIn(400, function(){
+                    }).fadeIn(200, function(){
+                        setImageSlideArrowHeight( $(this).parent().parent() );
                         $('#rightcontentcontainer .contentbox').isotope('layout');
-                    }); //$(this).parent().parent().find('img.active').attr('src');
+                    });
 
                 });
 
+                function setImageSlideArrowHeight( obj ){
+
+                    var arrowpos = obj.find('.coverimage img').height() / 2;
+                    obj.find(".navleft,.navright").css({ 'margin-top' : arrowpos+'px' });
+                    //$(".item.active .intro .imagenav .navleft, .item.active .intro .imagenav .navright").css({ 'margin-top' : arrowpos+'px' });
+
+                }
 
 
-            $('body').on('click', '.item .button', function(){
+
+            $('body').on('click', '.item .button', function(e){
+
+                e.stopPropagation();
+
                 $(this).toggleClass('active');
 
                 $(this).parent().find('.imagenav').fadeToggle();
@@ -949,10 +910,15 @@ jQuery(function($) {
                 }
             });
 
-            $('body').on('click', '.item .optionfullscreen', function(){
+            $('body').on('click', '.item .optionfullscreen', function(e){
+                e.stopPropagation();
+                var fscrobj = $(this).parent().parent().parent().parent().parent();
+                fscrobj.toggleClass('fullscreen');
+                setTimeout(function(){
+                    setImageSlideArrowHeight( fscrobj );
+                    $('#rightcontentcontainer .contentbox').isotope('layout');
+                }, 400 );
 
-                $(this).parent().parent().parent().parent().parent().toggleClass('fullscreen');
-                $('#rightcontentcontainer .contentbox').isotope('layout');
 
             });
 
@@ -963,6 +929,8 @@ jQuery(function($) {
                 }else{
                     event.returnValue = false;
                 }
+                event.stopPropagation();
+
                 $('#infocontainer .contentpage.active').removeClass('active');
 
                 $('#infocontainer,#topspace, #topspace .closebutton').toggleClass( 'active' );
@@ -1020,6 +988,7 @@ jQuery(function($) {
                 }else{
                     event.returnValue = false;
                 }
+                event.stopPropagation();
 
                 $('#infocontainer .contentpage.active').removeClass('active');
                 $('#infocontainer .contentpage[data-link="'+$(this).attr('href')+'"]').find('.main .textbox').html( objlist[ $('#infocontainer .contentpage[data-link="'+$(this).attr('href')+'"]').data('id') ].content );
@@ -1028,8 +997,18 @@ jQuery(function($) {
                 markupInfoPages();
             });
 
+
+
             // toggle slide main content
             $('body').on('click', '.switchbutton .leftswapbutton, .switchbutton .rightswapbutton', function( event ){
+
+                if(event.preventDefault){
+                    event.preventDefault();
+                }else{
+                    event.returnValue = false;
+                }
+                event.stopPropagation();
+
                 $('#infocontainer').slideUp(200).removeClass('active');
                 $('#topspace,#topspace .closebutton').removeClass('active');
 
@@ -1051,19 +1030,26 @@ jQuery(function($) {
                 }else if( $('body').hasClass('theory') ){
 
                     $('body').removeClass( 'theory overview articlemenu' );
-
                     applyTagSelection();
                     $('body').addClass('practice');
+
                 }
             });
 
+
+
+
+
             // button home start content
             $('body').on('click', '#topbar .leftside .custom-logo-link', function( event ){
-                if(event.preventDefault){
+
+                 if(event.preventDefault){
                     event.preventDefault();
                 }else{
                     event.returnValue = false;
                 }
+                event.stopPropagation();
+
                 $('#infocontainer').slideUp(200).removeClass('active');
                 $('#topspace,#topspace .closebutton').removeClass('active');
 
@@ -1082,6 +1068,11 @@ jQuery(function($) {
 
 
 
+
+
+
+
+
             // setup search
             var emptysearchtext = 'In development';
             var emptyhinttext = 'Type a search';
@@ -1089,20 +1080,49 @@ jQuery(function($) {
             if( $('#searchhints').length < 1 ){
               $('<div id="searchhints"><div class="resultcontent">'+emptyhinttext+'</div></div>').insertAfter('#searchbox');
             }
+
             $('#searchhints').css({ 'width': $('#searchbox').outerWidth() });
             $('#searchbox').val('');
             $('#searchbox').attr('placeholder', emptysearchtext);
 
+            //$('#searchhints').addClass('active');
 
-            $('body').on('mouseover focus', '#searchbox, #searchhints', function(){
+
+            $('body').on('mouseover focus', '#searchbox, #searchhints', function(event){
+                if(event.preventDefault){
+                    event.preventDefault();
+                }else{
+                    event.returnValue = false;
+                }
+                event.stopPropagation()
+
                 $('#searchhints').addClass('active');
-                setSearchHints();
+                //setSearchHints();
             });
 
-            $('body').on('mouseout blur', '#searchbox, #searchhints ', function(){
+            $('body').on('blur', '#searchbox', function(event){
+
+                if(event.preventDefault){
+                    event.preventDefault();
+                }else{
+                    event.returnValue = false;
+                }
+
                 if( $('#searchbox:focus').length == 0 && $('#searchhints:hover').length == 0){
                     $('#searchbox').css({ 'background-color': 'white' });
                     $('#searchhints .resultcontent').html(emptyhinttext);
+                    $('#searchhints').removeClass('active');
+                }
+            });
+            $('body').on('mouseout', '#searchhints', function(event){
+
+                if(event.preventDefault){
+                    event.preventDefault();
+                }else{
+                    event.returnValue = false;
+                }
+
+                if( $('#searchbox:focus').length == 0 && $('#searchhints:hover').length == 0){
                     $('#searchhints').removeClass('active');
                 }
             });
@@ -1119,7 +1139,7 @@ jQuery(function($) {
             });
 
             function setSearchHints(){
-                var searchstring = $('#searchbox').val();
+              var searchstring = $('#searchbox').val();
               var searchresult = '';
               if( searchstring.length < 1 ){
                 searchresult = emptyhinttext;
@@ -1132,6 +1152,7 @@ jQuery(function($) {
             function getSearchResult( searchstring ){
 
                 var alltags = JSON.parse(site_data['tagdata']); //root.filterdata.alltags;
+                var allTitles = objlist;
                 //var catfilter = root.filterdata.allCats;
 
                 var related = searchstring;
@@ -1139,9 +1160,12 @@ jQuery(function($) {
 
                 // get tags by letter/word
                 var taglist = Array();
+                var titlelist = Array();
 
                 if( unspaced.length > 0 ){
-                    related = '<ul>';
+
+                    // match tags
+                    related = '<ul class="tagresults">';
                     $.each( alltags, function( idx, tag ){
                         var tagstring = tag.name;
                         $.each( unspaced, function( inx, str ) {
@@ -1151,7 +1175,7 @@ jQuery(function($) {
                                 if( $.inArray( tag.name , taglist ) < 0 ){ // no double
 
                                     taglist.push( tag.name );
-                                    related += '<li><a onclick="alert(\'cehck\');" href="#tags='+tag.slug+'" class="tagbutton ';
+                                    related += '<li><a href="#tags='+tag.slug+'" class="tagbutton ';
                                     if( $.inArray( tag.name , tagfilter ) > -1 ){
                                         related += 'selected ';
                                     }
@@ -1163,30 +1187,122 @@ jQuery(function($) {
                         });
                     });
                     related += '</ul>';
+
+                    // match titles
+                    related += '<ul class="titleresults">';
+
+                    //console.log( JSON.stringify(site_data['postdata'] ) );
+
+                    var itemlist = JSON.parse(site_data['postdata'] );
+                    $.each( itemlist, function( idx, obj ){
+                        var titlestring = obj.title.toLowerCase();
+                        var words = titlestring.split(' '); // split title in words
+
+                        $.each( unspaced, function( inx, str ) { // each search key
+
+                            $.each( words, function( ix, word ) {
+
+                                var r = word.indexOf(str);
+
+                                if( r > -1  && str != ' ' && str != ''){
+
+                                    console.log( 'searched: '+ str + ' in word '+word );
+
+                                    if( $.inArray( obj.title , titlelist ) < 0 ){ // no double
+                                        var type = 0;
+                                        $(obj.cats).each(function( x , cat ){
+                                            if( cat == theoryCategory ){
+                                                type = 1; // left content
+                                            }else if( cat == overviewCategory ){
+                                                type = 2; // main/start content
+                                            }
+                                        });
+                                        if( type == 0 ){
+                                            titlelist.push( obj.title );
+                                            related += '<li><a href="#id='+obj.id+'" class="titlebutton" ';
+                                            related += 'data-id="'+obj.id+'">'+obj.title+'</a></li>';
+                                        }
+                                    }
+                                }
+
+                            });
+
+                        });
+                    });
+                    related += '</ul>';
                 }
 
                 return related;
 
             };
 
-            /*
+
             $('body').on('click', '#searchhints .resultcontent .tagbutton', function( event ){
+
+                event.stopPropagation();
                 if(event.preventDefault){
                     event.preventDefault();
                 }else{
                     event.returnValue = false;
                 }
-                $(this).toggleClass('selected');
-                applyTagSelection();
+                $( '.tagbutton.'+$(this).data('tag') ).toggleClass('selected');
+
+                if( !$('body').hasClass('practice') ){
+                    $('#infocontainer').slideUp(200).removeClass('active');
+                    $('#topspace,#topspace .closebutton').removeClass('active');
+                    $('body').removeClass( 'theory overview articlemenu' );
+                    applyTagSelection();
+                    $('body').addClass('practice');
+                }else{
+                    applyTagSelection();
+                }
+
             });
-            */
+
+            $('body').on('click', '#searchhints .resultcontent .titlebutton', function( event ){
+
+                if(event.preventDefault){
+                    event.preventDefault();
+                }else{
+                    event.returnValue = false;
+                }
+
+                var itemid = $(this).data('id');
+
+                console.log( itemid );
+
+                $('#rightcontentcontainer #post-'+itemid+' .itemcontent .intro').trigger('click');
+
+                /*
+                if( !$('body').hasClass('practice') ){
+                    $('#infocontainer').slideUp(200).removeClass('active');
+                    $('#topspace,#topspace .closebutton').removeClass('active');
+                    $('body').removeClass( 'theory overview articlemenu' );
+
+                    $('#rightcontentcontainer #post-'+itemid).trigger('click');
+
+                }else{
+
+                    $('#rightcontentcontainer #post-'+itemid).trigger('click');
+
+                }*/
+
+            });
+
+            $('body').on('click', '.item .intro, #leftmenucontainer, #rightmenucontainer, #leftcontentcontainer, #rightcontentcontainer, #maincontentcontainer', function( event ){
+                $('.item').removeClass('fullscreen');
+                $('#rightcontentcontainer .contentbox').isotope('layout');
+            });
 
 
 
 
 
 
-            // Init
+            /** Init
+             * load, detect content direction and interact
+             */
+
             //$('body').removeClass('overview theory');
 
             // $('body').addClass('theory'),$('body').addClass('practice'),$('body').addClass('articlemenu'),$('body').addClass('filtermenu');
@@ -1220,8 +1336,6 @@ jQuery(function($) {
             $('body').imagesLoaded( function( instance ) {
 
                 activateIsotope();
-
-
                 if( typeof( hashvars ) !== 'undefined' && (hashvars.tags || hashvars.cats  || hashvars.pid ) ){ // hashvars.pid
 
                     if( hashvars.tags  ){
@@ -1245,7 +1359,6 @@ jQuery(function($) {
                         filterClass += '.'+catfilter.join(',.');
                     }
 
-
                     applyTagSelection();
 
                     $('.cleartags').remove();
@@ -1264,15 +1377,33 @@ jQuery(function($) {
 
                 }
 
-
                 //$('rightcontentcontainer').one('webkitTransitionEnd otransitionend oTransitionEnd msTransisitonEnd transitionend', function(e){
                 //});
-
-                    $('#pageloader').remove();
-                    console.log('Page successfully loaded');
-
+                $('#pageloader').remove();
+                console.log('Page successfully loaded');
 
             });
+
+
+
+
+
+
+            /** on resize */
+            var resizeId;
+            $(window).resize(function() {
+              clearTimeout(resizeId);
+              resizeId = setTimeout(doneGlobalResizing, 20);
+            });
+
+            function doneGlobalResizing(){
+              // do something after resizing iss done
+                var container = $('#rightcontentcontainer .contentbox');
+                var w = container.innerWidth()/4;
+                container.isotope({ masonry: { columnWidth: w } }).isotope( 'layout' );
+            }
+
+
 
 
 	});

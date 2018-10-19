@@ -1075,13 +1075,13 @@ jQuery(function($) {
 
             // setup search
             var emptysearchtext = 'In development';
-            var emptyhinttext = 'Type a search';
+            var emptyhinttext = '';
 
             if( $('#searchhints').length < 1 ){
               $('<div id="searchhints"><div class="resultcontent">'+emptyhinttext+'</div></div>').insertAfter('#searchbox');
             }
 
-            $('#searchhints').css({ 'width': $('#searchbox').outerWidth() });
+            //$('#searchhints').css({ 'width': $('#searchbox').outerWidth() });
             $('#searchbox').val('');
             $('#searchbox').attr('placeholder', emptysearchtext);
 
@@ -1166,6 +1166,7 @@ jQuery(function($) {
 
                     // match tags
                     related = '<ul class="tagresults">';
+                    related += '<li class="listheader"><h5>Labels<h5></li>';
                     $.each( alltags, function( idx, tag ){
                         var tagstring = tag.name;
                         $.each( unspaced, function( inx, str ) {
@@ -1190,6 +1191,7 @@ jQuery(function($) {
 
                     // match titles
                     related += '<ul class="titleresults">';
+                    related += '<li class="listheader"><h5>Titles<h5></li>';
 
                     //console.log( JSON.stringify(site_data['postdata'] ) );
 
@@ -1245,7 +1247,12 @@ jQuery(function($) {
                 }else{
                     event.returnValue = false;
                 }
-                $( '.tagbutton.'+$(this).data('tag') ).toggleClass('selected');
+
+                tagfilter = [];
+
+                $( '.tagbutton' ).removeClass('selected');
+                $( '.tagbutton.'+$(this).data('tag') ).addClass('selected');
+                //$( '.tagbutton.'+$(this).data('tag') ).toggleClass('selected');
 
                 if( !$('body').hasClass('practice') ){
                     $('#infocontainer').slideUp(200).removeClass('active');

@@ -1114,6 +1114,7 @@ jQuery(function($) {
                     $('#searchhints').removeClass('active');
                 }
             });
+
             $('body').on('mouseout', '#searchhints', function(event){
 
                 if(event.preventDefault){
@@ -1122,7 +1123,7 @@ jQuery(function($) {
                     event.returnValue = false;
                 }
 
-                if( $('#searchbox:focus').length == 0 && $('#searchhints:hover').length == 0){
+                if( $('#searchbox:focus').length == 0 ){//&& $('#searchhints:hover').length == 0
                     $('#searchhints').removeClass('active');
                 }
             });

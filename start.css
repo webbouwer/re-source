@@ -372,9 +372,11 @@ min-width:460px;
 max-width:80%;
 background-color: white;
 border-bottom:none;
+visibility: hidden;
 }
 #searchhints.active
 {
+visibility: visible;
 }
 #searchhints .resultcontent
 {

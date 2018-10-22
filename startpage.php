@@ -77,7 +77,7 @@ $header_image = get_header_image();
 
                     <div id="topbar">
                         <div class="leftside">
-                            <div class="menubutton"><span>Menu</span></div>
+                            <div class="menubutton"><span><img src="<?php echo get_template_directory_uri().'/images/menu.svg'; ?>" /></span></div>
                             <?php wp_main_theme_toplogo_html(); ?>
                         </div>
                         <div class="rightside"><input id="searchbox" class="basic-search" placeholder="in development" size="24" /></div>

@@ -316,35 +316,41 @@ border-bottom:5px solid black;
 display: block;
 float: left;
 width:58%;
+text-align: center;
 }
 #topbar .leftside .menubutton
 {
 display: inline-block;
-width:54px;
-height:48px;
+width:58px;
+height:38px;
+float:left;
 background-image:url('images/menu.png');
 background-position: left center;
-background-size: 40px;
+background-size: auto 100%;
 background-repeat: no-repeat;
-}
-#topbar .leftside .menubutton span
-{
-display: none;
 }
 #topbar .leftside .custom-logo-link
 {
 display: inline-block;
-width:260px;
-height:47px;
-background-image: url('images/resource.png');
+width:280px;
+height:38px;
+margin-left:-5px;
+background-image: url('images/resource_logo.png');
 background-repeat: no-repeat;
 background-position:center;
-background-size: 250px auto;
+background-size: auto 100%;
+}
+
+#topbar .leftside .menubutton span
+{
+display: none;
 }
 #topbar .leftside .custom-logo-link span
 {
 display: none;
 }
+
+
 #topbar .rightside
 {
 display: block;
@@ -354,9 +360,9 @@ width:42%;
 
 #topbar .rightside #searchbox
 {
-margin:6px 0px;
+margin:0px 0px 10px;
 width:100%;
-padding:2% 2%;
+padding:2.2% 2%;
 font-size:20px;
 font-weight:bold;
 text-transform:uppercase;

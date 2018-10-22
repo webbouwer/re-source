@@ -246,7 +246,6 @@ function wp_main_theme_toplogo_html(){
     if( is_customize_preview() ){
         echo '<div id="area-custom-image" class="customizer-placeholder">Logo image</div>';
     }
-
     if( get_theme_mod('wp_main_theme_identity_logo', '') != '' ){
         $custom_logo_url = get_theme_mod('wp_main_theme_identity_logo');
         $custom_logo_attr = array(
@@ -273,6 +272,20 @@ function wp_main_theme_toplogo_html(){
         esc_attr( get_bloginfo( 'name', 'display' ) ) //get_bloginfo( 'description' )
         );
     }
+
+
+    /*
+        $custom_logo_url = get_template_directory_uri().'/images/logo2.svg';
+        $custom_logo_attr = array(
+            'class'    => 'custom-logo',
+            'itemprop' => 'logo',
+        );
+        echo sprintf( '<a href="%1$s" class="custom-logo-link image" rel="home" itemprop="url">%2$s</a>',
+        esc_url( home_url( '/' ) ),
+        '<img id="toplogo" src="'.$custom_logo_url.'" border="0" />'
+        );
+
+    */
 }
 
 

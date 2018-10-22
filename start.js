@@ -943,7 +943,7 @@ jQuery(function($) {
                 //$('#infocontainer .contentpage.active');
                 // section container (selector)
                 markupInfoPages();
-
+                $("#infomenu,#infocontent").css({ 'width':  $("#topbar").innerWidth() });
                 $('#infocontainer').slideToggle(300);
             });
 
@@ -960,7 +960,7 @@ jQuery(function($) {
                 $('.section-container .section').on('click', function(ev) {
 
                   var el = $(this);
-                  var speed = 400;
+                  var speed = 100;
                   $('.section-container').addClass('active'); // main active
                   $('.section-container .section').removeClass('active');
                   el.addClass('active').appendTo(el.parent()); // section active

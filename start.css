@@ -475,9 +475,10 @@ position:relative;
 display:block;
 min-width:560px;
 }
-#topcontent #infocontainer #infomenu
+#topcontent #infocontainer #infomenu,
+#topcontent #infocontainer #infocontent .contentbox
 {
-max-width:84%;
+max-width:100%;
 min-width:560px;
 }
 #topcontent #infocontainer #infomenu ul li
@@ -504,34 +505,45 @@ text-decoration:none;
 #topcontent #infocontainer
 {
 }
-#topcontent #infocontainer .itemcontent
+
+
+
+#infocontent .contentpage
 {
-max-width:96%;
-padding:24px 0px;
+width: 100%;
+}
+.contentpage .itemcontent
+{
+width:100%;
 }
 
 #topcontent #infocontainer .itemcontent .textbox
 {
+width:100%;
 font-size:17px;
 }
 
+#topcontent #infocontainer .itemcontent .textbox p
+{
+margin:0px;
+padding:4px 0px;
+line-height: 1.2em;
+}
 
-#topcontent #infocontainer #infomenu,
-#topcontent #infocontainer #infocontent,
-#infocontainer #infocontent .contentpage
+
+
+#topcontent #infocontainer #infomenu
 {
 transition: all linear 0.3s;
 }
-
-
 #topcontent #infocontainer.active #infomenu
 {
-margin:0px 6.1% 0px 8.1%;
+margin-left:8%;
 }
 #topcontent #infocontainer.active #infocontent
 {
-padding:0px 6.1% 0px 8.1%;
-max-height:70%; /* 560px;*/
+margin-left:8%;
+max-height:70%;
 overflow-y:auto;
 }
 
@@ -547,6 +559,222 @@ position:relative;
 height:auto;
 overflow:auto;
 }
+
+
+/* info menu  pages */
+.section-container
+{
+}
+.section-container .section
+{
+float:left;
+height:210px;
+width:30.33%;
+margin-right:4.5%;
+line-height:0.8em;
+margin-bottom:66px;
+}
+.section-container .section:nth-child(3n+3)
+{
+margin-right:0;
+}
+.section-intro img
+{
+display:none;
+}
+
+.section-container .section-intro .imgwrap {
+float: left;
+height:210px;
+width:100%;
+background-size: cover;
+background-position: center;
+margin-right:0px;
+}
+.section-container .section-intro .name,
+.section-container .section-intro .desc
+{
+font-size:13px;
+line-height:0.8em;
+}
+.section-container.active .section-intro .name,
+.section-container.active .section-intro .desc
+{
+display:none;
+}
+.section .section-content
+{
+display:none;
+}
+
+.section-container .section.active
+{
+width:100%;
+float:none;
+}
+
+.section-content a
+{
+color:black;
+}
+
+.section-container.active .section,
+.section-container.active .section:nth-child(3n+3)
+{
+width:10.75%;
+height:76px;
+margin:0%;
+margin-right:2%;
+margin-bottom:18px;
+}
+.section-container.active .section:nth-child(8)
+{
+margin-right:0%;
+}
+.section-container.active .section .section-intro .imgwrap {
+height:76px;
+}
+
+.section-container.active .section .section-intro
+{
+}
+
+
+.section-container .section.active .section-intro
+{
+width:100%;
+}
+.section-container.active .section.active .section-intro .imgwrap {
+width:180px;
+height:180px;
+margin-right:12px;
+}
+.section.active .section-intro .name,
+.section.active .section-intro .desc
+{
+display:none;
+}
+
+
+
+
+/*
+.section-container
+{
+}
+.section-container .section
+{
+float:left;
+height:210px;
+width:30.33%;
+margin-right:4.5%;
+margin-bottom:30px;
+}
+.section-container .section:nth-child(3n+3)
+{
+margin-right:0;
+}
+.section-intro img
+{
+display:none;
+}
+
+.section-container .section-intro .imgwrap {
+  float: left;
+height:210px;
+width:100%;
+  background-size: cover;
+  background-position: center;
+  margin-right:0px;
+}
+
+.section-container .section-intro .name,
+.section-container .section-intro .desc
+{
+display:none;
+}
+.section .section-content
+{
+display:none;
+}
+.section.active .section-intro .name,
+.section.active .section-intro .desc
+{
+display:inline;
+}
+.section-container.active .section
+{
+float:left;
+height:76px;
+width:76px;
+margin-right:3px;
+margin-bottom:6px;
+}
+
+.section-container.active .section.active,
+.section-container.active .section.active .section-intro
+{
+height:auto;
+width:100%;
+}
+.section-container.active .section.active .section-intro
+{
+height:180px;
+display: block;
+vertical-align: bottom;
+}
+.section-container.active .section-intro .imgwrap {
+float: left;
+height: 76px;
+width: 76px;
+margin-right:6px;
+}
+.section-container.active .section.active .section-intro .imgwrap {
+display: inline-block;
+height: 180px;
+width: 180px;
+vertical-align: text-bottom;
+margin-right:6px;
+}
+.selectedcontentsection
+{
+width:100%;
+}
+.selectedcontentsection .section-content
+{
+display:block;
+}
+*/
+
+
+.contentpage .textbox .reststroombutton
+{
+display:block;
+width:31.33%;
+float:left;
+margin-right:3%;
+margin-bottom:25px;
+}
+.contentpage .textbox .reststroombutton:nth-child(3n+3)
+{
+margin-right:0%;
+}
+
+
+.contentpage .textbox .reststroombutton a
+{
+max-width:100%;
+font-size:15px;
+font-weight:bold;
+text-decoration: none;
+color:black;
+}
+.contentpage .textbox .reststroombutton a img
+{
+max-width:100%;
+height:auto;
+}
+
 
 
 
@@ -1271,100 +1499,6 @@ display: block;
 .theory #leftcontentcontainer .contentbox .button
 {
 display: none;
-}
-
-
-
-/* info menu  pages */
-.section-container
-{
-
-}
-.section-container .section
-{
-float:left;
-height:210px;
-width:30.33%;
-margin-right:4.5%;
-margin-bottom:30px;
-}
-.section-container .section:nth-child(3n+3)
-{
-margin-right:0;
-}
-.section-intro img
-{
-display:none;
-}
-
-.section-container .section-intro .imgwrap {
-  float: left;
-height:210px;
-width:100%;
-  background-size: cover;
-  background-position: center;
-  margin-right:0px;
-}
-
-.section-container .section-intro .name,
-.section-container .section-intro .desc
-{
-display:none;
-}
-.section .section-content
-{
-display:none;
-}
-.section.active .section-intro .name,
-.section.active .section-intro .desc
-{
-display:inline;
-}
-.section-container.active .section
-{
-float:left;
-height:76px;
-width:76px;
-margin-right:3px;
-margin-bottom:6px;
-}
-
-.section-container.active .section.active,
-.section-container.active .section.active .section-intro
-{
-height:auto;
-width:100%;
-}
-.section-container.active .section.active .section-intro
-{
-height:180px;
-display: block;
-vertical-align: bottom;
-}
-.section-container.active .section-intro .imgwrap {
-float: left;
-height: 76px;
-width: 76px;
-margin-right:6px;
-}
-.section-container.active .section.active .section-intro .imgwrap {
-display: inline-block;
-height: 180px;
-width: 180px;
-vertical-align: text-bottom;
-margin-right:6px;
-}
-
-
-
-.selectedcontentsection
-{
-/* clear:both; */
-width:100%;
-}
-.selectedcontentsection .section-content
-{
-display:block;
 }
 
 

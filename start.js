@@ -1311,6 +1311,16 @@ jQuery(function($) {
              * load, detect content direction and interact
              */
 
+            function smallScreenMessage(){
+                $('#messageOverlay').remove();
+                if( $(window).width() < 1180  ){
+                    $('body').append( '<div id="messageOverlay">Small screen message</div>' );
+                }else{
+                    $('#messageOverlay').remove();
+                }
+            }
+            smallScreenMessage();
+
             //$('body').removeClass('overview theory');
 
             // $('body').addClass('theory'),$('body').addClass('practice'),$('body').addClass('articlemenu'),$('body').addClass('filtermenu');
@@ -1395,8 +1405,6 @@ jQuery(function($) {
 
 
 
-
-
             /** on resize */
             var resizeId;
             $(window).resize(function() {
@@ -1405,11 +1413,17 @@ jQuery(function($) {
             });
 
             function doneGlobalResizing(){
-              // do something after resizing iss done
-                var container = $('#rightcontentcontainer .contentbox');
-                var w = container.innerWidth()/4;
-                container.isotope({ masonry: { columnWidth: w } }).isotope( 'layout' );
+
+
+                    // do something after resizing iss done
+                    var container = $('#rightcontentcontainer .contentbox');
+                    var w = container.innerWidth()/4;
+                    container.isotope({ masonry: { columnWidth: w } }).isotope( 'layout' );
+
+                    smallScreenMessage();
+
             }
+
 
 
 

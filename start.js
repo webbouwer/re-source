@@ -1074,7 +1074,7 @@ jQuery(function($) {
 
 
             // setup search
-            var emptysearchtext = 'Time to Backup :)';
+            var emptysearchtext = 'Search';
             var emptyhinttext = '';
 
             if( $('#searchhints').length < 1 ){

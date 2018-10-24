@@ -25,19 +25,19 @@ text-align: center;
 .textloader
 {
 display: block;
-margin:4% auto;
 text-align: center;
 padding:7px 8px 5px;
 width:100px;
 font-weight:bold;
 text-transform: uppercase;
 color:white;
+opacity:0.6;
 background-color: black;
 }
 
 #pageloader .textloader
 {
-margin:8% auto;
+margin:18% auto;
 }
 
 #messageOverlay
@@ -54,8 +54,28 @@ z-index:2000;
 
 #messageOverlay .overlayContent
 {
-width:280px;
-margin:20% auto;
+width:300px;
+margin:10% auto;
+}
+
+#messageOverlay .overlayContent .overlayimage
+{
+padding-bottom: 10px;
+border-bottom:5px solid black;
+margin-bottom:7px;
+text-align: center;
+}
+
+#messageOverlay .overlayContent .overlayimage img
+{
+    width:240px;
+    height:auto;
+}
+#messageOverlay .overlayContent .overlaytext
+{
+font-size:19px;
+font-weight:bold;
+line-height: 1.3em;
 }
 
 #topspace.active
@@ -389,12 +409,15 @@ border:1px solid black;
 #searchhints
 {
 position:absolute;
-right:0px;
+right:8%;
 height:auto;
 z-index:999;
 min-width:560px;
 /*max-width:80%;*/
-width:100%;
+width:84%;
+
+
+
 background-color: white;
 border-top:none;
 border-bottom:none;
@@ -413,7 +436,7 @@ display:none;
 {
 display:block;
 width:100%;
-min-height:15px;
+min-height:13px;
 border-bottom:5px solid black;
 /*
 position: absolute;

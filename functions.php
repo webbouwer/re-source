@@ -43,6 +43,16 @@ function basic_setup_widgets_init() {
 			'before_title'  => '<h3>',
 			'after_title'   => '</h3>'
 		));
+		// Custom mobile frontpage
+		register_sidebar(array(
+			'name' => 'Widgets Mobile Layer',
+			'id'   => 'widgets-mobile-layer',
+			'description'   => 'This the widgetized layer area for smaller screens.',
+			'before_widget' => '<div id="%1$s" class="widget %2$s"><div class="widgetpadding">',
+			'after_widget'  => '<div class="clr"></div></div></div>',
+			'before_title'  => '<h3>',
+			'after_title'   => '</h3>'
+		));
 		// Topcontent main widgets
 		register_sidebar(array(
 			'name' => 'Widgets Top',

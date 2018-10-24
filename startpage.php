@@ -131,6 +131,13 @@ $header_image = get_header_image();
         <div id="rightmenuplaceholder">
             <div class="togglebox"><h4>Labels<span class="tagcount"></span></h4></div>
         </div>
+
+      </div>
+        <div id="messageOverlay"><div class="overlayContent">
+        <?php
+            wp_main_theme_widgetarea_html( 'widgets-mobile-layer' );
+        ?>
+        </div></div>
     <?php
     /* default pageframe elements not to use or overwrite:
     #topcontent, .outerspace, #maincontent, #maincontentbar, #mainsidebar, #bottomcontent

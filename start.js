@@ -1074,7 +1074,7 @@ jQuery(function($) {
 
 
             // setup search
-            var emptysearchtext = 'In development';
+            var emptysearchtext = 'Time to Backup :)';
             var emptyhinttext = '';
 
             if( $('#searchhints').length < 1 ){
@@ -1192,8 +1192,11 @@ jQuery(function($) {
 
                     // match titles
                     related += '<ul class="titleresults">';
-                    related += '<li class="listheader"><h5>Titles<h5></li>';
+                    related += '<li class="listheader"><h5>Praktijk en Design<h5></li>';
 
+                    var theorysearch = '';
+                    theorysearch += '<ul class="theoryresults">';
+                    theorysearch += '<li class="listheader"><h5>Theorie & Reflectie<h5></li>';
                     //console.log( JSON.stringify(site_data['postdata'] ) );
 
                     var itemlist = JSON.parse(site_data['postdata'] );
@@ -1225,6 +1228,11 @@ jQuery(function($) {
                                             related += '<li><a href="#id='+obj.id+'" class="titlebutton" ';
                                             related += 'data-id="'+obj.id+'">'+obj.title+'</a></li>';
                                         }
+                                        if( type == 1 ){
+                                            titlelist.push( obj.title );
+                                            theorysearch += '<li><a href="#id='+obj.id+'" class="titlebutton" ';
+                                            theorysearch += 'data-id="'+obj.id+'">'+obj.title+'</a></li>';
+                                        }
                                     }
                                 }
 
@@ -1232,7 +1240,7 @@ jQuery(function($) {
 
                         });
                     });
-                    related += '</ul>';
+                    related += '</ul>' + theorysearch + '</ul><div class="clr"></div>';
                 }
 
                 return related;
@@ -1276,26 +1284,28 @@ jQuery(function($) {
                 }
 
                 var itemid = $(this).data('id');
-
                 console.log( itemid );
 
-                $('#rightcontentcontainer #post-'+itemid+' .itemcontent .intro').trigger('click');
-
+                if( $(this).parent().parent().hasClass('theoryresults') ){
+                    $('#leftmenucontainer #post-'+itemid+' .itemcontent .intro').trigger('click');
+                }else{
+                    $('#rightcontentcontainer #post-'+itemid+' .itemcontent .intro').trigger('click');
+                }
                 /*
                 if( !$('body').hasClass('practice') ){
                     $('#infocontainer').slideUp(200).removeClass('active');
                     $('#topspace,#topspace .closebutton').removeClass('active');
                     $('body').removeClass( 'theory overview articlemenu' );
-
                     $('#rightcontentcontainer #post-'+itemid).trigger('click');
-
                 }else{
-
                     $('#rightcontentcontainer #post-'+itemid).trigger('click');
-
                 }*/
 
             });
+
+
+
+
 
             $('body').on('click', '.item .intro, #leftmenucontainer, #rightmenucontainer, #leftcontentcontainer, #rightcontentcontainer, #maincontentcontainer', function( event ){
                 $('.item').removeClass('fullscreen');
@@ -1310,13 +1320,14 @@ jQuery(function($) {
             /** Init
              * load, detect content direction and interact
              */
-
             function smallScreenMessage(){
-                $('#messageOverlay').remove();
                 if( $(window).width() < 1180  ){
-                    $('body').append( '<div id="messageOverlay">Small screen message</div>' );
+                    $('#pageloader').fadeOut(200);
+                    $('#pagecontainer').fadeOut(300);
+                    $('#messageOverlay').fadeIn(300);
                 }else{
-                    $('#messageOverlay').remove();
+                    $('#pagecontainer').fadeIn(300);
+                    $('#messageOverlay').fadeOut(300);
                 }
             }
             smallScreenMessage();

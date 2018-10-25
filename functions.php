@@ -43,6 +43,16 @@ function basic_setup_widgets_init() {
 			'before_title'  => '<h3>',
 			'after_title'   => '</h3>'
 		));
+		// Custom mobile frontpage
+		register_sidebar(array(
+			'name' => 'Widgets Mobile Layer',
+			'id'   => 'widgets-mobile-layer',
+			'description'   => 'This the widgetized layer area for smaller screens.',
+			'before_widget' => '<div id="%1$s" class="widget %2$s"><div class="widgetpadding">',
+			'after_widget'  => '<div class="clr"></div></div></div>',
+			'before_title'  => '<h3>',
+			'after_title'   => '</h3>'
+		));
 		// Topcontent main widgets
 		register_sidebar(array(
 			'name' => 'Widgets Top',
@@ -80,6 +90,7 @@ add_action( 'widgets_init', 'basic_setup_widgets_init' );
 
 // register global variables (options/customizer)
 $wp_global_data = array();
+
 // all post data global
 function wp_main_theme_get_postdata(){
         $args = array(
@@ -116,8 +127,8 @@ function wp_main_theme_get_postdata(){
                     'link' => get_the_permalink(),
                     'title' => get_the_title(),
                     'slug' => $post->post_name,
-                    'image' => get_the_post_thumbnail(),
-                    'imgurl' => wp_get_attachment_url( get_post_thumbnail_id( $post->id ) ),
+                    'image' => get_the_post_thumbnail( $post->id, 'large'),
+                    'imgurl' => wp_get_attachment_url( get_post_thumbnail_id( $post->id, 'large' ) ),
                     'imgorient' => check_image_orientation( $post->id ),
                     'excerpt' => $excerpt,
                     'content' => $content,
@@ -137,6 +148,59 @@ function wp_main_theme_get_postdata(){
         //wp_die();
         return $response;
 }
+
+// Hook in content
+add_filter('post_gallery', 'resource_override_gallery', 1, 2);
+
+function resource_override_gallery($empty, $attr){
+    //Extract the attributes
+    //https://wordpress.stackexchange.com/questions/74515/add-filter-and-changing-output-captions-of-image-gallery
+    /*
+    if ( isset( $attr['include'] ) ) {
+        $include =$attr['include'];
+    }
+    if ( isset( $attr['exclude'] ) ) {
+        $exclude =$attr['include'];
+    }
+
+    if ( !empty($include) ) {
+        $include = preg_replace( '/[^0-9,]+/', '', $include );
+        $_attachments = get_posts( array('include' => $include, 'post_status' => 'inherit', 'post_type' => 'attachment', 'post_mime_type' => 'image', 'order' => $order, 'orderby' => $orderby) );
+
+        $attachments = array();
+        foreach ( $_attachments as $key => $val ) {
+            $attachments[$val->ID] = $_attachments[$key];
+        }
+    } elseif ( !empty($exclude) ) {
+        $exclude = preg_replace( '/[^0-9,]+/', '', $exclude );
+        $attachments = get_children( array('post_parent' => $id, 'exclude' => $exclude, 'post_status' => 'inherit', 'post_type' => 'attachment', 'post_mime_type' => 'image', 'order' => $order, 'orderby' => $orderby) );
+    } else {
+        $attachments = get_children( array('post_parent' => $id, 'post_status' => 'inherit', 'post_type' => 'attachment', 'post_mime_type' => 'image', 'order' => $order, 'orderby' => $orderby) );
+    }
+
+    if ( empty($attachments) )
+        return ''; // no gallery
+
+    $output = "";
+    foreach ( $attachments as $att_id => $attachment ){
+        $url = wp_get_attachment_url($att_id);
+        $output .= '<img src="'.$url.'" />'; //$att_id;// wp_get_attachment_image($att_id, 'large'). "\n"; //wp_get_attachment_link($att_id, $size, true) . "\n";
+    }
+    */
+    //return html markup
+    $posts = get_posts(array('include' => $attr['ids'],'post_type' => 'attachment'));
+
+    $output = "";
+    foreach($posts as $imagePost){
+        //$output .= "<div src='".wp_get_attachment_image_src($imagePost->ID, 'small')[0]."'>";
+        //$output .= "<div src='".wp_get_attachment_image_src($imagePost->ID, 'medium')[0]."' data-media=\"(min-width: 400px)\">";
+        $output .= "<img src='".wp_get_attachment_image_src($imagePost->ID, 'large')[0]."' data-media=\"(min-width: 950px)\" />";
+        //$output .= "<div src='".wp_get_attachment_image_src($imagePost->ID, 'extralarge')[0]."' data-media=\"(min-width: 1200px)\">";
+    }
+
+    return '<div class="imageslides">'.$output.'</div>';
+}
+
 function wp_main_theme_get_customizer(){
     return json_encode( get_theme_mods() );
 }
@@ -147,7 +211,7 @@ function wp_main_theme_get_all_tags(){
     return json_encode( get_terms( 'post_tag' ) );
 }
 function wp_main_theme_get_all_categories(){
-    return json_encode( get_categories( array("type"=>"post") ) );
+    return json_encode( get_terms( 'category' ) ); //get_categories( array("type"=>"post") )
 }
 // data for global js
 $wp_global_data['customdata']   = wp_main_theme_get_customizer();
@@ -179,10 +243,10 @@ function wp_main_theme_stylesheet(){
 add_action( 'wp_head', 'wp_main_theme_stylesheet', 9999 );
 
 // register style sheet function for editor
-function onepiece_editor_styles() {
+function wp_main_editor_styles() {
     add_editor_style( 'style.css' );
 }
-add_action( 'admin_init', 'onepiece_editor_styles' );
+add_action( 'admin_init', 'wp_main_editor_styles' );
 
 
 
@@ -192,7 +256,6 @@ function wp_main_theme_toplogo_html(){
     if( is_customize_preview() ){
         echo '<div id="area-custom-image" class="customizer-placeholder">Logo image</div>';
     }
-
     if( get_theme_mod('wp_main_theme_identity_logo', '') != '' ){
         $custom_logo_url = get_theme_mod('wp_main_theme_identity_logo');
         $custom_logo_attr = array(
@@ -219,6 +282,20 @@ function wp_main_theme_toplogo_html(){
         esc_attr( get_bloginfo( 'name', 'display' ) ) //get_bloginfo( 'description' )
         );
     }
+
+
+    /*
+        $custom_logo_url = get_template_directory_uri().'/images/logo2.svg';
+        $custom_logo_attr = array(
+            'class'    => 'custom-logo',
+            'itemprop' => 'logo',
+        );
+        echo sprintf( '<a href="%1$s" class="custom-logo-link image" rel="home" itemprop="url">%2$s</a>',
+        esc_url( home_url( '/' ) ),
+        '<img id="toplogo" src="'.$custom_logo_url.'" border="0" />'
+        );
+
+    */
 }
 
 
@@ -311,6 +388,7 @@ function wp_main_theme_loop_html(){
                 $post = get_post($post->id);
                 $fulltext = $post->post_content;//  str_replace( '<!--more-->', '',);
                 $content = apply_filters('the_content', $fulltext );
+
                 $excerpt = truncate( $content, $excerpt_length, '', false, true );  // get_the_excerpt()
 
                 if(is_page()){
@@ -336,6 +414,10 @@ function wp_main_theme_loop_html(){
     endif;
     wp_reset_query();
 }
+
+
+
+
 
 
 /**
@@ -381,11 +463,11 @@ function get_categories_select(){
 }
 
 // Category metabox Hierarchy
-function onepiece_wp_terms_checklist_args( $args, $post_id ) {
+function wp_terms_checklist_args( $args, $post_id ) {
    $args[ 'checked_ontop' ] = false;
    return $args;
 }
-add_filter( 'wp_terms_checklist_args', 'onepiece_wp_terms_checklist_args', 1, 2 );
+add_filter( 'wp_terms_checklist_args', 'wp_terms_checklist_args', 1, 2 );
 
 // check active widgets
 function is_sidebar_active( $sidebar_id ){
@@ -409,6 +491,9 @@ function check_sidebar_params( $params ) {
 }
 // Add widget param check for empty html correction
 add_filter( 'dynamic_sidebar_params', 'check_sidebar_params' );
+
+
+
 
 /**
 * Truncates text.

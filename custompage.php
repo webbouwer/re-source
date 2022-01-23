@@ -55,6 +55,7 @@ $header_image = get_header_image();
     $stylesheet = get_template_directory_uri().'/custom.css';
     echo '<link rel="stylesheet" id="wp-theme-custom-style"  href="'.$stylesheet.'" type="text/css" media="all" />';
 
+	
 echo '</head>';
 echo '<body '.$headerbgstyle.' '; body_class(); echo '>';
 ?>

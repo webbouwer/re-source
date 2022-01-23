@@ -25,8 +25,10 @@ function basic_setup_register_menus() {
 		'bottom' => __( 'Bottom menu' , 'resource' )
 		)
 	);
+	
 }
 add_action( 'init', 'basic_setup_register_menus' );
+
 
 // activate the Links Manager:: add_filter( 'pre_option_link_manager_enabled', '__return_true' );
 
@@ -43,7 +45,7 @@ function basic_setup_widgets_init() {
 			'before_title'  => '<h3>',
 			'after_title'   => '</h3>'
 		));
-		// Custom mobile frontpage
+		// Custom mobile frontpage 
 		register_sidebar(array(
 			'name' => 'Widgets Mobile Layer',
 			'id'   => 'widgets-mobile-layer',
@@ -114,8 +116,36 @@ function wp_main_theme_get_postdata(){
                 $excerpt_length = 120; // words
                 $post = get_post($post->id);
                 $fulltext = $post->post_content;//  str_replace( '<!--more-->', '',);
-                $content = apply_filters('the_content', $fulltext );
-                $excerpt = truncate( $content, $excerpt_length, '', false, true );  // get_the_excerpt()
+    
+                
+                //$content = apply_filters('the_content', $fulltext );
+                
+                
+                libxml_use_internal_errors(true); //use this to prevent warning messages from displaying because of the bad HTML
+    
+                $doc = new DOMDocument();
+                $doc->loadHTML(mb_convert_encoding($fulltext, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NODEFDTD);
+                //$doc->loadHTML( utf8_decode( $fulltext ) ); 
+                $doc->encoding = 'utf-8';
+                $doc->normalizeDocument();
+                $content = $doc->saveHTML();  
+    
+                $content = apply_filters('the_content', $content );
+    
+                /*
+                $doc = new DOMDocument();
+                $doc->encoding = 'utf-8';
+                $doc->loadHTML( utf8_decode( $fulltext ) ); 
+                $content = $doc->saveHTML(); 
+                //
+                $content = str_replace("‘","'", $content);
+                $content = str_replace("’","'", $content);
+                $content = str_replace('“','"', $content); 
+                $content = str_replace('”','"', $content);
+    
+                $content = apply_filters('the_content', $content );
+                */
+                $excerpt = truncate( $content, $excerpt_length, '', false, true );  // get_the_excerpt() 
 
                 $type = 'post';
                 if( $post->post_type === 'page' ){
@@ -208,16 +238,45 @@ function wp_main_theme_get_all_posts(){
     return json_encode( wp_main_theme_get_postdata() );
 }
 function wp_main_theme_get_all_tags(){
-    return json_encode( get_terms( 'post_tag' ) );
+    
+    $args = array(
+        'orderby'           => 'name', 
+        'order'             => 'ASC',
+        'hide_empty'        => false, 
+        'fields'            => 'all', 
+        'parent'            => 0,
+        'hierarchical'      => true, 
+        'child_of'          => 0,
+        'childless'         => false,
+        'pad_counts'        => false, 
+        'cache_domain'      => 'core'
+    ); 
+    
+    $taglist = get_terms( 'post_tag', $args );
+    
+    usort($taglist, function($a, $b){
+        return strcmp($a->name, $b->name);
+    });
+    
+    return json_encode( $taglist ); 
+    
+    //return json_encode( get_terms( $args ) ); 
 }
 function wp_main_theme_get_all_categories(){
-    return json_encode( get_terms( 'category' ) ); //get_categories( array("type"=>"post") )
+    
+    $args = array( 
+		'order'         => 'DESC'
+    );
+    return json_encode( get_terms( 'category', $args ) ); //get_categories( array("type"=>"post") )
 }
+
 // data for global js
 $wp_global_data['customdata']   = wp_main_theme_get_customizer();
 $wp_global_data['postdata']     = wp_main_theme_get_all_posts();
 $wp_global_data['tagdata']      = wp_main_theme_get_all_tags();
 $wp_global_data['catdata']      = wp_main_theme_get_all_categories();
+
+
 
 // register global customizer variables
 function wp_main_theme_global_js() {
@@ -267,7 +326,7 @@ function wp_main_theme_toplogo_html(){
         '<img id="toplogo" src="'.$custom_logo_url.'" border="0" />'
         );
     }else if( get_theme_mod('custom_logo', '') != '' ){
-        $custom_logo_id = get_theme_mod('custom_logo');
+        $custom_logo_id = get_theme_mod('custom_logo');  
         $custom_logo_attr = array(
             'class'    => 'custom-logo',
             'itemprop' => 'logo',
@@ -391,21 +450,31 @@ function wp_main_theme_loop_html(){
 
                 $excerpt = truncate( $content, $excerpt_length, '', false, true );  // get_the_excerpt()
 
+                $post_tags = get_the_tags();
+                $taglist = '';
+                if ( $post_tags ) {
+                    foreach( $post_tags as $tag ) {
+                    $strlist .= $tag->name . ', '; 
+                    }
+                    $strlist = preg_replace('/\s+/', '', $strlist);
+                    $taglist = rtrim($strlist,',');
+                }
+
                 if(is_page()){
-                    echo '<div class="post-content">';
+                    echo '<div class="post-content" data-tags="'.$taglist.'">';
                     echo $content;
                     echo '</div>';
                 }else if( is_single() ){
-                    echo '<div class="post-content">';
+                    echo '<div class="post-content" data-tags="'.$taglist.'">';
                     echo $content;
                     echo '</div>';
                     previous_post_link('%link', __('previous', 'resource' ), TRUE);
                     next_post_link('%link', __('next', 'resource' ), TRUE);
 
                 }else{
-                    echo '<div class="post-content post-excerpt">';
-                    echo $excerpt;
-                    echo '</div>';
+                    echo '<div class="post-content post-excerpt" data-tags="'.$taglist.'">';
+                    echo $content; //$excerpt;
+                    echo '</div>'; 
                 }
 
             echo '</div>';
@@ -598,6 +667,7 @@ function truncate($text, $length = 100, $ending = '...', $exact = true, $conside
     }
     return $truncate;
 }
+
 
 
 

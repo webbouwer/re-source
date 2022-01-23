@@ -25,7 +25,15 @@ $header_image = get_header_image();
 	.'<link rel="shortcut icon" href="images/favicon.ico" />'
 	// tell devices wich screen size to use by default
 	.'<meta name="viewport" content="initial-scale=1.0, width=device-width" />'
-	.'<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">';
+	.'<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">'
+    
+    .'<meta name="robots" content="index,follow">'."\r\n"
+    
+    .'<title>' . get_the_title() . ' | RE-Source - design research - online platform - living archive - REsource event 2018 - 2019</title>'."\r\n"
+    .'<meta name="description" content="RE-Source 2019 event '.get_bloginfo( 'description' ).'">'."\r\n"
+    .'<meta name="author" content="RE-source">'."\r\n"
+    .'<meta name="keywords" content="re-source, design, research, circular, map, source, reststromen, urban, resource, re-cycle, ontwerp, design award, ontwerpen, residual, reflect, strategy, empatic, field, mapping, ontwerppraktijk, resource-platform, platform, material, practice, process, re-activate, re-design, redesign, betonstraatsteen, grond en slib, gras, betonstraatstenen, plantmateriaal, slib, straatmeubilair, bank, reststroom, Ester van de Wiel, Joost Adriaanse, David Hamers, Thom Bindels, Jos Klarenbeek, Paul Slot, Simone Post, Manon van Hoeckel, Ginette Verstraete, info, theory, praktijk, flow, reframe, re-frame, onderzoeksproject, education, Biotopische slibfabriek, papierbeheer, groene intocht, publiek depot, tijdsteen, steentijd, stadshovenier, dutch design award, dutch design, dda, re-duce, re-manufacture, re-order, re-pair, re-purpose, re-shape, re-tell, recycle, ontwerpers, We-Are-Amp, Tim Heijmans, Moniek Ellen, Oddsized, Webdesign Den Haag, Carl Muller, Design Academy Eindhoven, lectoraat Places and Traces, Vrije Universiteit Amsterdam, Design Cultures, Faculty of Humanities, Gemeente Rotterdam, NWO, NWO+SIA smart culture">'."\r\n";
+        
     // more info for og api's
     echo '<meta property="og:title" content="' . get_the_title() . '"/>'
         .'<meta property="og:type" content="website"/>'
@@ -83,7 +91,20 @@ echo '<body '.$headerbgstyle.' '; body_class(); echo '>';
                     if( is_customize_preview() ){
                         echo '<div id="area-page-main-content" class="customizer-placeholder">Page main content</div>';
                     }
+                    
+                    if(!is_single() && !is_page()){
+                        next_posts_link( '&larr; Older posts', $wp_query ->max_num_pages);
+                        echo " - ";
+                        previous_posts_link( 'Newer posts &rarr;' ); 
+                    }
+                    
                     wp_main_theme_loop_html();
+                    
+                    if(!is_single() && !is_page()){
+                        next_posts_link( '&larr; Older posts', $wp_query ->max_num_pages);
+                        echo " - ";
+                        previous_posts_link( 'Newer posts &rarr;' ); 
+                    }
                     ?>
                 </div>
                 <div id="mainsidebar">
@@ -114,8 +135,43 @@ echo '<body '.$headerbgstyle.' '; body_class(); echo '>';
             </div>
         </div>
     </div>
+    
+
+    
 <?php
     wp_footer();
+    ?>
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-3063830-64"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-3063830-64');
+    </script> 
+    <script>
+    
+    jQuery(function($) { 
+        var taglist = $('.post-content').data('tags');
+        //setTimeout(function(){
+            var url = 'http://www.re-source.info';
+            if( taglist && taglist != '' ){
+                var url = 'https://www.re-source.info#tags='+taglist;
+            }
+            window.location = url;
+        //},200);   
+    });
+    </script>
+    
+    <?php
+    
+    /* redirect to homepage
+    $delay = 3; //seconds 
+    sleep($delay); 
+    header("Location: http://www.re-source.info"); 
+    */
     echo '</body></html>';
 ?>
 

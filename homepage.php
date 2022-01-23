@@ -17,16 +17,18 @@ $header_image = get_header_image();
     <meta charset="<?php bloginfo( 'charset' ); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="profile" href="http://gmpg.org/xfn/11">
-<!-- Google Tag Manager -->
+<!-- Google Tag Manager
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-W5CXPXH');</script>
-<!-- End Google Tag Manager -->
+End Google Tag Manager -->
 
     <?php
     if ( ! isset( $content_width ) ) $content_width = 360; // mobile first
+
+
     echo
     //'<link rel="canonical" href="'.home_url(add_query_arg(array(),$wp->request)).'">'
 	'<link rel="pingback" href="'.get_bloginfo( 'pingback_url' ).'" />'
@@ -36,8 +38,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 	.'<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">'."\r\n"
     .'<meta name="robots" content="index,follow">'."\r\n"
 
-    .'<title>RE-source - resource design research platform  - resource event circulair</title>'."\r\n"
-    .'<meta name="description" content="RE-Source | '.get_bloginfo( 'description' ).'">'."\r\n"
+    .'<title>'.get_bloginfo( 'name' ).'</title>'."\r\n"
+    .'<meta name="description" content="'.get_bloginfo( 'description' ).'">'."\r\n"
     .'<meta name="author" content="RE-source">'."\r\n"
     .'<meta name="keywords" content="re-source, design, research, circular, map, source, reststromen, urban, resource, re-cycle, design award, ontwerp, ontwerpen, residual, reflect, strategy, empatic, field, mapping, ontwerppraktijk, resource-platform, platform, material, practice, process, re-activate, re-design, redesign, betonstraatsteen, grond en slib, gras, betonstraatstenen, plantmateriaal, slib, straatmeubilair, bank, reststroom, Ester van de Wiel, Joost Adriaanse, David Hamers, Thom Bindels, Jos Klarenbeek, Paul Slot, Simone Post, Manon van Hoeckel, Ginette Verstraete, info, theory, praktijk, flow, reframe, re-frame, onderzoeksproject, education, Biotopische slibfabriek, papierbeheer, groene intocht, publiek depot, tijdsteen, steentijd, stadshovenier, dutch design award, dutch design, dda, re-duce, re-manufacture, re-order, re-pair, re-purpose, re-shape, re-tell, recycle, ontwerpers, We-Are-Amp, Tim Heijmans, Moniek Ellen, Oddsized, Webdesign Den Haag, Carl Muller, Design Academy Eindhoven, lectoraat Places and Traces, Vrije Universiteit Amsterdam, Design Cultures, Faculty of Humanities, Gemeente Rotterdam, NWO, NWO+SIA smart culture">'."\r\n";
 
@@ -56,6 +58,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 			$thumbnail_src = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'medium' );
 			echo '<meta property="og:image" content="' . esc_attr( $thumbnail_src[0] ) . '"/>';
 		}
+
     // include wp head
     wp_head();
 
@@ -114,15 +117,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                                 <?php //wp_main_theme_menu_html( 'top' , true  ); ?>
 
                                 <div class="nav-menu"><ul>
-                                <li class="page_item page-item-508"><a href="https://zee-plaats-werk-land.nl/setup/">Project</a></li>
-                                <li class="page_item page-item-812"><a href="https://zee-plaats-werk-land.nl/setup/online-platform/">Online Platform</a></li>
-                                <li class="page_item page-item-2"><a href="https://zee-plaats-werk-land.nl/setup/reststromen/">Reststromen</a></li>
-                                <li class="page_item page-item-332"><a href="https://zee-plaats-werk-land.nl/setup/het-resource-team/">Team</a></li>
+                                <li class="page_item page-item-508"><a href="https://zee-plaats-werk-land.nl/setup/">Wat</a></li>
+                                <li class="page_item page-item-812"><a href="https://zee-plaats-werk-land.nl/setup/hoe/">Hoe</a></li>
+                                <li class="page_item page-item-2"><a href="https://zee-plaats-werk-land.nl/setup/wie/">Wie</a></li>
+                                <li class="page_item page-item-332"><a href="https://zee-plaats-werk-land.nl/setup/waar/">Waar</a></li>
                                 </ul></div>
-
-
-
-
 
                             </div>
                             <div id="infocontent">
@@ -138,7 +137,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div id="leftmenuplaceholder">
         </div>
         <div id="leftmenucontainer">
-            <div class="togglebox"><h4>Reflecties</h4></div>
+            <div class="togglebox"><h4>Notities</h4></div>
             <div class="contentbox"></div>
         </div>
         <div id="leftcontentcontainer">
@@ -146,7 +145,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="contentbox"></div>
 
             <div id="contentswitch">
-                    <div class="switchbutton"><div class="leftswapbutton"><span>Theorie & Reflectie</span></div><div class="rightswapbutton"><span>Praktijk en Design</span></div></div>
+                    <div class="switchbutton"><div class="leftswapbutton"><span>Dialoog & Reflectie</span></div><div class="rightswapbutton"><span>Praktijk- & Veldwerk</span></div></div>
             </div>
         </div>
 

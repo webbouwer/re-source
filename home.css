@@ -88,7 +88,7 @@ text-align: center;
 #messageOverlay .overlayContent .overlaytext
 {
 font-size:19px;
-font-weight:bold; 
+font-weight:bold;
 line-height: 1.3em;
 }
 
@@ -255,7 +255,7 @@ position: relative;
 float:left;
 width:2%;
 height:100%;
-min-height:100vh; /*100%;*/ 
+min-height:100vh; /*100%;*/
 }
 #maincontentcontainer
 {
@@ -321,7 +321,7 @@ height:90px;
 {
 position: relative;
 width:66%;
-max-width:1024px; /* max-width:1128px; */ 
+max-width:960px; /* max-width:1024px;  max-width:1128px; */
 margin:0px auto; 
 }
 
@@ -388,7 +388,7 @@ display: inline-block;
 width:280px;
 height:38px;
 margin-left:-5px;
-background-image: url('images/resource_logo.png');
+background-image: url('images/ZPWL_weblogo.gif');
 background-repeat: no-repeat;
 background-position:center;
 background-size: auto 100%;
@@ -431,9 +431,9 @@ z-index:999;
 min-width:560px;
 /*max-width:80%;*/
 width:84%;
-    
 
-    
+
+
 background-color: white;
 border-top:none;
 border-bottom:none;
@@ -579,19 +579,19 @@ padding:0px;
 #topcontent #infocontainer #infomenu ul li
 {
 display:inline-block;
-width:28%; 
+width:28%;
 margin:0px;
 padding:16px 0px 16px;
-text-align:center; 
+text-align:center;
 }
 #topcontent #infocontainer #infomenu ul li:first-child
 {
-width:22%; 
+width:22%;
 text-align:left;
-} 
+}
 #topcontent #infocontainer #infomenu ul li:last-child
 {
-width:22%; 
+width:22%;
 text-align:right;
 float:right;
 width:auto;
@@ -690,8 +690,8 @@ overflow:auto;
 #page-332.active
 {
 overflow:auto !important;
-height:auto !important; 
-} 
+height:auto !important;
+}
 
 .section-container
 {
@@ -715,7 +715,7 @@ line-height: 1em;
 }
 .section-intro img
 {
-display:none; 
+display:none;
 }
 
 .section-container .section-intro .imgwrap {
@@ -732,8 +732,8 @@ margin-bottom:12px;
 
 .section-container .section-intro .name
 {
-display: block;  
-line-height:0.9em; 
+display: block;
+line-height:0.9em;
 }
 .section-container .section-intro .name,
 .section-container .section-intro .desc
@@ -790,7 +790,7 @@ width:100%;
 }
 .section-container.active .section.active .section-intro .imgwrap {
 width:200px;
-height:200px;    
+height:200px;
 margin-top:10px;
 margin-right:12px;
 }
@@ -989,9 +989,9 @@ color:black;
 
 #leftmenucontainer .contentbox .nonactive .itemcontent
 {
-/*opacity:0.4;*/ 
- 
-    color:black; 
+/*opacity:0.4;*/
+
+    color:black;
     opacity:0.4;
 }
 
@@ -1023,8 +1023,8 @@ width:90%;
 
 body.overview
 {
-min-height:100%; 
-overflow-y: auto;  
+min-height:100%;
+overflow-y: auto;
 }
 
 
@@ -1042,11 +1042,11 @@ display:none;
 .overview #maincontentcontainer .contentbox .item h1,
 .overview #maincontentcontainer .main .textbox h1
 {
-font-size:84px; 
+font-size:84px;
 line-height:88px;
 padding:0;
 padding-bottom:12px;
-margin-right: 50px; 
+margin-right: 50px;
 }
 .overview #maincontentcontainer .main .textbox h1
 {
@@ -1063,14 +1063,14 @@ margin:-6px 50px 0px -3px;
     display:block;
     background-image: url('images/pijl_down.png');
     background-repeat: no-repeat;
-    background-position: 98.7% 10px; 
+    background-position: 98.7% 10px;
     background-size: 36px;
     /* box-shadow: 0px 2px 15px -4px rgba(18,18,18,1); */
     z-index: 400;
     background-color:black;
 }
 
-#maincontentcontainer #tourmenu li 
+#maincontentcontainer #tourmenu li
 {
     display:none;
     padding:10px 12px;
@@ -1090,7 +1090,7 @@ margin:-6px 50px 0px -3px;
     font-size: 19px;
     letter-spacing: 0.02em;
     text-transform: capitalize;
-    color:white; 
+    color:white;
 }
 #maincontentcontainer #tourmenu li a:first-child:after
 {
@@ -1099,13 +1099,13 @@ content: ' / ';
 
 #maincontentcontainer .contentbox
 {
-    
+
 }
 
 #maincontentcontainer .item .intro .introslides
 {
-    margin-right:50px;  
-    border-top:5px solid black; 
+    margin-right:50px;
+    border-top:5px solid black;
 }
 #maincontentcontainer .item .intro .introslides .slide
 {
@@ -1130,7 +1130,7 @@ content: ' / ';
 #maincontentcontainer .item .intro .introslides .slide.selected
 {
     width:100%;
-    min-height:100%; 
+    min-height:100%;
 }
 
 
@@ -1141,7 +1141,7 @@ content: ' / ';
 #contentswitch
 {
 position:absolute;
-top:30%;
+top:40%;
 right:0px;
 overflow:visible;
 z-index: 999;
@@ -1154,6 +1154,47 @@ width:60px;
 margin-right:0px;
 }
 
+
+.leftswapbutton,
+.rightswapbutton
+{
+position: absolute;
+height: 240px;
+width:30px;
+left:-40px;
+z-index: 999;
+}
+
+
+.leftswapbutton span,
+.rightswapbutton span
+{
+display:block;
+height: 26px;
+width:200px;
+font-size: 18px;
+font-weight: bold;
+text-align:center;
+}
+
+.rightswapbutton span
+{
+  margin-left:-62px;
+-webkit-transform: rotate(90deg);
+        -moz-transform: rotate(90deg);
+        -o-transform: rotate(90deg);
+        transform: rotate(90deg);
+}
+.leftswapbutton span
+{
+  margin-left:-80px;
+-webkit-transform: rotate(-90deg);
+        -moz-transform: rotate(-90deg);
+        -o-transform: rotate(-90deg);
+        transform: rotate(-90deg);
+}
+
+/*
 .leftswapbutton,
 .rightswapbutton
 {
@@ -1178,6 +1219,9 @@ left:-10px;
 {
 display:none;
 }
+*/
+
+
 /*
 .leftswapbutton
 {
@@ -1221,7 +1265,7 @@ line-height:0.9em;
 .practice #leftmenucontainer .contentbox .itemcontent
 {
     color:black;
-    opacity:1; 
+    opacity:1;
 }
 
 .practice .nonactive .coverimage,
@@ -1229,13 +1273,13 @@ line-height:0.9em;
 .practice .nonactive .catbutton,
 .practice .nonactive .tagbutton
 {
-    color:black; 
+    color:black;
     opacity:0.4;
 }
 .practice .nonactive .tagbutton:hover
 {
     color:black;
-    opacity:1; 
+    opacity:1;
 }
 
 .tagbutton:before
@@ -1248,7 +1292,7 @@ font-weight:bold;
 }
 #rightmenucontainer #tagmenu
 {
-padding:10px 0px 0px 0px; 
+padding:10px 0px 0px 0px;
 }
 #rightmenucontainer .tagbutton
 {
@@ -1454,7 +1498,7 @@ height:auto;
 {
 font-weight:normal;
 font-size:15px;
-padding:3px 0px 5px; 
+padding:3px 0px 5px;
 text-align: left;
 color: black;
 }
@@ -1568,7 +1612,7 @@ display: block;
 content: '';
 right:7px;
 bottom:14px;
-font-size:0px; 
+font-size:0px;
 width:46px;
 height:46px;
 background-image: url('images/full.png');
@@ -1644,17 +1688,17 @@ width:100%;
 {
 position: relative;
 width:94%;
-    
+
 }
 
 .practice .item.active .itemcontent .intro .coverimage .stage img
 {
-border-bottom:5px solid black; 
+border-bottom:5px solid black;
 }
 
 .practice #rightcontentcontainer .item.selected .itemtagbox
 {
-margin-right:4.5%; 
+margin-right:4.5%;
 }
 
 
@@ -1669,8 +1713,8 @@ min-width:760px;
     */
 position: relative;
 width:80%;
-max-width:1128px; 
-margin:0px auto; 
+max-width:1128px;
+margin:0px auto;
 }
 .overview #maincontentcontainer .contentbox .item
 {
@@ -1721,7 +1765,7 @@ margin-top:10px;
 }
 .overview #maincontentcontainer .item.overviewcontent .itemcatbox a.catbutton
 {
-display:block; 
+display:block;
 }
 .overview #maincontentcontainer .item.overviewcontent .itemtagbox
 {
@@ -1816,7 +1860,7 @@ margin:0px auto;
 width:50%;
 float:left;
 }
-*/ 
+*/
 .theory #leftcontentcontainer .contentbox .item.landscape
 {
 
@@ -1875,13 +1919,13 @@ height:60%;
 max-height:560px;
 float:right;
 width:69.8%;
-margin-right: 23.2%; 
+margin-right: 23.2%;
 */
 }
 
 .overview #maincontentcontainer .contentbox .item
 {
-    max-height:760px !important; 
+    max-height:760px !important;
     overflow-y:visible;
 }
 /*
@@ -1926,12 +1970,12 @@ z-index:400;
 }
 .overview #maincontentcontainer .leftslidenav
 {
-left:-40px; 
+left:-40px;
 }
 .overview #maincontentcontainer .rightslidenav
 {
 background-image:url('images/pijl_rechts.png');
-right:10px; 
+right:10px;
 }
 
 
@@ -1993,7 +2037,7 @@ width:86%; /* width:0%; overflow-x:hidden;*/
 float:right;
 width:94%;
 margin-right:3%;
-padding-top:20px; 
+padding-top:20px;
 }
 .practice.articlemenu #rightcontentcontainer
 {
@@ -2020,7 +2064,7 @@ width:800px;
 margin-left:-900px !important;
 overflow-y:auto;
 }
-.practice #maincontentcontainer .contentbox 
+.practice #maincontentcontainer .contentbox
 {
 height:600px;
 width:600px !important;
@@ -2033,7 +2077,7 @@ margin-left:-2400px !important;
 .theory #leftcontentcontainer
 {
 position: relative;
-/*overflow-y: auto;*/ 
+/*overflow-y: auto;*/
 height:100%;
 padding-left:0px;
 float:left;
@@ -2077,7 +2121,7 @@ top:0px;
 right:0px;
 /*float:right;*/
 height:100%;
-overflow-y: auto; 
+overflow-y: auto;
 width:20%; /* 22 */
 }
 .theory #rightcontentcontainer .contentbox

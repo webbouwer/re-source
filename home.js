@@ -1262,7 +1262,7 @@ jQuery(function($) {
 										// todo 2022
 										//if( $('#infocontainer .contentpage[data-link="'+$('#infomenu ul li:first-child a').attr('href')+'"]').data('id') && objlist[ $('#infocontainer .contentpage[data-link="'+$('#infomenu ul li:first-child a').attr('href')+'"]').data('id') ].content != '' ){
                     $('#infocontainer .contentpage[data-link="'+$('#infomenu ul li:first-child a').attr('href')+'"]').addClass( 'active' ).removeClass( 'nonactive' ).find('.main .textbox').html( objlist[ $('#infocontainer .contentpage[data-link="'+$('#infomenu ul li:first-child a').attr('href')+'"]').data('id') ].content );
-										//} 
+										//}
                     markupInfoPages();
                     $("#infomenu, #infocontent").css({ 'width':  $("#topbar").innerWidth() });
 
@@ -1461,7 +1461,7 @@ jQuery(function($) {
              */
 
 
-            var emptysearchtext = 'Search';
+            var emptysearchtext = 'Zoek';
             var emptyhinttext = '';
 
             if( $('#searchhints').length < 1 ){

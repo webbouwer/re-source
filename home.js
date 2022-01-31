@@ -1504,11 +1504,11 @@ jQuery(function($) {
 
                     // match titles
                     related += '<ul class="titleresults">';
-                    related += '<li class="listheader"><h5>Praktijk en Design<h5></li>';
+                    related += '<li class="listheader"><h5>Praktijk- & Veldwerk<h5></li>';
 
                     var theorysearch = '';
                     theorysearch += '<ul class="theoryresults">';
-                    theorysearch += '<li class="listheader"><h5>Theorie & Reflectie<h5></li>';
+                    theorysearch += '<li class="listheader"><h5>Dialoog en Reflectie<h5></li>'; 
                     //console.log( JSON.stringify(site_data['postdata'] ) );
 
                     var itemlist = JSON.parse(site_data['postdata'] );

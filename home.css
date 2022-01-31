@@ -34,9 +34,7 @@ color:white;
 opacity:0.6;
 background-color: black;
 }
-
-
-
+/*
 #messageOverlay
 {
 position:fixed;
@@ -47,6 +45,20 @@ height:100%;
 background-color:white;
 z-index:2000;
 }
+*/
+.overlayContent .overlayimage
+{
+  background-color:red;
+
+  background-image:url('images/zpwl_mobile_notice.jpg');
+  background-size: cover;
+}
+.overlayContent .overlayimage img
+{
+  margin:164px 0px 200px 56px;
+  width:195px;
+  height:auto;
+}
 
 @media screen and (max-width: 780px) {
     #pageloader .textloader
@@ -56,42 +68,52 @@ z-index:2000;
     #messageOverlay .overlayContent
     {
     width:300px;
-    margin:160px auto;
+    margin:30px auto;
     }
 }
+
 @media screen and (min-width: 780px) {
     #pageloader .textloader
     {
-    margin:120px auto;
+    margin:20px auto;
     }
     #messageOverlay .overlayContent
     {
     width:300px;
-    margin:240px auto;
+    margin:140px auto;
     }
 }
 
-
+/*
 #messageOverlay .overlayContent .overlayimage
 {
 padding-bottom: 10px;
-border-bottom:5px solid black;
 margin-bottom:7px;
 text-align: center;
+
+width:340px;
+background-image:url('images/zpwl_mobile_notice.jpg');
+background-size: cover;
+
 }
 
 #messageOverlay .overlayContent .overlayimage img
 {
-    width:240px;
+    margin-top:282px;
+    margin-bottom:270px;
+    margin-left:30px;
+    width:230px;
     height:auto;
 }
+
+
 #messageOverlay .overlayContent .overlaytext
 {
 font-size:19px;
 font-weight:bold;
 line-height: 1.3em;
 }
-
+*/
 
 
 #topspace.active

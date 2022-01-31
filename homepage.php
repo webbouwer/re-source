@@ -40,9 +40,9 @@ End Google Tag Manager -->
 
     .'<title>'.get_bloginfo( 'name' ).'</title>'."\r\n"
     .'<meta name="description" content="'.get_bloginfo( 'description' ).'">'."\r\n"
-    .'<meta name="author" content="RE-source">'."\r\n"
-    .'<meta name="keywords" content="re-source, design, research, circular, map, source, reststromen, urban, resource, re-cycle, design award, ontwerp, ontwerpen, residual, reflect, strategy, empatic, field, mapping, ontwerppraktijk, resource-platform, platform, material, practice, process, re-activate, re-design, redesign, betonstraatsteen, grond en slib, gras, betonstraatstenen, plantmateriaal, slib, straatmeubilair, bank, reststroom, Ester van de Wiel, Joost Adriaanse, David Hamers, Thom Bindels, Jos Klarenbeek, Paul Slot, Simone Post, Manon van Hoeckel, Ginette Verstraete, info, theory, praktijk, flow, reframe, re-frame, onderzoeksproject, education, Biotopische slibfabriek, papierbeheer, groene intocht, publiek depot, tijdsteen, steentijd, stadshovenier, dutch design award, dutch design, dda, re-duce, re-manufacture, re-order, re-pair, re-purpose, re-shape, re-tell, recycle, ontwerpers, We-Are-Amp, Tim Heijmans, Moniek Ellen, Oddsized, Webdesign Den Haag, Carl Muller, Design Academy Eindhoven, lectoraat Places and Traces, Vrije Universiteit Amsterdam, Design Cultures, Faculty of Humanities, Gemeente Rotterdam, NWO, NWO+SIA smart culture">'."\r\n";
-
+    .'<meta name="author" content="Zee plaats werk land">'."\r\n"
+    .'<meta name="keywords" content="zee-plaats-werk-land, delta werken, design, zee, delta, plaats, werk, land, research, map, source, urban, re-cycle, design award, ontwerp, ontwerpen, residual, reflect, strategy, empatic, field, mapping, ontwerppraktijk, resource-platform, platform, material, practice, process, Ester van de Wiel, Joost Adriaanse, info, theory, praktijk, flow, reframe, re-frame, onderzoeksproject, education, Biotopische slibfabriek, papierbeheer, groene intocht, publiek depot, tijdsteen, steentijd, stadshovenier, dutch design award, dutch design, dda, re-duce, re-manufacture, re-order, re-pair, re-purpose, re-shape, re-tell, recycle, ontwerpers, We-Are-Amp, Tim Heijmans, Moniek Ellen, Oddsized, Webdesign Den Haag, Carl Muller, Design Academy Eindhoven, lectoraat Places and Traces, Vrije Universiteit Amsterdam, Design Cultures, Faculty of Humanities, Gemeente Rotterdam, NWO, NWO+SIA smart culture">'."\r\n";
+    
     // more info for og api's
     echo '<meta property="og:title" content="' . get_the_title() . '"/>'."\r\n"
         .'<meta property="og:type" content="website"/>'."\r\n"
@@ -145,7 +145,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="contentbox"></div>
 
             <div id="contentswitch">
-                    <div class="switchbutton"><div class="leftswapbutton"><span>Dialoog & Reflectie</span></div><div class="rightswapbutton"><span>Praktijk- & Veldwerk</span></div></div>
+                    <div class="switchbutton"><div class="leftswapbutton"><span>Dialoog en Reflectie</span></div><div class="rightswapbutton"><span>Praktijk- & Veldwerk</span></div></div>
             </div>
         </div>
 
@@ -174,35 +174,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         ?>
         </div></div>
     <?php
-    /* default pageframe elements not to use or overwrite:
-    #topcontent, .outerspace, #maincontent, #maincontentbar, #mainsidebar, #bottomcontent
-    */
-    /*
-    wp_main_theme_toplogo_html();
-    wp_main_theme_menu_html( 'top' , true  );
-    wp_main_theme_widgetarea_html( 'widgets-top-sidebar' );
-    if( is_customize_preview() ){
-        echo '<div id="area-main-menu" class="customizer-placeholder">Main menu</div>';
-    }
-    wp_main_theme_menu_html( array( 'main' ) );
-    if( is_customize_preview() ){
-        echo '<div id="area-page-main-content" class="customizer-placeholder">Page main content</div>';
-    }
-    wp_main_theme_loop_html();
-    if( is_customize_preview() ){
-        echo '<div id="area-side-menu" class="customizer-placeholder">Side menu</div>';
-    }
-    wp_main_theme_menu_html( 'side' );
-    wp_main_theme_widgetarea_html( 'sidebar' );
-    if( is_customize_preview() ){
-        echo '<div id="area-bottom-menu" class="customizer-placeholder">Bottom menu</div>';
-    }
-    wp_main_theme_menu_html( 'bottom' );
-    wp_main_theme_widgetarea_html( 'widgets-bottom-sidebar' );
-    */
-
     wp_footer();
-
     ?>
     <!-- Global site tag (gtag.js) - Google Analytics
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-3063830-64"></script>
